@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #FBF9F5;
+  --foreground: #22201E;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-geist), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono);
 }
 
@@ -16,7 +16,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist), system-ui, sans-serif;
 }
 
 .kolo-group {
@@ -64,11 +64,22 @@ body {
   background: #c2410c;
 }
 
-/* Redesign tokens (her-side): pine CTAs, warm warning background. */
-@theme inline {
-  --color-pine: #1f5c4a;
-  --color-pine-dark: #164637;
-  --color-pine-soft: #e6f0ec;
-  --color-warn-bg: #fff6e0;
-  --color-warn-fg: #7a4d00;
+/* Kolo design tokens */
+@theme {
+  --font-sans: var(--font-geist), system-ui, sans-serif;
+  --font-serif: var(--font-literata), Georgia, serif;
+  --color-ink: #22201E;  --color-ink-2: #4A4540;  --color-muted: #605A55;  --color-faint: #8A837C;
+  --color-paper: #FBF9F5; --color-sand: #F1EDE6;  --color-line: #ECE6DD;   --color-line-strong: #E3DCD2;
+  --color-pine: #24594B;  --color-pine-dark: #163D33;
+  --color-warn-bg: #FEF3C7; --color-warn-ink: #6B3A07;
+  --color-beauty: #D88A9B;    --color-beauty-tint: #F8E7EB;    --color-beauty-ink: #8E3B50;
+  --color-cleaning: #6EA6C6;  --color-cleaning-tint: #E3EFF6;  --color-cleaning-ink: #2D5E7C;
+  --color-food: #D9A05E;      --color-food-tint: #F7ECDD;      --color-food-ink: #86561C;
+  --color-childcare: #9F90D4; --color-childcare-tint: #ECE8F8; --color-childcare-ink: #4E3F8C;
+  --color-tailoring: #86AE7E; --color-tailoring-tint: #E7F0E3; --color-tailoring-ink: #3F6236;
+  /* aliases used by /verify */
+  --color-pine-soft: #E3EEEA; --color-warn-fg: #6B3A07;
 }
+.kolo-ring { background: conic-gradient(#D88A9B 0 20%, #6EA6C6 0 40%, #D9A05E 0 60%, #9F90D4 0 80%, #86AE7E 0); border-radius: 9999px; }
+.kolo-map .leaflet-tile-pane { filter: saturate(.45) sepia(.18) brightness(1.05); }
+:focus-visible { outline: 3px solid #22201E; outline-offset: 2px; }

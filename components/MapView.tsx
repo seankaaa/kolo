@@ -71,7 +71,7 @@ export default function MapView({
   }, []);
   if (mountId === 0) return <div className="h-full w-full bg-stone-100" />;
   return (
-    <MapContainer key={mountId} center={[37.7, -122.25]} zoom={9} className="h-full w-full" zoomControl={false}>
+    <MapContainer key={mountId} center={[37.7, -122.25]} zoom={9} className="kolo-map h-full w-full" zoomControl={false}>
       <Tiles />
       <Controller target={target} onBounds={onBounds} onZoom={setZoom} />
       {zoom < CLUSTER_BELOW_ZOOM ? (
