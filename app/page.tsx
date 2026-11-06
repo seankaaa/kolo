@@ -68,17 +68,6 @@ export default function Home() {
       });
   }, []);
 
-  async function verify() {
-    if (!liveId) return;
-    const res = await fetch(`/api/providers/${liveId}`, {
-      method: "PATCH",
-      headers: authHeaders(),
-      body: JSON.stringify({ verified: true }),
-    });
-    const p: Provider = await res.json();
-    setProviders((ps) => ps.map((x) => (x.id === p.id ? p : x)));
-    setSelected(p);
-  }
   const me = providers.find((p) => p.id === liveId);
 
   const filtered = useMemo(() => {
@@ -175,8 +164,7 @@ export default function Home() {
           ) : (
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-sm opacity-90">{t("getVerified")}:</span>
-              <button onClick={verify} className="min-h-11 rounded-full bg-white px-4 text-sm font-semibold text-emerald-800">🪪 {t("verifyId")}</button>
-              <button onClick={verify} className="min-h-11 rounded-full bg-white px-4 text-sm font-semibold text-emerald-800">🤝 {t("verifyPartner")}</button>
+              <Link href={`/verify?listing=${me.id}`} className="min-h-11 rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-emerald-800">🪪 {t("getVerified")}</Link>
               <span className="text-xs opacity-75">{t("demoVerify")}</span>
             </div>
           )}

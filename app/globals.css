@@ -63,3 +63,12 @@ body {
   font-size: 16px;
   background: #c2410c;
 }
+
+/* Redesign tokens (her-side): pine CTAs, warm warning background. */
+@theme inline {
+  --color-pine: #1f5c4a;
+  --color-pine-dark: #164637;
+  --color-pine-soft: #e6f0ec;
+  --color-warn-bg: #fff6e0;
+  --color-warn-fg: #7a4d00;
+}

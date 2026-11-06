@@ -77,8 +77,7 @@ export default function Me() {
             ) : (
               <>
                 <span className="text-sm opacity-90">{t("getVerified")}:</span>
-                <button onClick={() => patchListing(live.id, { verified: true })} className={`${pill} bg-white text-emerald-800`}>🪪 {t("verifyId")}</button>
-                <button onClick={() => patchListing(live.id, { verified: true })} className={`${pill} bg-white text-emerald-800`}>🤝 {t("verifyPartner")}</button>
+                <Link href={`/verify?listing=${live.id}`} className={`${pill} bg-white text-emerald-800`}>🪪 {t("getVerified")}</Link>
               </>
             )}
             <Link href={`/explore?live=${live.id}`} className={`${pill} border-2 border-white`}>🗺️ {t("seeMeOnMap")}</Link>
@@ -272,6 +271,7 @@ function ListingCard({ p, lang, t, onPatch, onDelete }: {
       )}
       {!editing && (
         <div className="mt-3 flex flex-wrap gap-2">
+          {!p.verified && <Link href={`/verify?listing=${p.id}`} className={`${pill} bg-pine text-white hover:bg-pine-dark`}>🪪 {t("getVerified")}</Link>}
           <button onClick={() => setEditing(true)} className={`${pill} border border-stone-300`}>✎ {t("edit")}</button>
           <button onClick={() => onPatch({ paused: !p.paused })} className={`${pill} border border-stone-300`}>{p.paused ? `▶ ${t("activate")}` : `❚❚ ${t("pause")}`}</button>
           <Link href={`/explore?live=${p.id}`} className={`${pill} border border-stone-300`}>🗺️ {t("seeOnMap")}</Link>
