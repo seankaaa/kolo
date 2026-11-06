@@ -112,6 +112,14 @@ function BookingForm({ provider, item, onCancel }: { provider: Provider; item: S
       }),
     });
     const order = await res.json();
+    // Details become the first chat message so they get translated for her.
+    if (details.trim()) {
+      await fetch(`/api/orders/${order.id}/messages`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ from: "customer", text: details.trim() }),
+      });
+    }
     router.push(`/order/${order.id}`);
   }
 

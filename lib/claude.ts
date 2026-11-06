@@ -1,6 +1,13 @@
 import Anthropic from "@anthropic-ai/sdk";
 
-export const client = new Anthropic();
+let _client: Anthropic | null = null;
+/** Created lazily so routes still load (and chat degrades to untranslated) when no key is set. */
+export const client = {
+  get messages() {
+    _client ??= new Anthropic();
+    return _client.messages;
+  },
+};
 export const SMART_MODEL = "claude-sonnet-5-5";
 export const FAST_MODEL = "claude-haiku-5-5";
 

@@ -29,9 +29,10 @@ export async function POST(req: Request, ctx: RouteContext<"/api/orders/[id]/mes
   const senderLang = from === "customer" ? order.customerLanguage : provider.language;
   const readerLang = from === "customer" ? provider.language : order.customerLanguage;
 
-  let translated = text;
+  // On failure, store no translation; the reader then sees the original.
+  const translations: Message["translations"] = {};
   try {
-    translated = await translate(text, senderLang, readerLang);
+    translations[readerLang] = await translate(text, senderLang, readerLang);
   } catch (e) {
     console.error("translate failed", (e as Error).message);
   }
@@ -40,7 +41,7 @@ export async function POST(req: Request, ctx: RouteContext<"/api/orders/[id]/mes
     from,
     original: text,
     lang: senderLang,
-    translations: { [readerLang]: translated },
+    translations,
     at: Date.now(),
   };
   await updateDB((db) => db.orders.find((o) => o.id === id)?.messages.push(message));
