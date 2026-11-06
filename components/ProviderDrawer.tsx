@@ -49,7 +49,7 @@ export default function ProviderDrawer({ provider: p, onClose }: { provider: Pro
             {p.verified && <VerifiedBadge />}
           </div>
           <h2 className="text-xl font-semibold leading-tight text-ink">{title}</h2>
-          {p.language !== "en" && title !== p.title_native && <p className="mt-1 text-muted">{p.title_native}</p>}
+          {p.language !== "en" && title !== p.title_native && <p className="mt-1 font-serif italic text-muted">{p.title_native}</p>}
           {p.summary_en && <p className="mt-2 text-sm text-muted">{pick(p, lang, p.summary_en, p.summary_native || "")}</p>}
           <p className="mt-2 text-sm font-medium text-ink-2">{p.name}</p>
         </div>
@@ -74,7 +74,7 @@ export default function ProviderDrawer({ provider: p, onClose }: { provider: Pro
                 </button>
               )}
             </div>
-            <p className="text-sm leading-relaxed text-muted">{showNative && hasNative ? p.story_native : p.story_en}</p>
+            <p className={`text-sm leading-relaxed text-ink-2 ${showNative && hasNative ? "font-serif italic" : ""}`}>{showNative && hasNative ? p.story_native : p.story_en}</p>
           </div>
         )}
 

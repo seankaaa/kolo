@@ -247,7 +247,7 @@ export default function Join() {
             <p className="text-center text-base text-sky-900">⬇︎ {t("startNew")}</p>
           </div>
         )}
-        <h1 className="text-center text-3xl font-bold text-ink">🌐 {t("chooseLanguage")}</h1>
+        <h1 className="text-center font-serif text-[30px] font-semibold text-ink">🌐 {t("chooseLanguage")}</h1>
         <div className="mt-8 grid gap-4 sm:grid-cols-2">
           {LANG_BUTTONS.map((b) => (
             <button
@@ -271,7 +271,7 @@ export default function Join() {
   if (d.step === "signup") {
     return (
       <Page>
-        <h1 className="text-3xl font-bold text-ink">{t("signupTitle")}</h1>
+        <h1 className="font-serif text-[30px] font-semibold text-ink">{t("signupTitle")}</h1>
         <p className="mt-2 text-lg text-muted">{t("chooseLanguageHint")}</p>
         <form
           className="mt-6 space-y-5"
@@ -285,8 +285,8 @@ export default function Join() {
           <Check checked={agreePublic} onChange={setAgreePublic} label={t("publicAgree")} />
           {error && <p role="alert" className="rounded-xl bg-red-50 p-3 text-lg text-red-800">{error}</p>}
           <div className="flex gap-3">
-            <button type="button" onClick={() => update({ step: "lang" })} className={`${btn} border border-line-strong bg-white text-lg`}>← {t("back")}</button>
-            <button disabled={busy} className={`${btn} flex-1 bg-pine py-4 text-xl text-white hover:bg-pine-dark`}>{t("continue")} →</button>
+            <button type="button" onClick={() => update({ step: "lang" })} className={`${btn} h-14 bg-sand text-lg`}>← {t("back")}</button>
+            <button disabled={busy} className={`${btn} h-[68px] flex-1 bg-pine text-[20px] text-white hover:bg-pine-dark`}>{t("continue")} →</button>
           </div>
         </form>
       </Page>
@@ -316,8 +316,8 @@ export default function Join() {
         {error && <p role="alert" className="mt-4 rounded-xl bg-red-50 p-3 text-lg text-red-800">{error}</p>}
         {d.step === "preview" && d.listing && (
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <button onClick={startOver} className={`${btn} border border-line-strong bg-white`}>↺ {t("startOver")}</button>
-            <button onClick={publish} disabled={busy || d.flags === null || !d.listing.areaId} className={`${btn} flex-1 bg-pine py-4 text-xl text-white hover:bg-pine-dark`}>
+            <button onClick={startOver} className={`${btn} h-14 bg-sand`}>↺ {t("startOver")}</button>
+            <button onClick={publish} disabled={busy || d.flags === null || !d.listing.areaId} className={`${btn} h-[68px] flex-1 bg-pine text-[20px] text-white hover:bg-pine-dark`}>
               🚀 {busy ? t("publishing") : t("publish")}
             </button>
           </div>
@@ -341,11 +341,11 @@ export default function Join() {
               if (voiceOn) window.speechSynthesis?.cancel();
             }}
             aria-pressed={voiceOn}
-            className={`${btn} border border-line-strong bg-white text-sm`}
+            className={`${btn} h-14 bg-sand text-sm`}
           >
             {voiceOn ? "🔊" : "🔇"} {voiceOn ? t("speakerOn") : t("speakerOff")}
           </button>
-          <button onClick={() => turn && speak(turn.reply, SPEECH_LANG[d.lang])} disabled={!turn} className={`${btn} border border-line-strong bg-white text-sm`}>
+          <button onClick={() => turn && speak(turn.reply, SPEECH_LANG[d.lang])} disabled={!turn} className={`${btn} h-14 bg-sand text-sm`}>
             🔁 {t("repeat")}
           </button>
         </div>
@@ -358,7 +358,7 @@ export default function Join() {
         {busy && !turn ? (
           <p className="text-2xl text-faint">{t("thinking")}</p>
         ) : (
-          <h1 className={`text-[28px] font-bold leading-snug text-ink sm:text-3xl ${busy ? "opacity-40" : ""}`}>{turn?.reply}</h1>
+          <h1 className={`font-serif text-[28px] font-semibold leading-snug text-ink sm:text-[30px] ${busy ? "opacity-40" : ""}`}>{turn?.reply}</h1>
         )}
       </div>
 
@@ -374,9 +374,9 @@ export default function Join() {
                   key={k}
                   aria-pressed={on}
                   onClick={() => setAnswer((a) => (on ? a.replace(label, "").replace(/(, )+/g, ", ").replace(/^, |, $/g, "") : a ? `${a}, ${label}` : label))}
-                  className={`min-h-11 rounded-full border-2 px-4 text-base ${on ? "border-beauty bg-pine text-white" : "border-line-strong bg-white hover:border-beauty"}`}
+                  className={`min-h-11 rounded-full border-2 px-4 text-base ${on ? "border-[3px] border-ink bg-ink text-white" : "border-line-strong bg-white hover:border-beauty"}`}
                 >
-                  {label}
+                  {on ? "✓ " : ""}{label}
                 </button>
               );
             })}
@@ -425,10 +425,10 @@ export default function Join() {
                   onClick={() => dictation.switchLang(SPEECH_LANG[l], answer)}
                   aria-pressed={dictation.lang === SPEECH_LANG[l]}
                   className={`min-h-11 rounded-full border-2 px-4 text-base font-semibold ${
-                    dictation.lang === SPEECH_LANG[l] ? "border-ink bg-ink text-white" : "border-line-strong bg-white text-ink-2"
+                    dictation.lang === SPEECH_LANG[l] ? "border-[3px] border-ink bg-ink text-white" : "border-line-strong bg-white text-ink-2"
                   }`}
                 >
-                  🎙️ {translate(l, "langName")}
+                  {dictation.lang === SPEECH_LANG[l] ? "✓" : "🎙️"} {translate(l, "langName")}
                 </button>
               ))}
             </div>
@@ -450,7 +450,7 @@ export default function Join() {
           }
         }}
         rows={3}
-        className="mt-2 w-full rounded-2xl border-2 border-line-strong bg-white p-4 text-xl text-ink focus:border-ink focus:outline-none"
+        className="mt-2 w-full rounded-[18px] border-2 border-line-strong bg-white p-4 text-[20px] text-ink focus:border-ink focus:outline-none"
       />
 
       {error && (
@@ -461,21 +461,21 @@ export default function Join() {
       )}
 
       <div className="mt-4 flex flex-wrap gap-3">
-        <button onClick={() => sendAnswer(answer)} disabled={busy || !answer.trim()} className={`${btn} flex-1 bg-ink py-4 text-xl text-white`}>
+        <button onClick={() => sendAnswer(answer)} disabled={busy || !answer.trim()} className={`${btn} h-[68px] flex-1 bg-pine text-[20px] text-white hover:bg-pine-dark`}>
           ➤ {t("send")}
         </button>
         {canSpeak && answer && (
-          <button onClick={() => { setAnswer(""); dictation.start(""); }} disabled={busy} className={`${btn} border border-line-strong bg-white`}>
+          <button onClick={() => { setAnswer(""); dictation.start(""); }} disabled={busy} className={`${btn} h-14 bg-sand`}>
             🎙️ {t("rerecord")}
           </button>
         )}
-        <button onClick={() => sendAnswer(`(skip: ${turn?.asking ?? "none"})`, t("skip"))} disabled={busy || !turn} className={`${btn} border border-line-strong bg-white`}>
+        <button onClick={() => sendAnswer(`(skip: ${turn?.asking ?? "none"})`, t("skip"))} disabled={busy || !turn} className={`${btn} h-14 bg-sand`}>
           ⏭️ {t("skip")}
         </button>
       </div>
 
       {(step >= 5 || (turn && turn.missing.length === 0)) && (
-        <button onClick={() => buildListing(d)} disabled={busy} className={`${btn} mt-6 w-full bg-pine py-4 text-xl text-white hover:bg-pine`}>
+        <button onClick={() => buildListing(d)} disabled={busy} className={`${btn} mt-6 h-[68px] w-full bg-pine text-[20px] text-white hover:bg-pine`}>
           ✅ {t("finishPreview")}
         </button>
       )}
@@ -490,7 +490,7 @@ export default function Join() {
       )}
       <div className="mt-6 flex flex-wrap items-center gap-4">
         {!!d.prevTurns?.length && (
-          <button onClick={previousQuestion} disabled={busy} className={`${btn} border border-line-strong bg-white`}>
+          <button onClick={previousQuestion} disabled={busy} className={`${btn} h-14 bg-sand`}>
             ↩︎ {t("prevQuestion")}
           </button>
         )}
@@ -504,7 +504,7 @@ function Page({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-paper text-lg">
       <Header showOffer={false} />
-      <main className="mx-auto max-w-2xl px-4 py-8">{children}</main>
+      <main className="mx-auto max-w-[520px] px-4 py-8 text-[17px]">{children}</main>
     </div>
   );
 }
@@ -686,7 +686,7 @@ function Preview({ d, t, onChange, onFlag }: {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-ink">{t("previewTitle")}</h1>
+      <h1 className="font-serif text-[30px] font-semibold text-ink">{t("previewTitle")}</h1>
       <p className="mt-2 rounded-2xl bg-sky-50 p-4 text-lg text-sky-900">✋ {t("onlyYourWords")}</p>
 
       {!!d.turn?.missing.length && (

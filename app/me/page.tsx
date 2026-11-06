@@ -13,7 +13,7 @@ import type { Lang, Order, Provider, User } from "@/lib/types";
 
 type MeData = { user: User; listings: Provider[]; received: Order[]; placed: Order[] };
 type Tab = "new" | "accepted" | "done" | "support";
-const card = "rounded-2xl border border-line-strong bg-white p-4";
+const card = "rounded-2xl border border-line-strong bg-white p-4 text-[17px]";
 const pill = "inline-flex min-h-11 items-center rounded-full px-4 text-sm font-semibold";
 
 export default function Me() {
@@ -90,7 +90,7 @@ export default function Me() {
           {/* ---------- My listings ---------- */}
           <section id="listings" className="scroll-mt-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-bold text-ink">📋 {t("myListings")}</h2>
+              <h2 className="font-serif text-[22px] font-semibold text-ink">📋 {t("myListings")}</h2>
               <Link href="/join" className={`${pill} bg-pine text-white hover:bg-pine-dark`}>＋ {t("addListing")}</Link>
             </div>
             {data.listings.length === 0 && <p className="mt-3 text-muted">{t("noListings")}</p>}
@@ -108,7 +108,7 @@ export default function Me() {
         <div className="space-y-6">
           {/* ---------- Orders received ---------- */}
           <section id="orders" className="scroll-mt-4">
-            <h2 className="text-xl font-bold text-ink">📥 {t("ordersReceived")}</h2>
+            <h2 className="font-serif text-[22px] font-semibold text-ink">📥 {t("ordersReceived")}</h2>
             <div role="tablist" className="mt-3 flex gap-1">
               {(["new", "accepted", "done", "support"] as Tab[]).map((k) => (
                 <button key={k} role="tab" aria-selected={tab === k} onClick={() => setTab(k)}
@@ -140,7 +140,7 @@ export default function Me() {
 
           {/* ---------- Orders placed ---------- */}
           <section>
-            <h2 className="text-xl font-bold text-ink">🧾 {t("ordersPlaced")}</h2>
+            <h2 className="font-serif text-[22px] font-semibold text-ink">🧾 {t("ordersPlaced")}</h2>
             {data.placed.length === 0 && <p className="mt-3 text-sm text-faint">{t("noCustomerOrders")}</p>}
             <ul className="mt-3 space-y-2">
               {data.placed.map((o) => (
@@ -260,7 +260,7 @@ function ListingCard({ p, lang, t, onPatch, onDelete }: {
           <ul className="mt-2 space-y-0.5 text-sm text-ink-2">
             {p.services.map((s) => <li key={s.name} className="flex justify-between gap-2"><span>{s.name}</span><b>{s.price === "price on request" ? t("priceOnRequest") : s.price}</b></li>)}
           </ul>
-          {(p.story_native || p.story_en) && <p className="mt-2 text-sm italic text-muted">“{pick(p, lang, p.story_en, p.story_native)}”</p>}
+          {(p.story_native || p.story_en) && <p className="mt-2 font-serif text-sm italic text-muted">“{pick(p, lang, p.story_en, p.story_native)}”</p>}
           {!!p.needs?.length && (
             <ul className="mt-2 flex flex-wrap gap-1">
               {p.needs.map((n, i) => <li key={i} className="rounded-full bg-beauty-tint px-2 py-0.5 text-xs text-beauty-ink">{n.type === "money" ? "💵" : n.type === "goods" ? "🎁" : "🤝"} {lang === p.language ? n.label_native : n.label_en}{n.goal ? ` · $${n.goal}` : ""}</li>)}
@@ -305,7 +305,7 @@ function AccountCard({ user, t, onSaved, onLogout }: { user: User; t: T; onSaved
   const input = "min-h-11 w-full rounded-lg border border-line-strong px-3";
   return (
     <section className={card}>
-      <h2 className="text-xl font-bold text-ink">⚙️ {t("account")}</h2>
+      <h2 className="font-serif text-[22px] font-semibold text-ink">⚙️ {t("account")}</h2>
       <div className="mt-3 space-y-3">
         <label className="block text-sm text-muted">{t("firstNameShort")}<input value={name} onChange={(e) => setName(e.target.value)} className={input} /></label>
         <label className="block text-sm text-muted">{t("email")}<input value={user.email} readOnly className={`${input} bg-paper text-muted`} /></label>

@@ -24,8 +24,8 @@ const CHECKS: UIKey[] = ["vC1", "vC2", "vC3", "vC4"];
 
 const EMPTY = { first: "", last: "", dob: "", phone: "", zip: "", last4: "", idType: "", front: false, back: false, selfie: false, consent: false, partner: "", code: "" };
 
-const cta = "flex min-h-14 w-full items-center justify-center gap-2 rounded-2xl bg-pine px-5 text-xl font-bold text-white hover:bg-pine-dark disabled:opacity-40 focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-pine";
-const big = "mt-1 min-h-14 w-full rounded-2xl border-2 border-line-strong bg-white px-4 text-xl focus:border-pine focus:outline-none";
+const cta = "flex h-[68px] w-full items-center justify-center gap-2 rounded-full bg-pine px-5 text-xl font-bold text-white hover:bg-pine-dark disabled:opacity-40 focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-pine";
+const big = "mt-1 h-16 w-full rounded-[18px] border-2 border-line-strong bg-white px-4 text-[20px] focus:border-ink focus:outline-none";
 const lbl = "block text-lg font-semibold text-ink-2";
 
 function Flow() {
@@ -89,14 +89,14 @@ function Flow() {
   };
 
   return (
-    <main className="mx-auto max-w-xl px-4 py-6 text-lg">
+    <main className="mx-auto max-w-[520px] px-4 py-6 text-[17px]">
       <p role="note" className="rounded-2xl bg-warn-bg px-4 py-3 text-base font-medium text-warn-fg">🧪 {t("vDemoBanner")}</p>
 
       <div className="mt-5 flex items-center justify-between gap-2">
         {aIndex >= 0 || step === "partner" ? (
-          <button onClick={step === "partner" ? () => setStep("choose") : back} className="min-h-11 rounded-full border border-line-strong bg-white px-4 text-base font-semibold">← {t("vBack")}</button>
+          <button onClick={step === "partner" ? () => setStep("choose") : back} className="min-h-11 rounded-full bg-sand px-5 text-base font-semibold">← {t("vBack")}</button>
         ) : <span />}
-        <button onClick={() => speak(listenText, SPEECH_LANG[lang])} className="min-h-11 rounded-full border border-line-strong bg-white px-4 text-base font-semibold">🔊 {t("vListen")}</button>
+        <button onClick={() => speak(listenText, SPEECH_LANG[lang])} className="min-h-11 rounded-full bg-sand px-5 text-base font-semibold">🔊 {t("vListen")}</button>
       </div>
 
       {aIndex >= 0 && (
@@ -108,17 +108,17 @@ function Flow() {
         </div>
       )}
 
-      <h1 aria-live="polite" className="mt-5 text-[28px] font-bold leading-snug text-ink">{t(title[step])}</h1>
+      <h1 aria-live="polite" className="mt-5 font-serif text-[28px] font-semibold leading-snug text-ink">{t(title[step])}</h1>
       {helpFor[step] && step !== "consent" && <p className="mt-1 text-muted">{t(helpFor[step]!)}</p>}
 
       {step === "choose" && (
         <div className="mt-6 space-y-3">
           {!listingId && <p className="rounded-xl bg-sand p-3 text-base text-muted">{t("vNoListing")}</p>}
-          <button onClick={() => setStep("details")} className="flex min-h-20 w-full items-center gap-4 rounded-2xl border-2 border-line-strong bg-white p-4 text-left hover:border-pine">
+          <button onClick={() => setStep("details")} className="flex min-h-20 w-full items-center gap-4 rounded-[22px] border-2 border-line-strong bg-white p-4 text-left hover:border-ink">
             <span className="text-4xl">🪪</span>
             <span><span className="block text-xl font-bold">{t("vPathId")}</span><span className="text-base text-muted">≈ {t("vPathIdTime")}</span></span>
           </button>
-          <button onClick={() => setStep("partner")} className="flex min-h-20 w-full items-center gap-4 rounded-2xl border-2 border-line-strong bg-white p-4 text-left hover:border-pine">
+          <button onClick={() => setStep("partner")} className="flex min-h-20 w-full items-center gap-4 rounded-[22px] border-2 border-line-strong bg-white p-4 text-left hover:border-ink">
             <span className="text-4xl">🤝</span>
             <span><span className="block text-xl font-bold">{t("vPathPartner")}</span><span className="text-base text-muted">{t("vPathPartnerSub")}</span></span>
           </button>
@@ -164,9 +164,9 @@ function Flow() {
             <legend className={lbl}>{t("vIdType")}</legend>
             <div className="mt-2 grid gap-2">
               {ID_TYPES.map((k) => (
-                <label key={k} className={`flex min-h-14 cursor-pointer items-center gap-3 rounded-2xl border-2 px-4 ${f.idType === k ? "border-pine bg-pine-soft" : "border-line-strong bg-white"}`}>
+                <label key={k} className={`flex min-h-14 cursor-pointer items-center gap-3 rounded-[22px] px-4 ${f.idType === k ? "border-[3px] border-ink bg-white" : "border-2 border-line-strong bg-white"}`}>
                   <input type="radio" name="idtype" checked={f.idType === k} onChange={() => set({ idType: k })} className="h-6 w-6 accent-pine" />
-                  <span className="text-lg">{t(k)}</span>
+                  <span className="text-lg">{t(k)}</span>{f.idType === k && <span className="ml-auto text-xl font-bold" aria-hidden>✓</span>}
                 </label>
               ))}
             </div>
@@ -235,9 +235,9 @@ function Flow() {
         <div className="mt-5 space-y-4">
           <div className="grid gap-2">
             {PARTNERS.map((p) => (
-              <label key={p} className={`flex min-h-14 cursor-pointer items-center gap-3 rounded-2xl border-2 px-4 ${f.partner === p ? "border-pine bg-pine-soft" : "border-line-strong bg-white"}`}>
+              <label key={p} className={`flex min-h-14 cursor-pointer items-center gap-3 rounded-[22px] px-4 ${f.partner === p ? "border-[3px] border-ink bg-white" : "border-2 border-line-strong bg-white"}`}>
                 <input type="radio" name="partner" checked={f.partner === p} onChange={() => set({ partner: p })} className="h-6 w-6 accent-pine" />
-                <span className="text-lg">🤝 {p}</span>
+                <span className="text-lg">🤝 {p}</span>{f.partner === p && <span className="ml-auto text-xl font-bold" aria-hidden>✓</span>}
               </label>
             ))}
           </div>

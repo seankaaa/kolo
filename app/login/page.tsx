@@ -41,10 +41,10 @@ function LoginForm() {
     router.push(next.startsWith("/") ? next : "/me");
   }
 
-  const field = "min-h-12 w-full rounded-xl border-2 border-line-strong bg-white px-4 text-lg";
+  const field = "h-16 w-full rounded-[18px] border-2 border-line-strong bg-white px-4 text-[20px] focus:border-ink focus:outline-none";
   return (
-    <main className="mx-auto max-w-md px-4 py-10">
-      <h1 className="text-3xl font-bold text-ink">{t("login")}</h1>
+    <main className="mx-auto max-w-[520px] px-4 py-10 text-[17px]">
+      <h1 className="font-serif text-[32px] font-semibold text-ink">{t("login")}</h1>
       <p className="mt-1 rounded-lg bg-warn-bg px-3 py-2 text-sm text-warn-ink">🧪 {t("demoLogin")}</p>
       <form
         className="mt-6 space-y-4"
@@ -68,7 +68,7 @@ function LoginForm() {
           </select>
         </label>
         {error && <p role="alert" className="text-red-700">{error}</p>}
-        <button disabled={busy} className="min-h-12 w-full rounded-full bg-pine text-lg font-semibold text-white hover:bg-pine-dark disabled:opacity-50">
+        <button disabled={busy} className="h-[68px] w-full rounded-full bg-pine text-[20px] font-semibold text-white hover:bg-pine-dark disabled:opacity-50">
           {t("continue")} →
         </button>
       </form>

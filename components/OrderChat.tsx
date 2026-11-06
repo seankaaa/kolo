@@ -146,7 +146,7 @@ export default function OrderChat({ orderId, role }: { orderId: string; role: "c
                 </div>
                 {translated && (
                   <div className={`mt-1 border-t pt-1 text-xs ${mine ? "border-white/30 text-white/70" : "border-line text-faint"}`}>
-                    {t("original")} ({LANG_NAMES[m.lang]}): {m.original}
+                    {t("original")} ({LANG_NAMES[m.lang]}): <span className="font-serif italic">{m.original}</span>
                   </div>
                 )}
                 {mine && m.lang !== otherLang && m.translations[otherLang] && (
