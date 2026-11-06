@@ -126,3 +126,38 @@ export const LISTING_TOOL = {
     required: ["title_native", "title_en", "summary_native", "summary_en", "services", "category", "areaId", "locationPrecision", "travelRadius", "provenance"],
   },
 };
+
+type Collected = {
+  services?: { name: string; price?: string | null }[];
+  category?: string | null; has_shop?: boolean | null; can_travel?: boolean | null;
+  travel_distance?: string | null; availability?: string | null; area_id?: string | null;
+  [k: string]: unknown;
+};
+
+/**
+ * Completion is decided in code, not by the model:
+ * - an area chip answer "[area_id: x]" always sets the location;
+ * - "(skip: field)" marks a required field as answered-by-skipping;
+ * - when every required field is present, done = true.
+ */
+export function completeTurn(input: Record<string, unknown>, messages: ChatMsg[]) {
+  const c: Collected = { ...((input.collected as Collected) || {}) };
+  const userText = messages.filter((m) => m.role === "user").map((m) => m.content);
+  for (const m of userText) {
+    const area = m.match(/\[area_id: ([a-z0-9-]+)\]/);
+    if (area) c.area_id = area[1];
+  }
+  const skipped = new Set(userText.flatMap((m) => [...m.matchAll(/\(skip: ([a-z_]+)\)/g)].map((x) => x[1])));
+  const has: Record<(typeof REQUIRED)[number], boolean> = {
+    services: !!c.services?.length,
+    prices: !!c.services?.length && c.services.every((s) => !!s.price),
+    category: !!c.category,
+    shop_or_home: c.has_shop !== null && c.has_shop !== undefined,
+    travel: (c.can_travel !== null && c.can_travel !== undefined) || !!c.travel_distance,
+    availability: !!c.availability,
+    location: !!c.area_id,
+  };
+  const missing = REQUIRED.filter((f) => !has[f] && !skipped.has(f));
+  const done = missing.length === 0 || !!input.done;
+  return { ...input, collected: c, missing, done, asking: done ? "none" : input.asking };
+}

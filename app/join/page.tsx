@@ -94,6 +94,10 @@ export default function Join() {
     setError("");
     try {
       const turn = await post<Turn>("/api/intake", { lang: base.lang, name: base.name, messages });
+      if (!turn || typeof turn.reply !== "string") {
+        console.error("[kolo] bad intake response", turn);
+        throw new Error("bad response");
+      }
       const msgs: ChatMsg[] = [...messages, { role: "assistant", content: turn.reply }];
       const prevTurns = base.turn ? [...(base.prevTurns || []), base.turn] : base.prevTurns || [];
       const next = { ...base, messages: msgs, display, turn, prevTurns };
@@ -135,7 +139,10 @@ export default function Join() {
   function sendAnswer(content: string, shown = content) {
     if (!content.trim() || busy) return;
     dictation.stop();
-    nextTurn([...d.messages, { role: "user", content }], [...d.display, shown]);
+    // If the last request failed after her answer was appended, replace it rather than duplicating.
+    const base = d.messages[d.messages.length - 1]?.role === "user" ? d.messages.slice(0, -1) : d.messages;
+    const disp = d.messages[d.messages.length - 1]?.role === "user" ? d.display.slice(0, -1) : d.display;
+    nextTurn([...base, { role: "user", content }], [...disp, shown]);
   }
 
   async function signup() {
@@ -174,6 +181,15 @@ export default function Join() {
       setError(t("errNetwork"));
       setBusy(false);
     }
+  }
+
+  /** Re-run the last request after a failure; her answers are kept. */
+  function retry() {
+    setError("");
+    const last = d.messages[d.messages.length - 1];
+    if (last?.role === "user" || d.messages.length === 0) nextTurn(d.messages, d.display);
+    else if (d.turn?.done) buildListing(d);
+    else nextTurn(d.messages, d.display);
   }
 
   /** Go back one question: drop her last answer + the reply to it, restore the previous question. */
@@ -280,7 +296,7 @@ export default function Join() {
         {d.step === "preview" && d.listing && (
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             <button onClick={startOver} className={`${btn} border border-stone-300 bg-white`}>↺ {t("startOver")}</button>
-            <button onClick={publish} disabled={busy || d.flags === null} className={`${btn} flex-1 bg-orange-600 py-4 text-xl text-white hover:bg-orange-700`}>
+            <button onClick={publish} disabled={busy || d.flags === null || !d.listing.areaId} className={`${btn} flex-1 bg-orange-600 py-4 text-xl text-white hover:bg-orange-700`}>
               🚀 {busy ? t("publishing") : t("publish")}
             </button>
           </div>
@@ -393,7 +409,12 @@ export default function Join() {
         className="mt-2 w-full rounded-2xl border-2 border-stone-300 bg-white p-4 text-xl text-stone-900 focus:border-orange-500 focus:outline-none"
       />
 
-      {error && <p role="alert" className="mt-3 rounded-xl bg-red-50 p-3 text-lg text-red-800">{error}</p>}
+      {error && (
+        <div role="alert" className="mt-3 flex flex-wrap items-center justify-between gap-3 rounded-xl bg-red-50 p-3 text-lg text-red-800">
+          <span>{error}</span>
+          <button onClick={retry} className={`${btn} bg-red-700 text-white`}>↻ {t("tryAgain")}</button>
+        </div>
+      )}
 
       <div className="mt-4 flex flex-wrap gap-3">
         <button onClick={() => sendAnswer(answer)} disabled={busy || !answer.trim()} className={`${btn} flex-1 bg-stone-900 py-4 text-xl text-white`}>
@@ -404,10 +425,16 @@ export default function Join() {
             🎙️ {t("rerecord")}
           </button>
         )}
-        <button onClick={() => sendAnswer("(skip)", t("skip"))} disabled={busy || !turn} className={`${btn} border border-stone-300 bg-white`}>
+        <button onClick={() => sendAnswer(`(skip: ${turn?.asking ?? "none"})`, t("skip"))} disabled={busy || !turn} className={`${btn} border border-stone-300 bg-white`}>
           ⏭️ {t("skip")}
         </button>
       </div>
+
+      {(step >= 5 || (turn && turn.missing.length === 0)) && (
+        <button onClick={() => buildListing(d)} disabled={busy} className={`${btn} mt-6 w-full bg-emerald-600 py-4 text-xl text-white hover:bg-emerald-700`}>
+          ✅ {t("finishPreview")}
+        </button>
+      )}
 
       {d.display.length > 0 && (
         <details className="mt-8 text-stone-500">
@@ -485,6 +512,15 @@ function LocationPicker({ t, hasShop, citySaid, stateSaid, areaId, onPick }: {
   const results = query.trim() ? searchAreas(query, 6) : [];
   const showOther = current?.level === "state" && otherCity;
 
+  /** Any area chip is an answer: submit it right away. */
+  function pickArea(a: Area) {
+    const chain = areaChain(a.id);
+    setPath(chain);
+    const label = chain.map((x) => x.name).join(" › ");
+    const other = a.level === "state" && otherCity ? ` (other city: ${otherCity})` : "";
+    onPick(`📍 Location: ${label} (${a.level})${other} [area_id: ${a.id}]`, `📍 ${a.name}${other ? ` · ${otherCity}` : ""}`);
+  }
+
   return (
     <div className="mt-6 rounded-3xl border-2 border-orange-200 bg-orange-50 p-4">
       <p className="text-lg font-semibold text-stone-800">📍 {t("chooseArea")}</p>
@@ -492,7 +528,7 @@ function LocationPicker({ t, hasShop, citySaid, stateSaid, areaId, onPick }: {
         <>
           <nav aria-label="breadcrumb" className="mt-3 flex flex-wrap gap-2">
             {path.map((a, i) => (
-              <button key={a.id} onClick={() => setPath(path.slice(0, i + 1))} className="min-h-11 rounded-full border border-orange-300 bg-white px-4 text-base font-medium text-orange-900">
+              <button key={a.id} onClick={() => pickArea(a)} className="min-h-11 rounded-full border border-orange-300 bg-white px-4 text-base font-medium text-orange-900">
                 {i > 0 && "› "}{a.name}
               </button>
             ))}
@@ -519,7 +555,7 @@ function LocationPicker({ t, hasShop, citySaid, stateSaid, areaId, onPick }: {
           <p className="mt-4 text-base font-medium text-stone-600">🔍 {t("moreExact")}:</p>
           <div className="mt-2 flex flex-wrap gap-2">
             {children.map((c) => (
-              <button key={c.id} onClick={() => setPath(current ? [...path, c] : areaChain(c.id))} className="min-h-11 rounded-full border-2 border-stone-300 bg-white px-4 text-lg hover:border-orange-500">
+              <button key={c.id} onClick={() => pickArea(c)} className="min-h-11 rounded-full border-2 border-stone-300 bg-white px-4 text-lg hover:border-orange-500">
                 {c.name}
               </button>
             ))}
@@ -532,7 +568,7 @@ function LocationPicker({ t, hasShop, citySaid, stateSaid, areaId, onPick }: {
         {results.length > 0 && (
           <div className="mt-2 flex flex-wrap gap-2">
             {results.map((a) => (
-              <button key={a.id} onClick={() => { setPath(areaChain(a.id)); setQuery(""); }} className="min-h-11 rounded-full border-2 border-stone-300 bg-white px-4 text-base hover:border-orange-500">
+              <button key={a.id} onClick={() => pickArea(a)} className="min-h-11 rounded-full border-2 border-stone-300 bg-white px-4 text-base hover:border-orange-500">
                 {a.name}{parentLabel(a) && <span className="text-stone-400"> · {parentLabel(a)}</span>}
               </button>
             ))}
@@ -608,6 +644,29 @@ function Preview({ d, t, onChange, onFlag }: {
     <div>
       <h1 className="text-3xl font-bold text-stone-900">{t("previewTitle")}</h1>
       <p className="mt-2 rounded-2xl bg-sky-50 p-4 text-lg text-sky-900">✋ {t("onlyYourWords")}</p>
+
+      {!!d.turn?.missing.length && (
+        <div className="mt-4 rounded-2xl border-2 border-dashed border-stone-300 bg-white p-4">
+          <p className="font-semibold text-stone-800">➕ {t("addLater")}:</p>
+          <ul className="mt-1 list-inside list-disc text-base text-stone-600">
+            {d.turn.missing.map((m) => <li key={m}>{m.replace(/_/g, " ")}</li>)}
+          </ul>
+        </div>
+      )}
+      {!l.areaId && (
+        <LocationPicker
+          t={t}
+          hasShop={false}
+          citySaid={(d.turn?.collected?.city_said as string) || ""}
+          stateSaid={(d.turn?.collected?.state_said as string) || ""}
+          areaId=""
+          onPick={(content) => {
+            const id = content.match(/\[area_id: ([a-z0-9-]+)\]/)?.[1];
+            const a = id && AREAS.find((x) => x.id === id);
+            if (a) onChange({ ...l, areaId: a.id, locationPrecision: a.level, provenance: { ...l.provenance, areaId: [content.replace(/ \[area_id.*$/, "")] } });
+          }}
+        />
+      )}
 
       <div className="mt-5 space-y-3">
         {row("title", d.name)}

@@ -1,6 +1,6 @@
 import type Anthropic from "@anthropic-ai/sdk";
 import { client, SMART_MODEL } from "@/lib/claude";
-import { TURN_TOOL, turnSystem, type ChatMsg } from "@/lib/intake";
+import { completeTurn, TURN_TOOL, turnSystem, type ChatMsg } from "@/lib/intake";
 import type { Lang } from "@/lib/types";
 
 const KICKOFF = "(She just opened the intake. Greet her and ask the first open question.)";
@@ -17,10 +17,11 @@ export async function POST(req: Request) {
       messages: [{ role: "user", content: KICKOFF }, ...messages],
     });
     const tool = msg.content.find((b): b is Anthropic.ToolUseBlock => b.type === "tool_use");
-    if (tool) return Response.json(tool.input);
+    if (tool) return Response.json(completeTurn(tool.input as Record<string, unknown>, messages));
     // Fallback: plain-text reply; keep the conversation going.
     const text = msg.content.filter((b): b is Anthropic.TextBlock => b.type === "text").map((b) => b.text).join("").trim();
-    return Response.json({ reply: text, asking: "none", collected: {}, missing: ["services"], done: false });
+    console.warn("intake: model replied without the tool");
+    return Response.json(completeTurn({ reply: text, asking: "none", collected: {} }, messages));
   } catch (e) {
     console.error("intake failed", (e as Error).message);
     return Response.json({ error: "intake_failed" }, { status: 500 });
