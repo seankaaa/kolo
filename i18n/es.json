@@ -68,5 +68,6 @@
   "close": "Cerrar",
   "micLanguage": "El micrófono escucha",
   "otherCity": "Mi ciudad (si no aparece)",
-  "findCity": "Busca tu ciudad o estado"
+  "findCity": "Busca tu ciudad o estado",
+  "talkLong": "Habla todo lo que quieras; las pausas están bien. Toca ⏹ cuando termines."
 }

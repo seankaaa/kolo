@@ -334,6 +334,10 @@ export default function Join() {
             <p className={`text-xl font-semibold ${dictation.listening ? "text-red-700" : "text-stone-700"}`}>
               {dictation.listening ? t("listening") : t("tapToSpeak")}
             </p>
+            <p className="text-base text-stone-500">💬 {t("talkLong")}</p>
+            {dictation.status && dictation.status !== "no-speech" && (
+              <p className="text-xs text-stone-400">mic: {dictation.status}</p>
+            )}
             {/* Speech recognition hears one language at a time: one tap switches mid-sentence, keeping her words. */}
             <div role="group" aria-label={t("micLanguage")} className="flex items-center gap-2">
               <span className="text-base text-stone-500">{t("micLanguage")}:</span>

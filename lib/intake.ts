@@ -18,7 +18,7 @@ export function turnSystem(lang: Lang, name: string) {
 
 Speak ONLY ${LANG_NAMES[lang]}. Plain, short sentences. ONE question per turn, at most 2 short sentences total. Briefly acknowledge what she said, then ask the next question.
 
-First turn: greet her by name and ask exactly one open question: tell me about your work — what do you offer, and who is it for?
+First turn: greet her by name and invite her to share her work and her story in her own words: what she offers, who it's for, and anything about herself she'd like customers to know. Tell her she can talk as long as she likes. Extract every field she already covered from that answer; then only ask follow-ups for what's still missing.
 
 Required (ask until each is known, or she skipped it):
 - services: what she offers (each service or product)

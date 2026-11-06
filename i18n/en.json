@@ -68,5 +68,6 @@
   "close": "Close",
   "micLanguage": "Mic hears",
   "otherCity": "My city (if not listed)",
-  "findCity": "Find your city or state"
+  "findCity": "Find your city or state",
+  "talkLong": "Talk as long as you like — pauses are OK. Tap ⏹ when you're done."
 }

@@ -46,85 +46,118 @@ export function speak(text: string, lang: string) {
 }
 
 /**
- * Tap-to-start / tap-to-stop dictation with live captions.
- * Web Speech recognizes one language per session, so switchLang() restarts
- * recognition in another language and keeps everything said so far.
+ * Tap-to-start / tap-to-stop dictation with live captions, built for long answers.
+ *
+ * Chrome's Web Speech ends sessions on its own (pauses, ~60s limit, "no-speech",
+ * "network", "aborted"). While she hasn't tapped stop, we restart immediately and keep
+ * every word. Only a denied mic permission stops for good. Web Speech recognizes one
+ * language at a time, so switchLang() restarts in another language, keeping her words.
  */
 export function useDictation(defaultLang: string, onUpdate: (t: string) => void) {
   const [listening, setListening] = useState(false);
   const [lang, setLang] = useState(defaultLang);
+  const [status, setStatus] = useState(""); // last recognition event, shown small for debugging
   const recRef = useRef<any>(null);
   const textRef = useRef("");
-  // True from her tap-to-start until her tap-to-stop. Chrome ends sessions on its own after
-  // pauses or ~60s, so while this is set we silently restart and keep her words.
   const wantRef = useRef(false);
   const langRef = useRef(defaultLang);
+  const restartsRef = useRef<number[]>([]);
+  const onUpdateRef = useRef(onUpdate);
+  onUpdateRef.current = onUpdate;
+
   useEffect(() => {
     setLang(defaultLang);
     langRef.current = defaultLang;
   }, [defaultLang]);
+  useEffect(() => () => { wantRef.current = false; recRef.current?.abort?.(); }, []);
 
   function stop() {
     wantRef.current = false;
     const rec = recRef.current;
     recRef.current = null;
-    rec?.stop();
+    try { rec?.stop(); } catch {}
     setListening(false);
+    setStatus("");
   }
 
-  function start(prefix = "", useLang = langRef.current) {
+  function begin(useLang: string) {
     const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SR) return;
-    wantRef.current = true;
-    langRef.current = useLang;
-    window.speechSynthesis?.cancel();
     const rec = new SR();
     rec.lang = useLang;
     rec.interimResults = true;
     rec.continuous = true;
-    const base = prefix.trim();
-    textRef.current = base;
+    rec.maxAlternatives = 1;
+    const base = textRef.current.trim();
     rec.onresult = (e: any) => {
       let text = "";
       for (let i = 0; i < e.results.length; i++) text += e.results[i][0].transcript;
       textRef.current = [base, text.trim()].filter(Boolean).join(" ");
-      onUpdate(textRef.current);
+      onUpdateRef.current(textRef.current);
+    };
+    rec.onerror = (e: any) => {
+      const code = e?.error || "error";
+      console.warn("[kolo-mic] error:", code);
+      setStatus(code);
+      if (code === "not-allowed" || code === "service-not-allowed") wantRef.current = false;
     };
     rec.onend = () => {
       if (recRef.current !== rec) return;
       recRef.current = null;
-      if (wantRef.current) {
-        // Chrome stopped by itself: keep going from where she was.
-        setTimeout(() => wantRef.current && !recRef.current && start(textRef.current, langRef.current), 150);
-      } else {
+      if (!wantRef.current) {
         setListening(false);
+        return;
       }
-    };
-    rec.onerror = (e: any) => {
-      // Permission denied or no mic: stop for real instead of looping.
-      if (e?.error === "not-allowed" || e?.error === "service-not-allowed" || e?.error === "audio-capture") wantRef.current = false;
+      // Never give up on our own; just back off if Chrome keeps ending instantly
+      // (e.g. the mic is busy in another app). Only her tap or a denied permission stops it.
+      const now = Date.now();
+      restartsRef.current = [...restartsRef.current.filter((t) => now - t < 5000), now];
+      const delay = restartsRef.current.length > 6 ? 1000 : 0;
+      if (delay) setStatus("reconnecting");
+      setTimeout(() => wantRef.current && !recRef.current && begin(langRef.current), delay);
     };
     recRef.current = rec;
-    setListening(true);
-    rec.start();
+    try {
+      rec.start();
+      setListening(true);
+    } catch (err) {
+      console.warn("[kolo-mic] start failed:", err);
+      recRef.current = null;
+      setTimeout(() => wantRef.current && !recRef.current && begin(langRef.current), 300);
+    }
   }
 
-  /** Change recognition language; if recording, continue seamlessly in the new language. */
+  function start(prefix = "", useLang = langRef.current) {
+    window.speechSynthesis?.cancel();
+    wantRef.current = true;
+    langRef.current = useLang;
+    textRef.current = prefix.trim();
+    restartsRef.current = [];
+    setStatus("");
+    begin(useLang);
+  }
+
+  /** Change recognition language; if recording, continue in the new language, keeping her words. */
   function switchLang(next: string, currentText: string) {
     setLang(next);
     langRef.current = next;
-    if (recRef.current) {
+    if (wantRef.current) {
       const old = recRef.current;
       recRef.current = null;
-      old.onresult = null;
-      old.stop();
-      start(currentText, next);
+      if (old) {
+        old.onresult = null;
+        old.onend = null;
+        try { old.abort(); } catch {}
+      }
+      textRef.current = currentText.trim();
+      begin(next);
     }
   }
 
   return {
     listening,
     lang,
+    status,
     start,
     stop,
     switchLang,
