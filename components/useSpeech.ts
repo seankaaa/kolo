@@ -137,20 +137,19 @@ export function useDictation(defaultLang: string, onUpdate: (t: string) => void)
     begin(useLang);
   }
 
-  /** Change recognition language; if recording, continue in the new language, keeping her words. */
-  function switchLang(next: string, currentText: string) {
+  /**
+   * Change recognition language mid-recording. We let the current session finish
+   * (so its last words land), and onend restarts in the new language. Starting a new
+   * session while the old one is still alive is silently rejected by Chrome.
+   */
+  function switchLang(next: string, _currentText?: string) {
+    void _currentText;
     setLang(next);
     langRef.current = next;
-    if (wantRef.current) {
-      const old = recRef.current;
-      recRef.current = null;
-      if (old) {
-        old.onresult = null;
-        old.onend = null;
-        try { old.abort(); } catch {}
-      }
-      textRef.current = currentText.trim();
-      begin(next);
+    setStatus("");
+    const rec = recRef.current;
+    if (wantRef.current && rec) {
+      try { rec.stop(); } catch { /* onend will still fire */ }
     }
   }
 

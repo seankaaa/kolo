@@ -60,7 +60,9 @@
   "name": "California",
   "aliases": [
    "CA",
-   "Cali"
+   "Cali",
+   "Каліфорнія",
+   "Калифорния"
   ],
   "level": "state",
   "parentId": null,
@@ -131,7 +133,8 @@
   "id": "fl",
   "name": "Florida",
   "aliases": [
-   "FL"
+   "FL",
+   "Флорида"
   ],
   "level": "state",
   "parentId": null,
@@ -187,7 +190,9 @@
   "id": "il",
   "name": "Illinois",
   "aliases": [
-   "IL"
+   "IL",
+   "Іллінойс",
+   "Иллинойс"
   ],
   "level": "state",
   "parentId": null,
@@ -423,7 +428,9 @@
   "id": "nj",
   "name": "New Jersey",
   "aliases": [
-   "NJ"
+   "NJ",
+   "Нью-Джерсі",
+   "Нью-Джерси"
   ],
   "level": "state",
   "parentId": null,
@@ -452,7 +459,8 @@
   "name": "New York State",
   "aliases": [
    "NY",
-   "New York State"
+   "New York State",
+   "штат Нью-Йорк"
   ],
   "level": "state",
   "parentId": null,
@@ -494,7 +502,8 @@
   "id": "oh",
   "name": "Ohio",
   "aliases": [
-   "OH"
+   "OH",
+   "Огайо"
   ],
   "level": "state",
   "parentId": null,
@@ -536,7 +545,9 @@
   "id": "pa",
   "name": "Pennsylvania",
   "aliases": [
-   "PA"
+   "PA",
+   "Пенсільванія",
+   "Пенсильвания"
   ],
   "level": "state",
   "parentId": null,
@@ -604,7 +615,8 @@
   "id": "tx",
   "name": "Texas",
   "aliases": [
-   "TX"
+   "TX",
+   "Техас"
   ],
   "level": "state",
   "parentId": null,
@@ -661,7 +673,8 @@
   "name": "Washington",
   "aliases": [
    "Washington State",
-   "WA"
+   "WA",
+   "штат Вашингтон"
   ],
   "level": "state",
   "parentId": null,
@@ -719,7 +732,11 @@
   "aliases": [
    "SF Bay Area",
    "San Francisco Bay Area",
-   "Bay"
+   "Bay",
+   "Затока",
+   "Район затоки",
+   "Бей-Ейріа",
+   "Бэй Эриа"
   ],
   "level": "region",
   "parentId": "ca",
@@ -735,7 +752,9 @@
   "aliases": [
    "SF",
    "San Fran",
-   "Frisco"
+   "Frisco",
+   "Сан-Франциско",
+   "Сан Франциско"
   ],
   "level": "subregion",
   "parentId": "bay-area",
@@ -748,7 +767,10 @@
  {
   "id": "east-bay",
   "name": "East Bay",
-  "aliases": [],
+  "aliases": [
+   "Іст-Бей",
+   "Ист-Бэй"
+  ],
   "level": "subregion",
   "parentId": "bay-area",
   "center": [
@@ -761,7 +783,9 @@
   "id": "south-bay",
   "name": "South Bay",
   "aliases": [
-   "Silicon Valley"
+   "Silicon Valley",
+   "Саут-Бей",
+   "Саут-Бэй"
   ],
   "level": "subregion",
   "parentId": "bay-area",
@@ -800,7 +824,9 @@
  {
   "id": "oakland",
   "name": "Oakland",
-  "aliases": [],
+  "aliases": [
+   "Окленд"
+  ],
   "level": "city",
   "parentId": "east-bay",
   "center": [
@@ -812,7 +838,10 @@
  {
   "id": "berkeley",
   "name": "Berkeley",
-  "aliases": [],
+  "aliases": [
+   "Берклі",
+   "Беркли"
+  ],
   "level": "city",
   "parentId": "east-bay",
   "center": [
@@ -824,7 +853,10 @@
  {
   "id": "fremont",
   "name": "Fremont",
-  "aliases": [],
+  "aliases": [
+   "Фрімонт",
+   "Фремонт"
+  ],
   "level": "city",
   "parentId": "east-bay",
   "center": [
@@ -848,7 +880,9 @@
  {
   "id": "san-jose",
   "name": "San Jose",
-  "aliases": [],
+  "aliases": [
+   "Сан-Хосе"
+  ],
   "level": "city",
   "parentId": "south-bay",
   "center": [
@@ -1021,7 +1055,9 @@
    "New York",
    "NY City",
    "The City",
-   "Big Apple"
+   "Big Apple",
+   "Нью-Йорк",
+   "Нью Йорк"
   ],
   "level": "region",
   "parentId": "ny",
@@ -1035,7 +1071,9 @@
   "id": "brooklyn",
   "name": "Brooklyn",
   "aliases": [
-   "BK"
+   "BK",
+   "Бруклін",
+   "Бруклин"
   ],
   "level": "subregion",
   "parentId": "nyc",
@@ -1048,7 +1086,11 @@
  {
   "id": "brighton-beach",
   "name": "Brighton Beach",
-  "aliases": [],
+  "aliases": [
+   "Брайтон-Біч",
+   "Брайтон-Бич",
+   "Брайтон"
+  ],
   "level": "neighborhood",
   "parentId": "brooklyn",
   "center": [
@@ -1072,7 +1114,10 @@
  {
   "id": "queens",
   "name": "Queens",
-  "aliases": [],
+  "aliases": [
+   "Квінс",
+   "Квинс"
+  ],
   "level": "subregion",
   "parentId": "nyc",
   "center": [
@@ -1121,7 +1166,8 @@
   "id": "bronx",
   "name": "Bronx",
   "aliases": [
-   "The Bronx"
+   "The Bronx",
+   "Бронкс"
   ],
   "level": "subregion",
   "parentId": "nyc",
@@ -1134,7 +1180,10 @@
  {
   "id": "manhattan",
   "name": "Manhattan",
-  "aliases": [],
+  "aliases": [
+   "Мангеттен",
+   "Манхэттен"
+  ],
   "level": "subregion",
   "parentId": "nyc",
   "center": [
@@ -1158,7 +1207,9 @@
  {
   "id": "staten-island",
   "name": "Staten Island",
-  "aliases": [],
+  "aliases": [
+   "Стейтен-Айленд"
+  ],
   "level": "subregion",
   "parentId": "nyc",
   "center": [
@@ -1174,7 +1225,9 @@
    "North Jersey",
    "Jersey City",
    "Newark",
-   "Paterson"
+   "Paterson",
+   "Нью-Джерсі",
+   "Нью-Джерси"
   ],
   "level": "subregion",
   "parentId": "nyc",
@@ -1191,7 +1244,9 @@
    "LA",
    "L.A.",
    "Los Angeles",
-   "SoCal"
+   "SoCal",
+   "Лос-Анджелес",
+   "Лос Анджелес"
   ],
   "level": "region",
   "parentId": "ca",
@@ -1297,7 +1352,8 @@
   "aliases": [
    "Chi-town",
    "Chi",
-   "Chicagoland"
+   "Chicagoland",
+   "Чикаго"
   ],
   "level": "region",
   "parentId": "il",
@@ -1336,7 +1392,10 @@
  {
   "id": "ukrainian-village",
   "name": "Ukrainian Village",
-  "aliases": [],
+  "aliases": [
+   "Українське село",
+   "Украинская деревня"
+  ],
   "level": "neighborhood",
   "parentId": "chicago",
   "center": [
@@ -1379,7 +1438,9 @@
   "name": "Houston",
   "aliases": [
    "H-Town",
-   "HTX"
+   "HTX",
+   "Х'юстон",
+   "Хьюстон"
   ],
   "level": "region",
   "parentId": "tx",
@@ -1447,7 +1508,8 @@
   "aliases": [
    "DFW",
    "Dallas",
-   "Fort Worth"
+   "Fort Worth",
+   "Даллас"
   ],
   "level": "region",
   "parentId": "tx",
@@ -1510,7 +1572,9 @@
   "name": "San Antonio",
   "aliases": [
    "SA",
-   "SATX"
+   "SATX",
+   "Сан-Антоніо",
+   "Сан-Антонио"
   ],
   "level": "region",
   "parentId": "tx",
@@ -1566,7 +1630,9 @@
   "aliases": [
    "Miami-Dade",
    "South Florida",
-   "MIA"
+   "MIA",
+   "Маямі",
+   "Майами"
   ],
   "level": "region",
   "parentId": "fl",
@@ -1631,7 +1697,9 @@
   "name": "Phoenix",
   "aliases": [
    "PHX",
-   "Valley of the Sun"
+   "Valley of the Sun",
+   "Фінікс",
+   "Финикс"
   ],
   "level": "region",
   "parentId": "az",
@@ -1696,7 +1764,9 @@
   "name": "San Diego",
   "aliases": [
    "SD",
-   "SoCal"
+   "SoCal",
+   "Сан-Дієго",
+   "Сан-Диего"
   ],
   "level": "region",
   "parentId": "ca",
@@ -1746,7 +1816,8 @@
   "id": "denver",
   "name": "Denver",
   "aliases": [
-   "Mile High"
+   "Mile High",
+   "Денвер"
   ],
   "level": "region",
   "parentId": "co",
@@ -1799,7 +1870,9 @@
   "name": "Seattle",
   "aliases": [
    "SEA",
-   "Puget Sound"
+   "Puget Sound",
+   "Сіетл",
+   "Сиэтл"
   ],
   "level": "region",
   "parentId": "wa",
@@ -1812,7 +1885,9 @@
  {
   "id": "kent",
   "name": "Kent",
-  "aliases": [],
+  "aliases": [
+   "Кент"
+  ],
   "level": "city",
   "parentId": "seattle",
   "center": [
@@ -1864,7 +1939,8 @@
   "name": "Sacramento",
   "aliases": [
    "Sac",
-   "Sactown"
+   "Sactown",
+   "Сакраменто"
   ],
   "level": "region",
   "parentId": "ca",
@@ -1929,7 +2005,10 @@
   "name": "Philadelphia",
   "aliases": [
    "Philly",
-   "PHL"
+   "PHL",
+   "Філадельфія",
+   "Филадельфия",
+   "Філі"
   ],
   "level": "region",
   "parentId": "pa",
@@ -1944,7 +2023,9 @@
   "name": "Northeast Philly",
   "aliases": [
    "Northeast Philadelphia",
-   "NE Philly"
+   "NE Philly",
+   "Північно-Східна Філадельфія",
+   "Северо-Восточная Филадельфия"
   ],
   "level": "subregion",
   "parentId": "philadelphia",
@@ -1987,7 +2068,9 @@
    "DC",
    "DMV",
    "D.C. area",
-   "Washington DC"
+   "Washington DC",
+   "Вашингтон",
+   "Вашингтон округ Колумбія"
   ],
   "level": "region",
   "parentId": "dc",
@@ -2050,7 +2133,8 @@
   "name": "Boston",
   "aliases": [
    "Beantown",
-   "BOS"
+   "BOS",
+   "Бостон"
   ],
   "level": "region",
   "parentId": "ma",
@@ -2115,7 +2199,8 @@
   "name": "Atlanta",
   "aliases": [
    "ATL",
-   "Hotlanta"
+   "Hotlanta",
+   "Атланта"
   ],
   "level": "region",
   "parentId": "ga",
@@ -2171,7 +2256,9 @@
    "Twin Cities",
    "Minneapolis",
    "St. Paul",
-   "MSP"
+   "MSP",
+   "Міннеаполіс",
+   "Миннеаполис"
   ],
   "level": "region",
   "parentId": "mn",

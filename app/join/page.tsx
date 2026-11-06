@@ -311,9 +311,10 @@ export default function Join() {
       {turn?.asking === "location" && !busy && (
         <LocationPicker
           t={t}
-          hasShop={!!turn.collected.has_shop}
-          citySaid={(turn.collected.city_said as string) || ""}
-          stateSaid={(turn.collected.state_said as string) || ""}
+          hasShop={!!turn.collected?.has_shop}
+          citySaid={(turn.collected?.city_said as string) || ""}
+          stateSaid={(turn.collected?.state_said as string) || ""}
+          areaId={(turn.collected?.area_id as string) || ""}
           onPick={(content, shown) => sendAnswer(content, shown)}
         />
       )}
@@ -436,12 +437,13 @@ function Check({ checked, onChange, label, hint }: { checked: boolean; onChange:
 }
 
 /** Broad → precise area buttons, built from areas.json; works for any US city or state. */
-function LocationPicker({ t, hasShop, citySaid, stateSaid, onPick }: {
-  t: (k: UIKey) => string; hasShop: boolean; citySaid: string; stateSaid: string;
+function LocationPicker({ t, hasShop, citySaid, stateSaid, areaId, onPick }: {
+  t: (k: UIKey) => string; hasShop: boolean; citySaid: string; stateSaid: string; areaId: string;
   onPick: (content: string, shown: string) => void;
 }) {
   // Match what she said: her city if we know it; otherwise her state, with the city kept as "other city".
   const initial = (() => {
+    if (areaId && AREAS.some((a) => a.id === areaId)) return { path: areaChain(areaId), other: "" };
     const city = citySaid ? searchAreas(citySaid, 1)[0] : undefined;
     if (city) return { path: areaChain(city.id), other: "" };
     const state = stateSaid ? searchAreas(stateSaid).find((a) => a.level === "state") : undefined;
@@ -453,7 +455,8 @@ function LocationPicker({ t, hasShop, citySaid, stateSaid, onPick }: {
   const [query, setQuery] = useState("");
   const [address, setAddress] = useState("");
   const current = path[path.length - 1];
-  const children = current ? AREAS.filter((a) => a.parentId === current.id) : [];
+  // Nothing matched yet: offer the metro areas as buttons so she is never stuck.
+  const children = current ? AREAS.filter((a) => a.parentId === current.id) : AREAS.filter((a) => a.level === "region");
   const label = path.map((a) => a.name).join(" › ");
   const results = query.trim() ? searchAreas(query, 6) : [];
   const showOther = current?.level === "state" && otherCity;
@@ -492,7 +495,7 @@ function LocationPicker({ t, hasShop, citySaid, stateSaid, onPick }: {
           <p className="mt-4 text-base font-medium text-stone-600">🔍 {t("moreExact")}:</p>
           <div className="mt-2 flex flex-wrap gap-2">
             {children.map((c) => (
-              <button key={c.id} onClick={() => setPath([...path, c])} className="min-h-11 rounded-full border-2 border-stone-300 bg-white px-4 text-lg hover:border-orange-500">
+              <button key={c.id} onClick={() => setPath(current ? [...path, c] : areaChain(c.id))} className="min-h-11 rounded-full border-2 border-stone-300 bg-white px-4 text-lg hover:border-orange-500">
                 {c.name}
               </button>
             ))}

@@ -101,6 +101,23 @@ for mid, name, state, lat, lng, r, al, kids in METROS:
         for gname, glat, glng in gk:
             add(slug(gname), gname, "neighborhood", cid, glat, glng, 1.4)
 
+# Cyrillic aliases (uk / ru spellings) for places speakers commonly name.
+CYR = {
+ "brooklyn": ["Бруклін", "Бруклин"], "nyc": ["Нью-Йорк", "Нью Йорк"], "ny": ["штат Нью-Йорк"], "queens": ["Квінс", "Квинс"],
+ "brighton-beach": ["Брайтон-Біч", "Брайтон-Бич", "Брайтон"], "manhattan": ["Мангеттен", "Манхэттен"], "staten-island": ["Стейтен-Айленд"],
+ "bronx": ["Бронкс"], "northern-nj": ["Нью-Джерсі", "Нью-Джерси"], "nj": ["Нью-Джерсі", "Нью-Джерси"],
+ "philadelphia": ["Філадельфія", "Филадельфия", "Філі"], "northeast-philly": ["Північно-Східна Філадельфія", "Северо-Восточная Филадельфия"],
+ "oh": ["Огайо"], "los-angeles": ["Лос-Анджелес", "Лос Анджелес"], "chicago": ["Чикаго"], "ukrainian-village": ["Українське село", "Украинская деревня"],
+ "seattle": ["Сіетл", "Сиэтл"], "kent": ["Кент"], "sacramento": ["Сакраменто"], "bay-area": ["Затока", "Район затоки", "Бей-Ейріа", "Бэй Эриа"],
+ "oakland": ["Окленд"], "fremont": ["Фрімонт", "Фремонт"], "berkeley": ["Берклі", "Беркли"], "sf": ["Сан-Франциско", "Сан Франциско"], "san-jose": ["Сан-Хосе"], "east-bay": ["Іст-Бей", "Ист-Бэй"], "south-bay": ["Саут-Бей", "Саут-Бэй"],
+ "ca": ["Каліфорнія", "Калифорния"], "tx": ["Техас"], "fl": ["Флорида"], "wa": ["штат Вашингтон"], "il": ["Іллінойс", "Иллинойс"],
+ "pa": ["Пенсільванія", "Пенсильвания"], "miami": ["Маямі", "Майами"], "houston": ["Х'юстон", "Хьюстон"], "denver": ["Денвер"],
+ "boston": ["Бостон"], "atlanta": ["Атланта"], "dc-metro": ["Вашингтон", "Вашингтон округ Колумбія"], "minneapolis": ["Міннеаполіс", "Миннеаполис"],
+ "phoenix": ["Фінікс", "Финикс"], "san-diego": ["Сан-Дієго", "Сан-Диего"], "dfw": ["Даллас"], "san-antonio": ["Сан-Антоніо", "Сан-Антонио"],
+}
+for a in areas:
+    a["aliases"] += CYR.get(a["id"], [])
+
 # Standalone cities outside the metros, for "Somewhere in Ohio"-style scopes the state level is enough.
 ids = [a["id"] for a in areas]
 assert len(ids) == len(set(ids)), [i for i in ids if ids.count(i) > 1]

@@ -6,9 +6,17 @@ export const AREAS: Area[] = (areasData as RawArea[]).map(({ center, ...a }) => 
 const BY_ID = new Map(AREAS.map((a) => [a.id, a]));
 export const areaById = (id: string) => BY_ID.get(id);
 
-/** Lowercase, strip accents and punctuation: "Pequeña Habana" -> "pequena habana". */
+// Ukrainian/Russian Cyrillic -> Latin, so "Фрімонт" or "Бруклін" can match "Fremont" / "Brooklyn".
+const CYR: Record<string, string> = {
+  а: "a", б: "b", в: "v", г: "g", ґ: "g", д: "d", е: "e", є: "ye", ё: "yo", ж: "zh", з: "z", и: "i", і: "i", ї: "yi", й: "y",
+  к: "k", л: "l", м: "m", н: "n", о: "o", п: "p", р: "r", с: "s", т: "t", у: "u", ф: "f", х: "h", ц: "ts", ч: "ch", ш: "sh",
+  щ: "shch", ъ: "", ы: "y", ь: "", э: "e", ю: "yu", я: "ya", "’": "", "'": "",
+};
+const translit = (s: string) => s.toLowerCase().replace(/[а-яёіїєґ’']/g, (c) => CYR[c] ?? c);
+
+/** Lowercase, transliterate Cyrillic, strip accents and punctuation: "Pequeña Habana" -> "pequena habana". */
 export const norm = (s: string) =>
-  s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+  translit(s).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
 
 function editDistance(a: string, b: string) {
   const dp = Array.from({ length: a.length + 1 }, (_, i) => [i, ...Array(b.length).fill(0)]);
