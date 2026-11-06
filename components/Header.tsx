@@ -2,12 +2,20 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { load, UI_LANGS, useUILang, translate } from "@/lib/i18n";
+import { load, save, UI_LANGS, useUILang, translate } from "@/lib/i18n";
 
 export default function Header({ showOffer = true }: { showOffer?: boolean }) {
   const { lang, setLang, t } = useUILang();
   const [myId, setMyId] = useState<string | null>(null);
-  useEffect(() => setMyId(load<string | null>("kolo.providerId", null)), []);
+  useEffect(() => {
+    // Only offer "My listing" if that provider still exists (demo data can be reset).
+    const id = load<string | null>("kolo.providerId", null);
+    if (!id) return;
+    fetch(`/api/providers/${id}`).then((r) => {
+      if (r.ok) setMyId(id);
+      else save("kolo.providerId", null);
+    });
+  }, []);
 
   return (
     <header className="flex flex-wrap items-center justify-between gap-2 border-b border-stone-200 bg-white px-4 py-3">
@@ -29,6 +37,11 @@ export default function Header({ showOffer = true }: { showOffer?: boolean }) {
             <option key={l} value={l}>🌐 {translate(l, "langName")}</option>
           ))}
         </select>
+        {showOffer && (
+          <Link href="/her/oksana" className="hidden min-h-11 items-center rounded-full border border-stone-300 px-3 text-sm text-stone-700 hover:bg-stone-50 sm:flex" title="Demo: open a sample provider's inbox">
+            👩 Provider view
+          </Link>
+        )}
         {showOffer && (
           <Link
             href={myId ? `/her/${myId}` : "/join"}
