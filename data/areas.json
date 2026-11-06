@@ -1,0 +1,29 @@
+[
+  { "id": "bay-area", "name": "Bay Area", "level": "region", "parentId": null, "lat": 37.75, "lng": -122.25, "radius_km": 60 },
+
+  { "id": "sf", "name": "San Francisco", "level": "subregion", "parentId": "bay-area", "lat": 37.76, "lng": -122.44, "radius_km": 8 },
+  { "id": "east-bay", "name": "East Bay", "level": "subregion", "parentId": "bay-area", "lat": 37.80, "lng": -122.22, "radius_km": 20 },
+  { "id": "south-bay", "name": "South Bay", "level": "subregion", "parentId": "bay-area", "lat": 37.34, "lng": -121.93, "radius_km": 20 },
+  { "id": "peninsula", "name": "Peninsula", "level": "subregion", "parentId": "bay-area", "lat": 37.52, "lng": -122.30, "radius_km": 15 },
+  { "id": "north-bay", "name": "North Bay", "level": "subregion", "parentId": "bay-area", "lat": 38.10, "lng": -122.60, "radius_km": 25 },
+
+  { "id": "oakland", "name": "Oakland", "level": "city", "parentId": "east-bay", "lat": 37.8044, "lng": -122.2712, "radius_km": 5 },
+  { "id": "berkeley", "name": "Berkeley", "level": "city", "parentId": "east-bay", "lat": 37.8715, "lng": -122.2730, "radius_km": 5 },
+  { "id": "fremont", "name": "Fremont", "level": "city", "parentId": "east-bay", "lat": 37.5485, "lng": -121.9886, "radius_km": 5 },
+  { "id": "hayward", "name": "Hayward", "level": "city", "parentId": "east-bay", "lat": 37.6688, "lng": -122.0808, "radius_km": 5 },
+  { "id": "san-jose", "name": "San Jose", "level": "city", "parentId": "south-bay", "lat": 37.3382, "lng": -121.8863, "radius_km": 5 },
+  { "id": "sunnyvale", "name": "Sunnyvale", "level": "city", "parentId": "south-bay", "lat": 37.3688, "lng": -122.0363, "radius_km": 5 },
+  { "id": "santa-clara", "name": "Santa Clara", "level": "city", "parentId": "south-bay", "lat": 37.3541, "lng": -121.9552, "radius_km": 5 },
+  { "id": "daly-city", "name": "Daly City", "level": "city", "parentId": "peninsula", "lat": 37.6879, "lng": -122.4702, "radius_km": 5 },
+  { "id": "san-mateo", "name": "San Mateo", "level": "city", "parentId": "peninsula", "lat": 37.5630, "lng": -122.3255, "radius_km": 5 },
+  { "id": "redwood-city", "name": "Redwood City", "level": "city", "parentId": "peninsula", "lat": 37.4852, "lng": -122.2364, "radius_km": 5 },
+  { "id": "san-rafael", "name": "San Rafael", "level": "city", "parentId": "north-bay", "lat": 37.9735, "lng": -122.5311, "radius_km": 5 },
+  { "id": "santa-rosa", "name": "Santa Rosa", "level": "city", "parentId": "north-bay", "lat": 38.4404, "lng": -122.7141, "radius_km": 5 },
+
+  { "id": "mission", "name": "Mission", "level": "neighborhood", "parentId": "sf", "lat": 37.7599, "lng": -122.4148, "radius_km": 1.2 },
+  { "id": "excelsior", "name": "Excelsior", "level": "neighborhood", "parentId": "sf", "lat": 37.7244, "lng": -122.4272, "radius_km": 1.2 },
+  { "id": "sunset", "name": "Sunset", "level": "neighborhood", "parentId": "sf", "lat": 37.7530, "lng": -122.4940, "radius_km": 1.2 },
+  { "id": "richmond", "name": "Richmond", "level": "neighborhood", "parentId": "sf", "lat": 37.7800, "lng": -122.4830, "radius_km": 1.2 },
+  { "id": "bayview", "name": "Bayview", "level": "neighborhood", "parentId": "sf", "lat": 37.7290, "lng": -122.3920, "radius_km": 1.2 },
+  { "id": "outer-mission", "name": "Outer Mission", "level": "neighborhood", "parentId": "sf", "lat": 37.7190, "lng": -122.4420, "radius_km": 1.2 }
+]

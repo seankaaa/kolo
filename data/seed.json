@@ -1,0 +1,229 @@
+{
+  "providers": [
+    {
+      "id": "lupita",
+      "name": "Lupita H.",
+      "language": "es",
+      "category": "food",
+      "title_en": "Homemade tamales & family catering",
+      "title_native": "Tamales caseros y comida para fiestas",
+      "story_en": "I learned to make tamales from my grandmother in Puebla. I cook for birthdays, baptisms, and office lunches, and I deliver warm trays across Oakland.",
+      "story_native": "Aprendí a hacer tamales con mi abuela en Puebla. Cocino para cumpleaños, bautizos y comidas de oficina, y entrego charolas calientes en todo Oakland.",
+      "services": [
+        { "name": "Tamales (dozen, pork or chicken)", "price": "$30", "kind": "product" },
+        { "name": "Party tray for 20 people", "price": "$180", "kind": "product" }
+      ],
+      "areaId": "oakland",
+      "locationPrecision": "city",
+      "travelRadius": 10,
+      "verified": true
+    },
+    {
+      "id": "maria",
+      "name": "María T.",
+      "language": "es",
+      "category": "cleaning",
+      "title_en": "Deep home cleaning, eco products",
+      "title_native": "Limpieza profunda de casas con productos ecológicos",
+      "story_en": "Ten years of cleaning homes. I bring my own eco-friendly supplies and I am careful with pets.",
+      "story_native": "Diez años limpiando casas. Traigo mis propios productos ecológicos y tengo mucho cuidado con las mascotas.",
+      "services": [
+        { "name": "Standard clean (2 bedrooms)", "price": "$120", "kind": "service" },
+        { "name": "Deep clean / move-out", "price": "$220", "kind": "service" }
+      ],
+      "areaId": "excelsior",
+      "locationPrecision": "neighborhood",
+      "travelRadius": 8,
+      "verified": true
+    },
+    {
+      "id": "rosa",
+      "name": "Panadería Rosa",
+      "language": "es",
+      "category": "bakery",
+      "title_en": "Mexican bakery: conchas, pan de muerto, custom cakes",
+      "title_native": "Panadería mexicana: conchas, pan de muerto y pasteles por encargo",
+      "story_en": "Our little shop bakes fresh pan dulce every morning. Order a tres leches cake for your next celebration.",
+      "story_native": "Nuestra pequeña panadería hornea pan dulce fresco cada mañana. Encarga un pastel de tres leches para tu próxima celebración.",
+      "services": [
+        { "name": "Conchas (6 pack)", "price": "$9", "kind": "product" },
+        { "name": "Tres leches cake (serves 12)", "price": "$45", "kind": "product" }
+      ],
+      "areaId": "mission",
+      "locationPrecision": "exact",
+      "address": "2981 Mission St, San Francisco, CA",
+      "lat": 37.7487,
+      "lng": -122.4183,
+      "travelRadius": 0,
+      "verified": true
+    },
+    {
+      "id": "carmen",
+      "name": "Carmen R.",
+      "language": "es",
+      "category": "childcare",
+      "title_en": "Bilingual nanny (Spanish / English)",
+      "title_native": "Niñera bilingüe (español / inglés)",
+      "story_en": "I have cared for children for over eight years. I speak Spanish with the kids so they grow up bilingual.",
+      "story_native": "He cuidado niños por más de ocho años. Hablo español con los niños para que crezcan bilingües.",
+      "services": [
+        { "name": "Childcare (per hour)", "price": "$28/hr", "kind": "service" },
+        { "name": "Date-night evening (4 hrs)", "price": "$100", "kind": "service" }
+      ],
+      "areaId": "south-bay",
+      "locationPrecision": "subregion",
+      "travelRadius": 15,
+      "verified": false
+    },
+    {
+      "id": "elena",
+      "name": "Elena's Alterations",
+      "language": "es",
+      "category": "tailoring",
+      "title_en": "Tailor: hems, quinceañera & wedding dresses",
+      "title_native": "Costurera: bastillas, vestidos de quinceañera y de novia",
+      "story_en": "Walk-in alterations and dress fittings. Most hems are ready in two days.",
+      "story_native": "Arreglos de ropa sin cita y pruebas de vestidos. La mayoría de las bastillas están listas en dos días.",
+      "services": [
+        { "name": "Pants hem", "price": "$15", "kind": "service" },
+        { "name": "Dress fitting & alteration", "price": "from $60", "kind": "service" }
+      ],
+      "areaId": "san-jose",
+      "locationPrecision": "exact",
+      "address": "1427 Story Rd, San Jose, CA",
+      "lat": 37.3352,
+      "lng": -121.8547,
+      "travelRadius": 0,
+      "verified": false
+    },
+    {
+      "id": "oksana",
+      "name": "Oksana K.",
+      "language": "uk",
+      "category": "beauty",
+      "title_en": "Manicure & brow styling at your home",
+      "title_native": "Манікюр та оформлення брів у вас вдома",
+      "story_en": "I worked as a nail technician in Kharkiv for six years. I bring sterilized tools and everything needed for a salon-quality manicure at home.",
+      "story_native": "Я шість років працювала майстринею манікюру в Харкові. Приношу стерилізовані інструменти й усе необхідне для салонного манікюру вдома.",
+      "services": [
+        { "name": "Gel manicure", "price": "$45", "kind": "service" },
+        { "name": "Brow shaping & tint", "price": "$35", "kind": "service" }
+      ],
+      "areaId": "sunset",
+      "locationPrecision": "neighborhood",
+      "travelRadius": 6,
+      "verified": true
+    },
+    {
+      "id": "iryna",
+      "name": "Iryna S.",
+      "language": "uk",
+      "category": "cleaning",
+      "title_en": "Apartment & office cleaning",
+      "title_native": "Прибирання квартир та офісів",
+      "story_en": "Careful, quiet, and on time. Weekly or one-time cleaning.",
+      "story_native": "Акуратно, тихо й вчасно. Щотижневе або разове прибирання.",
+      "services": [
+        { "name": "Apartment clean (up to 2 bedrooms)", "price": "$110", "kind": "service" },
+        { "name": "Small office clean", "price": "$150", "kind": "service" }
+      ],
+      "areaId": "peninsula",
+      "locationPrecision": "subregion",
+      "travelRadius": 15,
+      "verified": false
+    },
+    {
+      "id": "nataliia",
+      "name": "Nataliia B.",
+      "language": "uk",
+      "category": "bakery",
+      "title_en": "Ukrainian honey cake & varenyky to order",
+      "title_native": "Український медівник та вареники на замовлення",
+      "story_en": "My medovyk is baked from my mother's recipe. I also make frozen varenyky with potato or cherries. Local delivery in Berkeley.",
+      "story_native": "Мій медівник печу за маминим рецептом. Також ліплю заморожені вареники з картоплею або вишнями. Доставка по Берклі.",
+      "services": [
+        { "name": "Honey cake medovyk (whole)", "price": "$55", "kind": "product" },
+        { "name": "Varenyky (30 pcs, frozen)", "price": "$25", "kind": "product" }
+      ],
+      "areaId": "berkeley",
+      "locationPrecision": "city",
+      "travelRadius": 5,
+      "verified": false
+    },
+    {
+      "id": "olga",
+      "name": "Olga P.",
+      "language": "ru",
+      "category": "tailoring",
+      "title_en": "Clothing repair & alterations, home studio",
+      "title_native": "Ремонт и подгонка одежды, домашняя мастерская",
+      "story_en": "I sew and repair clothes: zippers, hems, taking in dresses and coats. Pickup and drop-off nearby.",
+      "story_native": "Шью и ремонтирую одежду: молнии, подшив, ушивание платьев и пальто. Могу забрать и привезти поблизости.",
+      "services": [
+        { "name": "Zipper replacement", "price": "$20", "kind": "service" },
+        { "name": "Coat alteration", "price": "from $40", "kind": "service" }
+      ],
+      "areaId": "san-mateo",
+      "locationPrecision": "city",
+      "travelRadius": 5,
+      "verified": false
+    },
+    {
+      "id": "svetlana",
+      "name": "Café Samovar",
+      "language": "ru",
+      "category": "cafe",
+      "title_en": "Cozy café: pelmeni, blini, and tea",
+      "title_native": "Уютное кафе: пельмени, блины и чай",
+      "story_en": "A small family café with homemade pelmeni, blini with sour cream, and tea from the samovar.",
+      "story_native": "Маленькое семейное кафе с домашними пельменями, блинами со сметаной и чаем из самовара.",
+      "services": [
+        { "name": "Pelmeni plate", "price": "$14", "kind": "product" },
+        { "name": "Blini (3) with sour cream", "price": "$10", "kind": "product" }
+      ],
+      "areaId": "richmond",
+      "locationPrecision": "exact",
+      "address": "5312 Geary Blvd, San Francisco, CA",
+      "lat": 37.7806,
+      "lng": -122.4752,
+      "travelRadius": 0,
+      "verified": true
+    },
+    {
+      "id": "tatiana",
+      "name": "Tatiana M.",
+      "language": "ru",
+      "category": "childcare",
+      "title_en": "Nanny & after-school care, Russian-speaking",
+      "title_native": "Няня и присмотр после школы, русскоязычная",
+      "story_en": "Former kindergarten teacher. I help with homework, read with kids, and cook simple healthy meals.",
+      "story_native": "Бывшая воспитательница детского сада. Помогаю с домашними заданиями, читаю с детьми и готовлю простую полезную еду.",
+      "services": [
+        { "name": "After-school care (per hour)", "price": "$26/hr", "kind": "service" }
+      ],
+      "areaId": "richmond",
+      "locationPrecision": "neighborhood",
+      "travelRadius": 4,
+      "verified": false
+    },
+    {
+      "id": "grace",
+      "name": "Grace O.",
+      "language": "en",
+      "category": "beauty",
+      "title_en": "Box braids, twists & protective styles",
+      "title_native": "Box braids, twists & protective styles",
+      "story_en": "Braiding for 12 years. I work from a home studio or travel to you within Oakland.",
+      "story_native": "Braiding for 12 years. I work from a home studio or travel to you within Oakland.",
+      "services": [
+        { "name": "Box braids (medium)", "price": "$180", "kind": "service" },
+        { "name": "Kids' braids", "price": "$70", "kind": "service" }
+      ],
+      "areaId": "oakland",
+      "locationPrecision": "city",
+      "travelRadius": 8,
+      "verified": true
+    }
+  ],
+  "orders": []
+}
