@@ -290,5 +290,12 @@
   "vReferral": "Referral code",
   "vReferralHelp": "Your partner gives you this code.",
   "vPartnerConfirming": "Your partner will confirm you…",
-  "vNoListing": "Open this from one of your listings."
+  "vNoListing": "Open this from one of your listings.",
+  "entryQ": "What would you like to do?",
+  "findService": "I want to find a service",
+  "findServiceSub": "See women offering services near you",
+  "offerServices": "I want to offer my services",
+  "offerServicesSub": "Talk in your language. We'll make your listing.",
+  "changeLanguage": "Change language",
+  "listenAll": "Listen"
 }

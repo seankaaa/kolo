@@ -290,5 +290,12 @@
   "vReferral": "Código de referencia",
   "vReferralHelp": "Tu organización te da este código.",
   "vPartnerConfirming": "Tu organización te confirmará…",
-  "vNoListing": "Abre esto desde uno de tus anuncios."
+  "vNoListing": "Abre esto desde uno de tus anuncios.",
+  "entryQ": "¿Qué te gustaría hacer?",
+  "findService": "Quiero encontrar un servicio",
+  "findServiceSub": "Mira a mujeres que ofrecen servicios cerca de ti",
+  "offerServices": "Quiero ofrecer mis servicios",
+  "offerServicesSub": "Habla en tu idioma. Nosotros hacemos tu anuncio.",
+  "changeLanguage": "Cambiar idioma",
+  "listenAll": "Escuchar"
 }
