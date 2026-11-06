@@ -34,6 +34,12 @@ export interface Provider {
   lng?: number;
   travelRadius: number;
   availability?: string;
+  summary_en?: string;
+  summary_native?: string;
+  languages?: string[];
+  /** Synthetic contact for order notifications; never returned by public APIs. */
+  contact?: string;
+  status?: "draft" | "live";
   verified: boolean;
 }
 

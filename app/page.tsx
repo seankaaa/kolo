@@ -1,7 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import Link from "next/link";
+import Header from "@/components/Header";
+import { useUILang } from "@/lib/i18n";
 import { useEffect, useMemo, useState } from "react";
 import { AREAS, areaById, CATEGORIES, LANG_NAMES } from "@/lib/areas";
 import ProviderDrawer, { servesLabel, VerifiedBadge } from "@/components/ProviderDrawer";
@@ -20,10 +21,38 @@ export default function Home() {
   const [focus, setFocus] = useState<Area | null>(null);
   const [selected, setSelected] = useState<Provider | null>(null);
   const [group, setGroup] = useState<{ areaId: string; list: Provider[] } | null>(null);
+  const [liveId, setLiveId] = useState<string | null>(null);
+  const { t } = useUILang();
 
   useEffect(() => {
-    fetch("/api/providers").then((r) => r.json()).then(setProviders);
+    // After publishing, /join redirects to /?live=<id>: center on her area and open her drawer.
+    const live = new URLSearchParams(window.location.search).get("live");
+    fetch("/api/providers")
+      .then((r) => r.json())
+      .then((list: Provider[]) => {
+        setProviders(list);
+        const me = live && list.find((p) => p.id === live);
+        if (me) {
+          setLiveId(me.id);
+          setSelected(me);
+          const a = areaById(me.areaId);
+          if (a) setFocus({ ...a });
+        }
+      });
   }, []);
+
+  async function verify() {
+    if (!liveId) return;
+    const res = await fetch(`/api/providers/${liveId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ verified: true }),
+    });
+    const p: Provider = await res.json();
+    setProviders((ps) => ps.map((x) => (x.id === p.id ? p : x)));
+    setSelected(p);
+  }
+  const me = providers.find((p) => p.id === liveId);
 
   const filtered = useMemo(() => {
     const kw = keyword.trim().toLowerCase();
@@ -50,17 +79,24 @@ export default function Home() {
 
   return (
     <div className="flex h-screen flex-col bg-stone-50">
-      <header className="flex items-center justify-between border-b border-stone-200 bg-white px-5 py-3">
-        <div className="flex items-baseline gap-3">
-          <span className="text-2xl font-bold tracking-tight text-stone-900">
-            Kolo <span className="text-orange-600">◯</span>
-          </span>
-          <span className="hidden text-sm text-stone-500 sm:inline">Local services by women, in their own language</span>
+      <Header />
+      {me && (
+        <div role="status" className="flex flex-wrap items-center justify-between gap-3 bg-emerald-600 px-5 py-3 text-white">
+          <div>
+            <span className="text-lg font-bold">🎉 {t("live")}</span> <span className="opacity-90">{t("liveSub")}</span>
+          </div>
+          {me.verified ? (
+            <span className="rounded-full bg-white px-3 py-1 text-sm font-semibold text-emerald-800">✓ {t("verified")}</span>
+          ) : (
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-sm opacity-90">{t("getVerified")}:</span>
+              <button onClick={verify} className="min-h-11 rounded-full bg-white px-4 text-sm font-semibold text-emerald-800">🪪 {t("verifyId")}</button>
+              <button onClick={verify} className="min-h-11 rounded-full bg-white px-4 text-sm font-semibold text-emerald-800">🤝 {t("verifyPartner")}</button>
+              <span className="text-xs opacity-75">{t("demoVerify")}</span>
+            </div>
+          )}
         </div>
-        <Link href="/join" className="rounded-full bg-orange-600 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-700">
-          Offer your services →
-        </Link>
-      </header>
+      )}
 
       <div className="flex min-h-0 flex-1">
         <section className="flex w-full max-w-sm flex-col border-r border-stone-200 bg-white">

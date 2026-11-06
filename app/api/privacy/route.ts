@@ -21,7 +21,7 @@ Respond ONLY with JSON: {"flags": [{"field": "story_en", "text": "...", "reason"
 export async function POST(req: Request) {
   const listing = await req.json();
   const fields: Record<string, string> = {};
-  for (const k of ["name", "title_en", "title_native", "story_en", "story_native", "availability"]) {
+  for (const k of ["name", "title_en", "title_native", "summary_en", "summary_native", "story_en", "story_native", "availability"]) {
     if (typeof listing[k] === "string" && listing[k]) fields[k] = listing[k];
   }
   (listing.services || []).forEach((s: { name: string }, i: number) => (fields[`services.${i}.name`] = s.name));

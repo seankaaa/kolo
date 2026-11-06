@@ -44,3 +44,38 @@ export function speak(text: string, lang: string) {
   u.lang = lang;
   window.speechSynthesis.speak(u);
 }
+
+/**
+ * Tap-to-start / tap-to-stop dictation with live captions.
+ * onUpdate receives the full transcript so far (final + interim) while she speaks.
+ */
+export function useDictation(lang: string, onUpdate: (t: string) => void) {
+  const [listening, setListening] = useState(false);
+  const recRef = useRef<any>(null);
+
+  function stop() {
+    recRef.current?.stop();
+  }
+
+  function start(prefix = "") {
+    const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SR) return;
+    window.speechSynthesis?.cancel();
+    const rec = new SR();
+    rec.lang = lang;
+    rec.interimResults = true;
+    rec.continuous = true;
+    rec.onresult = (e: any) => {
+      let text = "";
+      for (let i = 0; i < e.results.length; i++) text += e.results[i][0].transcript;
+      onUpdate((prefix ? prefix + " " : "") + text.trim());
+    };
+    rec.onend = () => setListening(false);
+    rec.onerror = () => setListening(false);
+    recRef.current = rec;
+    setListening(true);
+    rec.start();
+  }
+
+  return { listening, start, stop, toggle: (prefix?: string) => (listening ? stop() : start(prefix)) };
+}
