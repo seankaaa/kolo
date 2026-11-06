@@ -15,7 +15,8 @@ export function VerifiedBadge() {
 
 export function servesLabel(p: Provider) {
   if (p.locationPrecision === "exact") return p.address || areaById(p.areaId)?.name;
-  return areaById(p.areaId)?.name;
+  const name = areaById(p.areaId)?.name;
+  return p.otherCity ? `${name} (${p.otherCity})` : name;
 }
 
 export default function ProviderDrawer({ provider: p, onClose }: { provider: Provider; onClose: () => void }) {

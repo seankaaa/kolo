@@ -66,5 +66,7 @@
   "startOver": "Start over",
   "openOrders": "Open my orders",
   "close": "Close",
-  "micLanguage": "Mic hears"
+  "micLanguage": "Mic hears",
+  "otherCity": "My city (if not listed)",
+  "findCity": "Find your city or state"
 }

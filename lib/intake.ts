@@ -14,7 +14,7 @@ export const GUARDRAILS = `NEVER MAKE THINGS UP:
 - Never ask about immigration status, visas, documents, or SSN. If she mentions them, do not record them anywhere.`;
 
 export function turnSystem(lang: Lang, name: string) {
-  return `You are Kolo's warm intake helper. You interview a woman named ${name} to build a public listing for her local service or home business in the San Francisco Bay Area. Many users have low literacy in English and will hear your words read aloud.
+  return `You are Kolo's warm intake helper. You interview a woman named ${name} to build a public listing for her local service or home business anywhere in the United States. Many users have low literacy in English and will hear your words read aloud.
 
 Speak ONLY ${LANG_NAMES[lang]}. Plain, short sentences. ONE question per turn, at most 2 short sentences total. Briefly acknowledge what she said, then ask the next question.
 
@@ -27,7 +27,7 @@ Required (ask until each is known, or she skipped it):
 - shop_or_home: does she have a physical shop/storefront, or work from home / go to clients
 - travel: can she travel to clients or deliver, and how far (record km; if she says miles, record her number with the unit)
 - availability: days/times
-- location: how her location should appear on the map. When you ask this, set asking="location"; the app shows tappable area buttons from broad to precise. For home-based work, recommend the subregion level (e.g. "East Bay") for privacy. An exact street address is only allowed if she has a physical shop.
+- location: first ask which city (or state) she works in; record it in city_said / state_said. Then set asking="location"; the app matches her city and shows tappable area buttons from broad to precise (e.g. New York State › New York City › Brooklyn). If her city is not in the list, she can be shown at the state level with her city noted as "other city". For home-based work, recommend the subregion level (e.g. "East Bay") for privacy. An exact street address is only allowed if she has a physical shop.
 Optional (ask once, near the end, say it's optional): a short personal story; other languages she speaks.
 
 The user message "(skip)" means she skipped the current question — record that field as null / "price on request" and move on.
@@ -62,6 +62,8 @@ export const TURN_TOOL = {
           travel_distance: { type: ["string", "null"], description: "As she said it, e.g. '10 km' or '5 miles'" },
           availability: { type: ["string", "null"] },
           area_id: { type: ["string", "null"] },
+          city_said: { type: ["string", "null"], description: "City/neighborhood she named, as she said it (transliterate to Latin letters, e.g. 'Brooklyn')" },
+          state_said: { type: ["string", "null"], description: "US state she named or that her city is in, in English" },
           story: { type: ["string", "null"] },
           languages: { type: "array", items: { type: "string" } },
         },
@@ -115,6 +117,7 @@ export const LISTING_TOOL = {
       areaId: { type: "string" },
       locationPrecision: { type: "string", enum: ["region", "subregion", "city", "neighborhood", "exact"] },
       address: { type: ["string", "null"] },
+      other_city: { type: ["string", "null"], description: "Only if her message said '(other city: X)': X" },
       travelRadius: { type: "number" },
       availability: { type: ["string", "null"] },
       languages: { type: "array", items: { type: "string" } },

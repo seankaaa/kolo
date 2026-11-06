@@ -57,3 +57,9 @@ body {
   outline: none;
   border-color: #f97316;
 }
+.kolo-group.kolo-metro {
+  width: 44px;
+  height: 44px;
+  font-size: 16px;
+  background: #c2410c;
+}

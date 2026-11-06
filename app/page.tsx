@@ -1,11 +1,13 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import Header from "@/components/Header";
-import { useUILang } from "@/lib/i18n";
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { AREAS, areaById, CATEGORIES, LANG_NAMES } from "@/lib/areas";
+import Header from "@/components/Header";
 import ProviderDrawer, { servesLabel, VerifiedBadge } from "@/components/ProviderDrawer";
+import type { Bounds, MapTarget } from "@/components/MapView";
+import { AREAS, areaById, CATEGORIES, distanceKm, LANG_NAMES, nearestArea, parentLabel, searchAreas } from "@/lib/areas";
+import { useUILang } from "@/lib/i18n";
 import type { Area, Provider } from "@/lib/types";
 
 const MapView = dynamic(() => import("@/components/MapView"), {
@@ -13,16 +15,34 @@ const MapView = dynamic(() => import("@/components/MapView"), {
   loading: () => <div className="grid h-full place-items-center text-stone-400">Loading map…</div>,
 });
 
+function posOf(p: Provider): [number, number] | null {
+  if (p.locationPrecision === "exact" && p.lat && p.lng) return [p.lat, p.lng];
+  const a = areaById(p.areaId);
+  return a ? [a.lat, a.lng] : null;
+}
+
+const inBounds = (b: Bounds, [lat, lng]: [number, number]) => lat >= b.south && lat <= b.north && lng >= b.west && lng <= b.east;
+
 export default function Home() {
   const [providers, setProviders] = useState<Provider[]>([]);
   const [category, setCategory] = useState<string | null>(null);
   const [keyword, setKeyword] = useState("");
   const [areaQuery, setAreaQuery] = useState("");
-  const [focus, setFocus] = useState<Area | null>(null);
+  const [showSuggest, setShowSuggest] = useState(false);
+  const [focusArea, setFocusArea] = useState<Area | null>(null);
+  const [target, setTarget] = useState<MapTarget | null>(null);
+  const [bounds, setBounds] = useState<Bounds | null>(null);
   const [selected, setSelected] = useState<Provider | null>(null);
   const [group, setGroup] = useState<{ areaId: string; list: Provider[] } | null>(null);
   const [liveId, setLiveId] = useState<string | null>(null);
+  const [geoMsg, setGeoMsg] = useState("");
   const { t } = useUILang();
+
+  function flyToArea(a: Area) {
+    setFocusArea(a);
+    setGroup(null);
+    setTarget({ lat: a.lat, lng: a.lng, radius_km: a.radius_km, nonce: Date.now() });
+  }
 
   useEffect(() => {
     // After publishing, /join redirects to /?live=<id>: center on her area and open her drawer.
@@ -36,7 +56,7 @@ export default function Home() {
           setLiveId(me.id);
           setSelected(me);
           const a = areaById(me.areaId);
-          if (a) setFocus({ ...a });
+          if (a) flyToArea(a);
         }
       });
   }, []);
@@ -59,23 +79,48 @@ export default function Home() {
     return providers.filter((p) => {
       if (category && p.category !== category) return false;
       if (!kw) return true;
-      const hay = [p.name, p.title_en, p.title_native, p.story_en, p.story_native, ...p.services.map((s) => s.name)]
-        .join(" ")
-        .toLowerCase();
+      const hay = [p.name, p.title_en, p.title_native, p.story_en, p.story_native, ...p.services.map((s) => s.name)].join(" ").toLowerCase();
       return hay.includes(kw);
     });
   }, [providers, category, keyword]);
 
-  const areaMatches = areaQuery.trim()
-    ? AREAS.filter((a) => a.name.toLowerCase().includes(areaQuery.trim().toLowerCase())).slice(0, 6)
-    : [];
+  // The list follows the map: only providers whose pin or area center is in view.
+  const inView = useMemo(
+    () => (bounds ? filtered.filter((p) => { const pos = posOf(p); return pos && inBounds(bounds, pos); }) : filtered),
+    [filtered, bounds]
+  );
+  const visibleList = group ? group.list.filter((p) => filtered.includes(p)) : inView;
 
-  function goToArea(a: Area) {
-    setFocus({ ...a }); // new object so the map re-flies even if the same area is picked twice
+  const suggestions = useMemo(() => searchAreas(areaQuery), [areaQuery]);
+  const noMatch = areaQuery.trim().length >= 2 && suggestions.length === 0;
+
+  function pick(a: Area) {
     setAreaQuery(a.name);
+    setShowSuggest(false);
+    flyToArea(a);
   }
 
-  const visibleList = group ? group.list.filter((p) => filtered.includes(p)) : filtered;
+  function nearMe() {
+    setGeoMsg("");
+    if (!navigator.geolocation) return setGeoMsg("Location isn't available in this browser.");
+    // Used once, in the browser only: never stored or sent anywhere.
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const a = nearestArea(pos.coords.latitude, pos.coords.longitude);
+        if (a) pick(a);
+      },
+      () => setGeoMsg("Couldn't get your location. Try typing a city.")
+    );
+  }
+
+  // Empty state helpers: nearest areas that do have providers.
+  const nearestWithProviders = useMemo(() => {
+    if (!focusArea) return [];
+    const withP = new Set(providers.map((p) => p.areaId));
+    return AREAS.filter((a) => withP.has(a.id) && a.id !== focusArea.id && a.level !== "state")
+      .sort((a, b) => distanceKm(focusArea.lat, focusArea.lng, a.lat, a.lng) - distanceKm(focusArea.lat, focusArea.lng, b.lat, b.lng))
+      .slice(0, 3);
+  }, [focusArea, providers]);
 
   return (
     <div className="flex h-screen flex-col bg-stone-50">
@@ -98,33 +143,50 @@ export default function Home() {
         </div>
       )}
 
-      <div className="flex min-h-0 flex-1">
-        <section className="flex w-full max-w-sm flex-col border-r border-stone-200 bg-white">
+      <div className="flex min-h-0 flex-1 flex-col md:flex-row">
+        <section className="flex max-h-[45vh] w-full flex-col border-b border-stone-200 bg-white md:max-h-none md:max-w-sm md:border-b-0 md:border-r">
           <div className="space-y-3 border-b border-stone-100 p-4">
             <div className="relative">
+              <label htmlFor="area-q" className="sr-only">Area</label>
               <input
+                id="area-q"
                 value={areaQuery}
-                onChange={(e) => setAreaQuery(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && areaMatches[0] && goToArea(areaMatches[0])}
-                placeholder="📍 Area: Oakland, Mission, South Bay…"
+                onChange={(e) => { setAreaQuery(e.target.value); setShowSuggest(true); }}
+                onFocus={() => setShowSuggest(true)}
+                onKeyDown={(e) => e.key === "Enter" && suggestions[0] && pick(suggestions[0])}
+                placeholder="📍 City or area: Brooklyn, LA, Ohio…"
+                autoComplete="off"
                 className="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm"
               />
-              {areaMatches.length > 0 && areaMatches[0].name !== areaQuery && (
+              {showSuggest && suggestions.length > 0 && (
                 <ul className="absolute z-[1100] mt-1 w-full overflow-hidden rounded-lg border border-stone-200 bg-white shadow-lg">
-                  {areaMatches.map((a) => (
+                  {suggestions.map((a) => (
                     <li key={a.id}>
-                      <button onClick={() => goToArea(a)} className="w-full px-3 py-2 text-left text-sm hover:bg-orange-50">
-                        {a.name} <span className="text-xs text-stone-400">{a.level}</span>
+                      <button onClick={() => pick(a)} className="flex w-full items-baseline justify-between gap-2 px-3 py-2 text-left text-sm hover:bg-orange-50">
+                        <span>
+                          {a.name}
+                          {parentLabel(a) && <span className="text-stone-400"> · {parentLabel(a)}</span>}
+                        </span>
+                        <span className="text-xs text-stone-400">{a.level}</span>
                       </button>
                     </li>
                   ))}
                 </ul>
               )}
+              {noMatch && <p className="mt-1 text-xs text-amber-700">We couldn&apos;t find that place. Try a city or state.</p>}
             </div>
+            <div className="flex gap-2">
+              <button onClick={nearMe} className="min-h-9 flex-1 rounded-full border border-stone-300 text-xs font-medium hover:bg-stone-100">📍 Near me</button>
+              <button onClick={() => { setFocusArea(null); setGroup(null); setTarget({ us: true, nonce: Date.now() }); }} className="min-h-9 flex-1 rounded-full border border-stone-300 text-xs font-medium hover:bg-stone-100">
+                🇺🇸 All US
+              </button>
+            </div>
+            {geoMsg && <p className="text-xs text-amber-700">{geoMsg}</p>}
             <input
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
               placeholder="🔎 Search: tamales, manicure, медівник…"
+              aria-label="Search listings"
               className="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm"
             />
             <div className="flex flex-wrap gap-1.5">
@@ -132,6 +194,7 @@ export default function Home() {
                 <button
                   key={k}
                   onClick={() => setCategory(category === k ? null : k)}
+                  aria-pressed={category === k}
                   className={`rounded-full border px-2.5 py-1 text-xs ${
                     category === k ? "border-orange-600 bg-orange-600 text-white" : "border-stone-300 text-stone-700 hover:bg-stone-100"
                   }`}
@@ -144,10 +207,8 @@ export default function Home() {
 
           {group && (
             <div className="flex items-center justify-between bg-orange-50 px-4 py-2 text-sm text-orange-900">
-              <span>
-                {group.list.length} providers serving <b>{areaById(group.areaId)?.name}</b>
-              </span>
-              <button onClick={() => setGroup(null)} className="text-xs underline">Show all</button>
+              <span>{group.list.length} providers serving <b>{areaById(group.areaId)?.name}</b></span>
+              <button onClick={() => setGroup(null)} className="text-xs underline">Show all in view</button>
             </div>
           )}
 
@@ -166,16 +227,37 @@ export default function Home() {
                 </button>
               </li>
             ))}
-            {visibleList.length === 0 && <li className="p-6 text-center text-sm text-stone-400">No matches yet.</li>}
+            {visibleList.length === 0 && (
+              <li className="space-y-3 p-6 text-center text-sm text-stone-500">
+                <p>
+                  No one here yet. Be the first:{" "}
+                  <Link href="/join" className="font-semibold text-orange-700 underline">Offer your services →</Link>
+                </p>
+                {nearestWithProviders.length > 0 && (
+                  <div>
+                    <p className="text-xs text-stone-400">Nearby areas with providers:</p>
+                    <div className="mt-2 flex flex-wrap justify-center gap-2">
+                      {nearestWithProviders.map((a) => (
+                        <button key={a.id} onClick={() => pick(a)} className="rounded-full border border-stone-300 px-3 py-1 text-xs hover:bg-orange-50">
+                          📍 {a.name}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </li>
+            )}
           </ul>
         </section>
 
-        <main className="relative min-w-0 flex-1">
+        <main className="relative min-h-0 min-w-0 flex-1">
           <MapView
             providers={filtered}
-            focus={focus}
+            target={target}
+            onBounds={setBounds}
             onSelectGroup={(areaId, list) => setGroup({ areaId, list })}
             onSelectProvider={setSelected}
+            onFly={(id) => { const a = areaById(id); if (a) flyToArea(a); }}
           />
           {selected && <ProviderDrawer key={selected.id} provider={selected} onClose={() => setSelected(null)} />}
         </main>

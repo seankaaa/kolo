@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Header from "@/components/Header";
 import { speak, speechSupported, useDictation } from "@/components/useSpeech";
-import { AREAS, areaChain, CATEGORIES, SPEECH_LANG } from "@/lib/areas";
+import { AREAS, areaChain, CATEGORIES, parentLabel, searchAreas, SPEECH_LANG } from "@/lib/areas";
 import { load, save, translate, useUILang, type UIKey } from "@/lib/i18n";
 import type { ChatMsg } from "@/lib/intake";
 import type { Area, Lang } from "@/lib/types";
@@ -309,7 +309,13 @@ export default function Join() {
       </div>
 
       {turn?.asking === "location" && !busy && (
-        <LocationPicker t={t} hasShop={!!turn.collected.has_shop} onPick={(content, shown) => sendAnswer(content, shown)} />
+        <LocationPicker
+          t={t}
+          hasShop={!!turn.collected.has_shop}
+          citySaid={(turn.collected.city_said as string) || ""}
+          stateSaid={(turn.collected.state_said as string) || ""}
+          onPick={(content, shown) => sendAnswer(content, shown)}
+        />
       )}
 
       <div className="mt-8 flex flex-col items-center gap-3">
@@ -425,30 +431,58 @@ function Check({ checked, onChange, label, hint }: { checked: boolean; onChange:
   );
 }
 
-/** Broad → precise area buttons, built from areas.json. */
-function LocationPicker({ t, hasShop, onPick }: { t: (k: UIKey) => string; hasShop: boolean; onPick: (content: string, shown: string) => void }) {
-  const [path, setPath] = useState<Area[]>([AREAS.find((a) => a.id === "bay-area")!]);
+/** Broad → precise area buttons, built from areas.json; works for any US city or state. */
+function LocationPicker({ t, hasShop, citySaid, stateSaid, onPick }: {
+  t: (k: UIKey) => string; hasShop: boolean; citySaid: string; stateSaid: string;
+  onPick: (content: string, shown: string) => void;
+}) {
+  // Match what she said: her city if we know it; otherwise her state, with the city kept as "other city".
+  const initial = (() => {
+    const city = citySaid ? searchAreas(citySaid, 1)[0] : undefined;
+    if (city) return { path: areaChain(city.id), other: "" };
+    const state = stateSaid ? searchAreas(stateSaid).find((a) => a.level === "state") : undefined;
+    if (state) return { path: [state], other: citySaid };
+    return { path: [] as Area[], other: citySaid };
+  })();
+  const [path, setPath] = useState<Area[]>(initial.path);
+  const [otherCity, setOtherCity] = useState(initial.other);
+  const [query, setQuery] = useState("");
   const [address, setAddress] = useState("");
   const current = path[path.length - 1];
-  const children = AREAS.filter((a) => a.parentId === current.id);
+  const children = current ? AREAS.filter((a) => a.parentId === current.id) : [];
   const label = path.map((a) => a.name).join(" › ");
+  const results = query.trim() ? searchAreas(query, 6) : [];
+  const showOther = current?.level === "state" && otherCity;
 
   return (
     <div className="mt-6 rounded-3xl border-2 border-orange-200 bg-orange-50 p-4">
       <p className="text-lg font-semibold text-stone-800">📍 {t("chooseArea")}</p>
-      <nav aria-label="breadcrumb" className="mt-3 flex flex-wrap gap-2">
-        {path.map((a, i) => (
-          <button key={a.id} onClick={() => setPath(path.slice(0, i + 1))} className="min-h-11 rounded-full border border-orange-300 bg-white px-4 text-base font-medium text-orange-900">
-            {i > 0 && "› "}{a.name}
+      {path.length > 0 && (
+        <>
+          <nav aria-label="breadcrumb" className="mt-3 flex flex-wrap gap-2">
+            {path.map((a, i) => (
+              <button key={a.id} onClick={() => setPath(path.slice(0, i + 1))} className="min-h-11 rounded-full border border-orange-300 bg-white px-4 text-base font-medium text-orange-900">
+                {i > 0 && "› "}{a.name}
+              </button>
+            ))}
+          </nav>
+          <button
+            onClick={() => {
+              const other = showOther ? ` (other city: ${otherCity})` : "";
+              onPick(`📍 ${label}${other} [area_id: ${current.id}]`, `📍 ${label}${showOther ? ` · ${otherCity}` : ""}`);
+            }}
+            className="mt-3 flex min-h-14 w-full items-center justify-center gap-2 rounded-2xl bg-orange-600 px-4 text-xl font-bold text-white hover:bg-orange-700 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-orange-700"
+          >
+            ✓ {current.name}{showOther ? ` · ${otherCity}` : ""}
           </button>
-        ))}
-      </nav>
-      <button
-        onClick={() => onPick(`📍 ${label} [area_id: ${current.id}]`, `📍 ${label}`)}
-        className="mt-3 flex min-h-14 w-full items-center justify-center gap-2 rounded-2xl bg-orange-600 px-4 text-xl font-bold text-white hover:bg-orange-700 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-orange-700"
-      >
-        ✓ {current.name}
-      </button>
+          {current.level === "state" && (
+            <label className="mt-3 block text-base text-stone-700">
+              {t("otherCity")}
+              <input value={otherCity} onChange={(e) => setOtherCity(e.target.value)} className="input mt-1" />
+            </label>
+          )}
+        </>
+      )}
       {children.length > 0 && (
         <>
           <p className="mt-4 text-base font-medium text-stone-600">🔍 {t("moreExact")}:</p>
@@ -461,7 +495,20 @@ function LocationPicker({ t, hasShop, onPick }: { t: (k: UIKey) => string; hasSh
           </div>
         </>
       )}
-      {hasShop && (
+      <div className="mt-4">
+        <label htmlFor="area-search" className="text-base font-medium text-stone-600">🔎 {t("findCity")}</label>
+        <input id="area-search" value={query} onChange={(e) => setQuery(e.target.value)} className="input mt-1" />
+        {results.length > 0 && (
+          <div className="mt-2 flex flex-wrap gap-2">
+            {results.map((a) => (
+              <button key={a.id} onClick={() => { setPath(areaChain(a.id)); setQuery(""); }} className="min-h-11 rounded-full border-2 border-stone-300 bg-white px-4 text-base hover:border-orange-500">
+                {a.name}{parentLabel(a) && <span className="text-stone-400"> · {parentLabel(a)}</span>}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+      {hasShop && current && (
         <div className="mt-4 border-t border-orange-200 pt-4">
           <label htmlFor="addr" className="text-base font-semibold text-stone-800">🏪 {t("exactAddress")}</label>
           <div className="mt-2 flex gap-2">

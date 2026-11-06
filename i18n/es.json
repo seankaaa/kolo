@@ -66,5 +66,7 @@
   "startOver": "Empezar de nuevo",
   "openOrders": "Abrir mis pedidos",
   "close": "Cerrar",
-  "micLanguage": "El micrófono escucha"
+  "micLanguage": "El micrófono escucha",
+  "otherCity": "Mi ciudad (si no aparece)",
+  "findCity": "Busca tu ciudad o estado"
 }

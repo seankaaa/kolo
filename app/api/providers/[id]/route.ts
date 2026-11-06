@@ -60,6 +60,7 @@ export async function PATCH(req: Request, ctx: RouteContext<"/api/providers/[id]
         travelRadius: Number(l.travelRadius) || 0,
         availability: l.availability || "",
         languages: l.languages || [],
+        otherCity: (l as { other_city?: string }).other_city || undefined,
         status: "live",
       });
       delete p.lat;
