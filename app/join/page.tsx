@@ -234,17 +234,17 @@ export default function Join() {
     return (
       <Page>
         {resumable.length > 0 && (
-          <div className="mb-8 rounded-2xl border-2 border-sky-200 bg-sky-50 p-4">
+          <div className="mb-8 rounded-2xl border-2 border-line-strong bg-sand p-4">
             {resumable.slice(-3).map((r) => (
               <button
                 key={r.id}
                 onClick={() => { setDraftId(r.id); setD(r.d); }}
-                className={`${btn} mb-2 w-full bg-sky-700 py-3 text-lg text-white`}
+                className={`${btn} mb-2 w-full bg-ink py-3 text-lg text-white`}
               >
                 ↩︎ {t("continueDraft")}{r.d.turn?.reply ? ` · “${r.d.turn.reply.slice(0, 40)}…”` : ""}
               </button>
             ))}
-            <p className="text-center text-base text-sky-900">⬇︎ {t("startNew")}</p>
+            <p className="text-center text-base text-ink-2">⬇︎ {t("startNew")}</p>
           </div>
         )}
         <h1 className="text-center font-serif text-[30px] font-semibold text-ink">🌐 {t("chooseLanguage")}</h1>
@@ -687,7 +687,7 @@ function Preview({ d, t, onChange, onFlag }: {
   return (
     <div>
       <h1 className="font-serif text-[30px] font-semibold text-ink">{t("previewTitle")}</h1>
-      <p className="mt-2 rounded-2xl bg-sky-50 p-4 text-lg text-sky-900">✋ {t("onlyYourWords")}</p>
+      <p className="mt-2 rounded-2xl bg-sand p-4 text-lg text-ink-2">✋ {t("onlyYourWords")}</p>
 
       {!!d.turn?.missing.length && (
         <div className="mt-4 rounded-2xl border-2 border-dashed border-line-strong bg-white p-4">
@@ -810,11 +810,11 @@ function Quotes({ quotes, t }: { quotes?: string[]; t: (k: UIKey) => string }) {
   if (!quotes?.length) return null;
   return (
     <div className="mt-1">
-      <button onClick={() => setOpen(!open)} aria-expanded={open} className="min-h-8 text-sm font-medium text-sky-700 underline-offset-2 hover:underline">
+      <button onClick={() => setOpen(!open)} aria-expanded={open} className="min-h-8 text-sm font-medium text-pine underline-offset-2 hover:underline">
         💬 {t("fromYourWords")}
       </button>
       {open && (
-        <ul className="mt-1 space-y-1 border-l-4 border-sky-200 pl-3 text-base italic text-muted">
+        <ul className="mt-1 space-y-1 border-l-4 border-line-strong pl-3 text-base italic text-muted">
           {quotes.map((q, i) => <li key={i}>“{q}”</li>)}
         </ul>
       )}
