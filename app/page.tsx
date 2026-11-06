@@ -28,6 +28,7 @@ const inBounds = (b: Bounds, [lat, lng]: [number, number]) => lat >= b.south && 
 export default function Home() {
   const [providers, setProviders] = useState<Provider[]>([]);
   const [category, setCategory] = useState<string | null>(null);
+  const [supportOnly, setSupportOnly] = useState(false);
   const [keyword, setKeyword] = useState("");
   const [areaQuery, setAreaQuery] = useState("");
   const [showSuggest, setShowSuggest] = useState(false);
@@ -84,11 +85,12 @@ export default function Home() {
     const kw = keyword.trim().toLowerCase();
     return providers.filter((p) => {
       if (category && p.category !== category) return false;
+      if (supportOnly && !p.needs?.length) return false;
       if (!kw) return true;
       const hay = [p.name, p.title_en, p.title_native, p.story_en, p.story_native, ...p.services.map((s) => s.name)].join(" ").toLowerCase();
       return hay.includes(kw);
     });
-  }, [providers, category, keyword]);
+  }, [providers, category, keyword, supportOnly]);
 
   // The list follows the map: only providers whose pin or area center is in view.
   const inView = useMemo(
@@ -228,6 +230,13 @@ export default function Home() {
               className="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm"
             />
             <div className="flex flex-wrap gap-1.5">
+              <button
+                onClick={() => setSupportOnly(!supportOnly)}
+                aria-pressed={supportOnly}
+                className={`rounded-full border px-2.5 py-1 text-xs ${supportOnly ? "border-rose-600 bg-rose-600 text-white" : "border-rose-300 text-rose-800 hover:bg-rose-50"}`}
+              >
+                💛 {t("openToSupport")}
+              </button>
               {Object.keys(CATEGORIES).map((k) => (
                 <button
                   key={k}
@@ -320,6 +329,7 @@ function ProviderRow({ p, onClick, reason }: { p: Provider; onClick: () => void;
       <div className="flex items-center gap-2 text-xs text-stone-500">
         <span>{catLabel(lang, p.category)}</span>·<span>{LANG_NAMES[p.language]}</span>
         {p.verified && <VerifiedBadge />}
+        {!!p.needs?.length && <span className="rounded-full bg-rose-100 px-2 py-0.5 text-xs font-medium text-rose-800">💛 {t("openToSupport")}</span>}
       </div>
       <div className="font-medium text-stone-900">{pick(p, lang, p.title_en, p.title_native)}</div>
       <div className="text-xs text-stone-500">

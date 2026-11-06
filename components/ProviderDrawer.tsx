@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useSession } from "@/lib/session";
 import { areaById, LANG_NAMES } from "@/lib/areas";
 import { catLabel, pick, useUILang } from "@/lib/i18n";
-import type { Lang, Provider, ServiceItem } from "@/lib/types";
+import type { Lang, Need, Provider, ServiceItem } from "@/lib/types";
 
 export function VerifiedBadge() {
   const { t } = useUILang();
@@ -102,6 +102,8 @@ export default function ProviderDrawer({ provider: p, onClose }: { provider: Pro
         </div>
 
         {booking && <BookingForm key={booking.name} provider={p} initial={booking} onCancel={() => setBooking(null)} />}
+
+        {!!p.needs?.length && <HelpSection p={p} />}
       </div>
     </aside>
   );
@@ -246,5 +248,106 @@ function L({ label, children }: { label: string; children: React.ReactNode }) {
       {label}
       <div className="mt-1">{children}</div>
     </label>
+  );
+}
+
+const NEED_ICON: Record<Need["type"], string> = { money: "💵", goods: "🎁", help: "🤝" };
+
+/** "How you can help": her own words only; money goes directly to her, never through Kolo. */
+function HelpSection({ p }: { p: Provider }) {
+  const { lang, t } = useUILang();
+  const { user } = useSession();
+  const router = useRouter();
+  const [showHandles, setShowHandles] = useState(false);
+  const [offering, setOffering] = useState<Need | null>(null);
+  const [note, setNote] = useState("");
+  const [sent, setSent] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const hasMoney = p.needs!.some((n) => n.type === "money");
+
+  async function sendOffer() {
+    if (!offering || !note.trim() || !user) return;
+    setBusy(true);
+    const r = await fetch("/api/orders", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        type: "support",
+        providerId: p.id,
+        customerUserId: user.id,
+        customerName: user.name,
+        customerLanguage: user.language,
+        item: `${NEED_ICON[offering.type]} ${offering.label_en}`,
+        details: note.trim(),
+      }),
+    });
+    const order = await r.json();
+    await fetch(`/api/orders/${order.id}/messages`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ from: "customer", text: note.trim() }),
+    });
+    setBusy(false);
+    setSent(true);
+    setOffering(null);
+    setNote("");
+  }
+
+  return (
+    <section className="rounded-xl border-2 border-rose-100 bg-rose-50/50 p-4">
+      <h3 className="text-sm font-semibold text-stone-800">💛 {t("howHelp")}</h3>
+      <ul className="mt-2 space-y-3">
+        {p.needs!.map((n, i) => (
+          <li key={i} className="rounded-lg bg-white p-3">
+            <div className="text-sm text-stone-800">
+              {NEED_ICON[n.type]} {lang === p.language ? n.label_native : n.label_en}
+            </div>
+            {n.type === "money" && n.goal ? (
+              <div className="mt-2">
+                <div className="h-2 overflow-hidden rounded-full bg-stone-200" role="progressbar" aria-valuemin={0} aria-valuemax={n.goal} aria-valuenow={n.raised || 0}>
+                  <div className="h-full rounded-full bg-rose-500" style={{ width: `${Math.min(100, ((n.raised || 0) / n.goal) * 100)}%` }} />
+                </div>
+                <div className="mt-1 text-xs text-stone-500">{t("raisedOf", { raised: n.raised || 0, goal: n.goal })}</div>
+              </div>
+            ) : null}
+            {n.type !== "money" && (
+              <button
+                onClick={() => (user ? setOffering(n) : router.push(`/login?next=${encodeURIComponent(`/explore?open=${p.id}`)}`))}
+                className="mt-2 min-h-11 rounded-full border border-rose-300 px-4 text-sm font-semibold text-rose-800 hover:bg-rose-100"
+              >
+                🙋 {t("iCanHelp")}
+              </button>
+            )}
+            {offering === n && (
+              <div className="mt-2 space-y-2">
+                <textarea value={note} onChange={(e) => setNote(e.target.value)} rows={2} placeholder={t("helpMsgPlaceholder")} aria-label={t("helpMsgPlaceholder")} className="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm" />
+                <div className="flex gap-2">
+                  <button disabled={busy || !note.trim()} onClick={sendOffer} className="min-h-11 rounded-full bg-rose-600 px-4 text-sm font-semibold text-white disabled:opacity-50">➤ {t("sendHelp")}</button>
+                  <button onClick={() => setOffering(null)} className="min-h-11 rounded-full px-4 text-sm text-stone-600">{t("cancel")}</button>
+                </div>
+              </div>
+            )}
+          </li>
+        ))}
+      </ul>
+      {sent && (
+        <p role="status" className="mt-2 text-sm text-emerald-800">
+          ✅ {t("helpSent")} <Link href="/me#orders" className="font-semibold underline">{t("openChat")}</Link>
+        </p>
+      )}
+      {hasMoney && !!p.paymentHandles?.length && (
+        <div className="mt-3">
+          <button onClick={() => setShowHandles(!showHandles)} aria-expanded={showHandles} className="min-h-11 w-full rounded-full bg-rose-600 text-sm font-semibold text-white hover:bg-rose-700">
+            💵 {t("supportDirectly")}
+          </button>
+          {showHandles && (
+            <div className="mt-2 rounded-lg bg-white p-3 text-sm">
+              <ul className="space-y-1 font-mono text-stone-800">{p.paymentHandles!.map((h) => <li key={h}>{h}</li>)}</ul>
+              <p className="mt-2 text-xs text-stone-500">{t("goesDirectly")}</p>
+            </div>
+          )}
+        </div>
+      )}
+    </section>
   );
 }

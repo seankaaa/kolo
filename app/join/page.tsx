@@ -23,6 +23,8 @@ type Listing = {
   story_native?: string | null; story_en?: string | null; services: Service[];
   category: string; areaId: string; locationPrecision: string; address?: string | null;
   travelRadius: number; availability?: string | null; languages?: string[];
+  needs?: { type: "money" | "goods" | "help"; label_native: string; label_en: string; goal?: number; source?: string[] }[];
+  paymentHandles?: string[];
   provenance: Record<string, string[]>;
 };
 type Flag = { field: string; text: string; reason: string; rewrite: string };
@@ -34,6 +36,7 @@ type Draft = {
 };
 
 const TOTAL = 7;
+const NEED_CHIPS: UIKey[] = ["need_daycare", "need_insurance", "need_rent", "need_school", "need_groceries", "need_clothes", "need_carseat", "need_english", "need_rides"];
 /** Her language first, then English (or Spanish if she chose English). */
 const micLangs = (l: Lang): Lang[] => (l === "en" ? ["en", "es"] : [l, "en"]);
 const LANG_BUTTONS: { lang: Lang; label: string }[] = [
@@ -358,6 +361,29 @@ export default function Join() {
           <h1 className={`text-[28px] font-bold leading-snug text-stone-900 sm:text-3xl ${busy ? "opacity-40" : ""}`}>{turn?.reply}</h1>
         )}
       </div>
+
+      {turn?.asking === "help" && !busy && (
+        <div className="mt-6 rounded-3xl border-2 border-rose-200 bg-rose-50 p-4">
+          <p className="text-lg font-semibold text-stone-800">💛 {t("helpChipsTitle")}</p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {NEED_CHIPS.map((k) => {
+              const label = translate(d.lang, k);
+              const on = answer.includes(label);
+              return (
+                <button
+                  key={k}
+                  aria-pressed={on}
+                  onClick={() => setAnswer((a) => (on ? a.replace(label, "").replace(/(, )+/g, ", ").replace(/^, |, $/g, "") : a ? `${a}, ${label}` : label))}
+                  className={`min-h-11 rounded-full border-2 px-4 text-base ${on ? "border-rose-600 bg-rose-600 text-white" : "border-stone-300 bg-white hover:border-rose-400"}`}
+                >
+                  {label}
+                </button>
+              );
+            })}
+          </div>
+          <p className="mt-3 text-sm text-stone-600">🔒 {t("moneyDirect")}</p>
+        </div>
+      )}
 
       {turn?.asking === "location" && !busy && (
         <LocationPicker
@@ -713,6 +739,25 @@ function Preview({ d, t, onChange, onFlag }: {
         </Part>
         {row("availability", `🕒 ${t("availability")}`)}
         {l.story_en && row("story", `💛 ${t("story")}`)}
+        {!!l.needs?.length && (
+          <Part label={`💛 ${t("howHelp")}`} t={t}>
+            <ul className="space-y-2">
+              {l.needs.map((n, i) => (
+                <li key={i}>
+                  {n.type === "money" ? "💵" : n.type === "goods" ? "🎁" : "🤝"} {d.lang === "en" ? n.label_en : n.label_native}
+                  {n.goal ? <b> · ${n.goal}</b> : null}
+                  <Quotes quotes={n.source} t={t} />
+                </li>
+              ))}
+            </ul>
+          </Part>
+        )}
+        {!!l.paymentHandles?.length && (
+          <Part label={`💵 ${t("paymentHandles")}`} quotes={l.provenance?.paymentHandles} t={t}>
+            <ul className="font-mono text-base">{l.paymentHandles.map((h) => <li key={h}>{h}</li>)}</ul>
+            <p className="mt-1 text-sm text-stone-500">🔒 {t("moneyDirect")}</p>
+          </Part>
+        )}
         {!!l.languages?.length && (
           <Part label={`🗣️ ${t("languages")}`} quotes={l.provenance?.languages} t={t}>
             {l.languages.join(", ")}

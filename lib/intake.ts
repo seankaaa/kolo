@@ -27,8 +27,14 @@ Required (ask until each is known, or she skipped it):
 - shop_or_home: does she have a physical shop/storefront, or work from home / go to clients
 - travel: can she travel to clients or deliver, and how far (record km; if she says miles, record her number with the unit)
 - availability: days/times
+Then, BEFORE asking about location, two optional-but-encouraged steps (one question each):
+- STORY (asking="story"): "Tell people a little about yourself: your journey, your family, why you do this work." Short. If she already told her story, don't ask again.
+- HOW YOU CAN HELP (asking="help"): "Besides booking your services, is there anything else people could help with?" The app shows tappable example chips. She may pick some, say it in her words, set a money goal ONLY if she says a number, or skip.
+- If she named a money need, ask once for payment handles (Zelle/Venmo/Cash App) with asking="payment", and tell her: money goes directly to her; Kolo never handles it.
+Use only her words for story and needs. Never dramatize or add hardship she didn't state. Never record immigration status details.
+Finally:
 - location: first ask which city (or state) she works in; record it in city_said / state_said. Then set asking="location"; the app matches her city and shows tappable area buttons from broad to precise (e.g. New York State › New York City › Brooklyn). If her city is not in the list, she can be shown at the state level with her city noted as "other city". For home-based work, recommend the subregion level (e.g. "East Bay") for privacy. An exact street address is only allowed if she has a physical shop.
-Optional (ask once, near the end, say it's optional): a short personal story; other languages she speaks.
+Optional: other languages she speaks (only if it comes up).
 
 The user message "(skip)" means she skipped the current question — record that field as null / "price on request" and move on.
 
@@ -49,7 +55,7 @@ export const TURN_TOOL = {
       reply: { type: "string", description: "Your next message, in her language. One question." },
       asking: {
         type: "string",
-        enum: ["services", "prices", "category", "shop_or_home", "travel", "availability", "location", "story", "languages", "none"],
+        enum: ["services", "prices", "category", "shop_or_home", "travel", "availability", "story", "help", "payment", "location", "languages", "none"],
       },
       collected: {
         type: "object",
@@ -66,6 +72,8 @@ export const TURN_TOOL = {
           state_said: { type: ["string", "null"], description: "US state she named or that her city is in, in English" },
           story: { type: ["string", "null"] },
           languages: { type: "array", items: { type: "string" } },
+          needs: { type: "array", items: { type: "object", properties: { type: { type: "string", enum: ["money", "goods", "help"] }, label: { type: "string" }, goal: { type: ["number", "null"] } } } },
+          payment_handles: { type: "array", items: { type: "string" } },
         },
       },
       missing: { type: "array", items: { type: "string", enum: [...REQUIRED] } },
@@ -85,6 +93,9 @@ ${GUARDRAILS}
 - areaId must be one of the area ids she chose. locationPrecision: "exact" only if she has a shop AND gave its address; otherwise the level of that area.
 - travelRadius: number in km (convert miles × 1.6 and round), 0 if she doesn't travel/deliver.
 - availability: short English summary.
+- story: her own words, lightly polished; warm and specific; never add hardship or drama she didn't state; no immigration details.
+- needs: only what she asked for ("how you can help"). type money|goods|help; label_native in her language and label_en; goal ONLY if she said a number. Provenance keys needs.0, needs.1, ...
+- paymentHandles: exactly as she gave them (e.g. "Venmo: @name"); provenance key paymentHandles. Omit if none.
 - provenance: for EVERY field you output, list the exact phrase(s) from HER answers (verbatim, in her language) that it came from. Keys: title, summary, story, category, areaId, travelRadius, availability, languages, address, and services.0, services.1, ... A field with no supporting phrase must be omitted (null).
 
 Areas (id | name | level):
@@ -121,6 +132,15 @@ export const LISTING_TOOL = {
       travelRadius: { type: "number" },
       availability: { type: ["string", "null"] },
       languages: { type: "array", items: { type: "string" } },
+      needs: {
+        type: "array",
+        items: {
+          type: "object",
+          properties: { type: { type: "string", enum: ["money", "goods", "help"] }, label_native: { type: "string" }, label_en: { type: "string" }, goal: { type: ["number", "null"] } },
+          required: ["type", "label_native", "label_en"],
+        },
+      },
+      paymentHandles: { type: "array", items: { type: "string" } },
       provenance: { type: "object", additionalProperties: { type: "array", items: { type: "string" } } },
     },
     required: ["title_native", "title_en", "summary_native", "summary_en", "services", "category", "areaId", "locationPrecision", "travelRadius", "provenance"],

@@ -24,7 +24,15 @@
       "areaId": "oakland",
       "locationPrecision": "city",
       "travelRadius": 10,
-      "verified": true
+      "verified": true,
+      "needs": [
+        {
+          "type": "goods",
+          "label_en": "A second large steamer pot for big orders",
+          "label_native": "Una segunda vaporera grande para pedidos grandes"
+        }
+      ],
+      "paymentHandles": []
     },
     {
       "id": "maria",
@@ -33,8 +41,8 @@
       "category": "cleaning",
       "title_en": "Deep home cleaning, eco products",
       "title_native": "Limpieza profunda de casas con productos ecológicos",
-      "story_en": "Ten years of cleaning homes. I bring my own eco-friendly supplies and I am careful with pets.",
-      "story_native": "Diez años limpiando casas. Traigo mis propios productos ecológicos y tengo mucho cuidado con las mascotas.",
+      "story_en": "I'm a mom of three — my youngest just started kindergarten. I clean homes because I love making a space feel calm, and my clients' pets always find me.",
+      "story_native": "Soy mamá de tres; la más pequeña acaba de entrar al kínder. Limpio casas porque me encanta que un espacio se sienta tranquilo, y las mascotas de mis clientes siempre me encuentran.",
       "services": [
         {
           "name": "Standard clean (2 bedrooms)",
@@ -51,7 +59,25 @@
       "locationPrecision": "neighborhood",
       "travelRadius": 8,
       "verified": true,
-      "ownerId": "u_maria"
+      "ownerId": "u_maria",
+      "needs": [
+        {
+          "type": "money",
+          "label_en": "Daycare costs for my youngest",
+          "label_native": "Gastos de guardería para mi hija menor",
+          "goal": 600,
+          "raised": 240
+        },
+        {
+          "type": "goods",
+          "label_en": "Kids' winter jackets (sizes 4, 7 and 10)",
+          "label_native": "Chamarras de invierno para niños (tallas 4, 7 y 10)"
+        }
+      ],
+      "paymentHandles": [
+        "Venmo: @maria-t-demo",
+        "Zelle: maria.demo@example.com"
+      ]
     },
     {
       "id": "rosa",
@@ -106,7 +132,20 @@
       "areaId": "south-bay",
       "locationPrecision": "subregion",
       "travelRadius": 15,
-      "verified": false
+      "verified": false,
+      "needs": [
+        {
+          "type": "help",
+          "label_en": "Rides to the kids' Saturday soccer",
+          "label_native": "Transporte al fútbol de los niños los sábados"
+        },
+        {
+          "type": "goods",
+          "label_en": "School supplies for my son",
+          "label_native": "Útiles escolares para mi hijo"
+        }
+      ],
+      "paymentHandles": []
     },
     {
       "id": "elena",
@@ -144,8 +183,8 @@
       "category": "beauty",
       "title_en": "Manicure & brow styling at your home",
       "title_native": "Манікюр та оформлення брів у вас вдома",
-      "story_en": "I worked as a nail technician in Kharkiv for six years. I bring sterilized tools and everything needed for a salon-quality manicure at home.",
-      "story_native": "Я шість років працювала майстринею манікюру в Харкові. Приношу стерилізовані інструменти й усе необхідне для салонного манікюру вдома.",
+      "story_en": "I'm a mom of a two-year-old and I've done nails since I was nineteen. My daughter's laugh is the best part of my day.",
+      "story_native": "Я мама дворічної доньки й роблю манікюр з дев’ятнадцяти років. Сміх доньки — найкраща частина мого дня.",
       "services": [
         {
           "name": "Gel manicure",
@@ -162,7 +201,20 @@
       "locationPrecision": "neighborhood",
       "travelRadius": 6,
       "verified": true,
-      "ownerId": "u_oksana"
+      "ownerId": "u_oksana",
+      "needs": [
+        {
+          "type": "help",
+          "label_en": "Someone to practice English with, once a week",
+          "label_native": "Хтось, з ким можна практикувати англійську раз на тиждень"
+        },
+        {
+          "type": "goods",
+          "label_en": "A used car seat",
+          "label_native": "Вживане автокрісло"
+        }
+      ],
+      "paymentHandles": []
     },
     {
       "id": "iryna",
@@ -214,7 +266,15 @@
       "areaId": "berkeley",
       "locationPrecision": "city",
       "travelRadius": 5,
-      "verified": false
+      "verified": false,
+      "needs": [
+        {
+          "type": "help",
+          "label_en": "Help with English for my small-business paperwork",
+          "label_native": "Допомога з англійською для документів мого маленького бізнесу"
+        }
+      ],
+      "paymentHandles": []
     },
     {
       "id": "olga",
@@ -342,7 +402,19 @@
       "areaId": "brighton-beach",
       "locationPrecision": "neighborhood",
       "travelRadius": 5,
-      "verified": true
+      "verified": true,
+      "needs": [
+        {
+          "type": "money",
+          "label_en": "A bigger oven for weekend orders",
+          "label_native": "Більша духовка для замовлень на вихідні",
+          "goal": 900,
+          "raised": 310
+        }
+      ],
+      "paymentHandles": [
+        "Zelle: halyna.demo@example.com"
+      ]
     },
     {
       "id": "us-marina",

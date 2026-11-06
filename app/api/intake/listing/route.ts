@@ -10,6 +10,8 @@ type Listing = {
   services: { name: string; price: string; kind: "service" | "product"; source?: string[] }[];
   category: string; areaId: string; locationPrecision: string; address?: string | null;
   travelRadius: number; availability?: string | null; languages?: string[];
+  needs?: { type: "money" | "goods" | "help"; label_native: string; label_en: string; goal?: number | null; source?: string[] }[];
+  paymentHandles?: string[];
   provenance: Record<string, string[]>;
 };
 
@@ -55,6 +57,15 @@ function check(l: Listing, transcript: string) {
       else { l[native] = ""; l[en] = ""; }
     }
   }
+  // Needs: only with a source in her words; a goal only if she said that number.
+  l.needs = (l.needs || [])
+    .map((n, i) => ({ ...n, source: prov[`needs.${i}`] }))
+    .filter((n) => n.source?.some((q) => q?.trim()));
+  l.needs.forEach((n) => {
+    if (n.goal && !has(n.goal)) { dropped.push(`goal ${n.goal} for ${n.label_en}`); n.goal = null; }
+    if (!n.goal) delete n.goal;
+  });
+  if (!hasProv("paymentHandles")) l.paymentHandles = [];
   if (!hasProv("availability")) l.availability = null;
   if (!hasProv("languages")) l.languages = [];
   if (!hasProv("address") || l.locationPrecision !== "exact") { l.address = null; }

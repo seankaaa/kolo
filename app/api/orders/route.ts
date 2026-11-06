@@ -30,6 +30,7 @@ export async function POST(req: Request) {
     customerUserId: typeof b.customerUserId === "string" ? b.customerUserId : undefined,
     providerUserId: listing.ownerId,
     status: "new",
+    type: b.type === "support" ? "support" : "order",
     messages: [],
     createdAt: Date.now(),
   };

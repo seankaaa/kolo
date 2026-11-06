@@ -65,6 +65,8 @@ export async function PATCH(req: Request, ctx: RouteContext<"/api/providers/[id]
         travelRadius: Number(l.travelRadius) || 0,
         availability: l.availability || "",
         languages: l.languages || [],
+        needs: (l.needs || []).slice(0, 6),
+        paymentHandles: (l.paymentHandles || []).slice(0, 4),
         otherCity: (l as { other_city?: string }).other_city || undefined,
         status: "live",
       });

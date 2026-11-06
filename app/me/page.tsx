@@ -12,7 +12,7 @@ import { authHeaders, logout, useSession } from "@/lib/session";
 import type { Lang, Order, Provider, User } from "@/lib/types";
 
 type MeData = { user: User; listings: Provider[]; received: Order[]; placed: Order[] };
-type Tab = "new" | "accepted" | "done";
+type Tab = "new" | "accepted" | "done" | "support";
 const card = "rounded-2xl border border-stone-200 bg-white p-4";
 const pill = "inline-flex min-h-11 items-center rounded-full px-4 text-sm font-semibold";
 
@@ -57,10 +57,12 @@ export default function Me() {
   if (!user || !data) return <div className="min-h-screen bg-stone-50"><Header /></div>;
 
   const live = data.listings.find((l) => l.id === liveId);
+  const orders = data.received.filter((o) => o.type !== "support");
   const byTab: Record<Tab, Order[]> = {
-    new: data.received.filter((o) => o.status === "new"),
-    accepted: data.received.filter((o) => o.status === "accepted"),
-    done: data.received.filter((o) => o.status === "done" || o.status === "declined"),
+    new: orders.filter((o) => o.status === "new"),
+    accepted: orders.filter((o) => o.status === "accepted"),
+    done: orders.filter((o) => o.status === "done" || o.status === "declined"),
+    support: data.received.filter((o) => o.type === "support"),
   };
 
   return (
@@ -109,11 +111,11 @@ export default function Me() {
           <section id="orders" className="scroll-mt-4">
             <h2 className="text-xl font-bold text-stone-900">📥 {t("ordersReceived")}</h2>
             <div role="tablist" className="mt-3 flex gap-1">
-              {(["new", "accepted", "done"] as Tab[]).map((k) => (
+              {(["new", "accepted", "done", "support"] as Tab[]).map((k) => (
                 <button key={k} role="tab" aria-selected={tab === k} onClick={() => setTab(k)}
                   className={`min-h-11 flex-1 rounded-full text-sm font-semibold ${tab === k ? "bg-stone-900 text-white" : "bg-stone-200 text-stone-700"}`}>
-                  {t(k === "new" ? "tabNew" : k === "accepted" ? "tabAccepted" : "tabDone")}
-                  {byTab[k].length > 0 && <span className={`ml-1.5 rounded-full px-1.5 text-xs ${k === "new" ? "bg-orange-500 text-white" : "bg-white/30"}`}>{byTab[k].length}</span>}
+                  {k === "support" ? `💛 ${t("supportOffers")}` : t(k === "new" ? "tabNew" : k === "accepted" ? "tabAccepted" : "tabDone")}
+                  {byTab[k].length > 0 && <span className={`ml-1.5 rounded-full px-1.5 text-xs ${k === "new" || k === "support" ? "bg-orange-500 text-white" : "bg-white/30"}`}>{byTab[k].length}</span>}
                 </button>
               ))}
             </div>
@@ -123,7 +125,7 @@ export default function Me() {
                 <li key={o.id} className={`${card} ${chat?.id === o.id ? "border-orange-400" : ""}`}>
                   <OrderSummary o={o} lang={lang} t={t} />
                   <div className="mt-2 flex flex-wrap gap-2">
-                    {o.status === "new" && (
+                    {o.status === "new" && o.type !== "support" && (
                       <>
                         <button onClick={() => setOrderStatus(o.id, "accepted")} className={`${pill} bg-emerald-600 text-white`}>✓ {t("accept")}</button>
                         <button onClick={() => setOrderStatus(o.id, "declined")} className={`${pill} border border-stone-300`}>✕ {t("decline")}</button>
@@ -168,7 +170,7 @@ function OrderSummary({ o, lang, t, customer }: { o: Order; lang: Lang; t: T; cu
   return (
     <>
       <div className="flex items-center justify-between gap-2">
-        <span className="font-semibold text-stone-900">{customer ? o.item : o.customerName}</span>
+        <span className="font-semibold text-stone-900">{o.type === "support" && <span className="mr-1 rounded-full bg-rose-100 px-2 py-0.5 text-xs text-rose-800">💛 {t("supportThread")}</span>}{customer ? o.item : o.customerName}</span>
         <StatusPill status={o.status} customer={customer} />
       </div>
       {!customer && <div className="text-sm text-stone-700">{o.item}{o.quantity && o.quantity > 1 ? ` × ${o.quantity}` : ""}</div>}
@@ -187,11 +189,20 @@ function ListingCard({ p, lang, t, onPatch, onDelete }: {
 }) {
   const [editing, setEditing] = useState(false);
   const [confirming, setConfirming] = useState(false);
-  const [form, setForm] = useState({ title_en: p.title_en, title_native: p.title_native, availability: p.availability || "", services: p.services });
+  const [form, setForm] = useState({
+    title_en: p.title_en, title_native: p.title_native, availability: p.availability || "", services: p.services,
+    story_native: p.story_native || "", story_en: p.story_en || "", needs: p.needs || [], paymentHandles: (p.paymentHandles || []).join("\n"),
+  });
   const input = "min-h-11 w-full rounded-lg border border-stone-300 px-3 text-sm";
 
   function save() {
-    onPatch({ listing: { ...p, ...form, other_city: p.otherCity } });
+    onPatch({
+      listing: {
+        ...p, ...form, other_city: p.otherCity,
+        needs: form.needs.filter((n) => n.label_native.trim() || n.label_en.trim()),
+        paymentHandles: form.paymentHandles.split("\n").map((h) => h.trim()).filter(Boolean),
+      },
+    });
     setEditing(false);
   }
 
@@ -214,6 +225,30 @@ function ListingCard({ p, lang, t, onPatch, onDelete }: {
               <input aria-label={t("price")} value={s.price} onChange={(e) => setForm({ ...form, services: form.services.map((x, j) => (j === i ? { ...x, price: e.target.value } : x)) })} className={input} />
             </div>
           ))}
+          <label className="block text-xs text-stone-600">💛 {t("story")}
+            <textarea rows={3} value={form.story_native} onChange={(e) => setForm({ ...form, story_native: e.target.value })} className={`${input} py-2`} />
+          </label>
+          <label className="block text-xs text-stone-600">💛 {t("story")} (English)
+            <textarea rows={2} value={form.story_en} onChange={(e) => setForm({ ...form, story_en: e.target.value })} className={`${input} py-2`} />
+          </label>
+          <fieldset className="space-y-2 rounded-lg border border-rose-200 p-2">
+            <legend className="px-1 text-xs font-semibold text-rose-800">{t("howHelp")}</legend>
+            {form.needs.map((n, i) => (
+              <div key={i} className="grid grid-cols-[5.5rem_1fr_5rem_2.75rem] gap-1">
+                <select aria-label="type" value={n.type} onChange={(e) => setForm({ ...form, needs: form.needs.map((x, j) => (j === i ? { ...x, type: e.target.value as typeof n.type } : x)) })} className={input}>
+                  <option value="money">💵</option><option value="goods">🎁</option><option value="help">🤝</option>
+                </select>
+                <input aria-label={t("needs")} value={n.label_native} onChange={(e) => setForm({ ...form, needs: form.needs.map((x, j) => (j === i ? { ...x, label_native: e.target.value, label_en: x.label_en || e.target.value } : x)) })} className={input} />
+                <input aria-label={t("goal")} type="number" min={0} placeholder="$" value={n.goal ?? ""} disabled={n.type !== "money"} onChange={(e) => setForm({ ...form, needs: form.needs.map((x, j) => (j === i ? { ...x, goal: e.target.value ? +e.target.value : undefined } : x)) })} className={input} />
+                <button aria-label={t("delete")} onClick={() => setForm({ ...form, needs: form.needs.filter((_, j) => j !== i) })} className="min-h-11 rounded-lg border border-stone-300">✕</button>
+              </div>
+            ))}
+            <button onClick={() => setForm({ ...form, needs: [...form.needs, { type: "goods", label_native: "", label_en: "" }] })} className="min-h-11 rounded-full border border-rose-300 px-3 text-sm text-rose-800">＋ {t("addNeed")}</button>
+          </fieldset>
+          <label className="block text-xs text-stone-600">💵 {t("paymentHandles")}
+            <textarea rows={2} value={form.paymentHandles} onChange={(e) => setForm({ ...form, paymentHandles: e.target.value })} placeholder="Venmo: @name" className={`${input} py-2 font-mono`} />
+            <span className="text-stone-400">{t("moneyDirect")}</span>
+          </label>
           <div className="flex gap-2">
             <button onClick={save} className={`${pill} bg-stone-900 text-white`}>✓ {t("save")}</button>
             <button onClick={() => setEditing(false)} className={`${pill} border border-stone-300`}>{t("cancel")}</button>
@@ -226,6 +261,12 @@ function ListingCard({ p, lang, t, onPatch, onDelete }: {
           <ul className="mt-2 space-y-0.5 text-sm text-stone-700">
             {p.services.map((s) => <li key={s.name} className="flex justify-between gap-2"><span>{s.name}</span><b>{s.price === "price on request" ? t("priceOnRequest") : s.price}</b></li>)}
           </ul>
+          {(p.story_native || p.story_en) && <p className="mt-2 text-sm italic text-stone-600">“{pick(p, lang, p.story_en, p.story_native)}”</p>}
+          {!!p.needs?.length && (
+            <ul className="mt-2 flex flex-wrap gap-1">
+              {p.needs.map((n, i) => <li key={i} className="rounded-full bg-rose-50 px-2 py-0.5 text-xs text-rose-800">{n.type === "money" ? "💵" : n.type === "goods" ? "🎁" : "🤝"} {lang === p.language ? n.label_native : n.label_en}{n.goal ? ` · $${n.goal}` : ""}</li>)}
+            </ul>
+          )}
           {p.paused && <p className="mt-1 text-xs text-stone-500">{t("pausedHint")}</p>}
         </>
       )}

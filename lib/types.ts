@@ -18,6 +18,14 @@ export interface ServiceItem {
   kind: "service" | "product";
 }
 
+export interface Need {
+  type: "money" | "goods" | "help";
+  label_native: string;
+  label_en: string;
+  goal?: number;
+  raised?: number;
+}
+
 export interface Provider {
   id: string;
   name: string;
@@ -43,6 +51,10 @@ export interface Provider {
   /** Synthetic contact for order notifications; never returned by public APIs. */
   contact?: string;
   status?: "draft" | "live";
+  /** "How you can help": only what she said, never dramatized. */
+  needs?: Need[];
+  /** Synthetic in the demo, e.g. "Venmo: @maria-t-demo". Money goes directly to her. */
+  paymentHandles?: string[];
   /** Account that owns this listing (a user can own many). */
   ownerId?: string;
   /** Paused listings are hidden from the map. */
@@ -85,6 +97,8 @@ export interface Order {
   customerUserId?: string;
   providerUserId?: string;
   status: "new" | "accepted" | "declined" | "done";
+  /** "support" = an offer to help with one of her needs (not an order). */
+  type?: "order" | "support";
   messages: Message[];
   createdAt: number;
 }
