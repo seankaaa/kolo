@@ -15,7 +15,8 @@ export function VerifiedBadge() {
 
 export function servesLabel(p: Provider) {
   if (p.locationPrecision === "exact") return p.address || areaById(p.areaId)?.name;
-  return areaById(p.areaId)?.name;
+  const name = areaById(p.areaId)?.name;
+  return p.otherCity ? `${name} (${p.otherCity})` : name;
 }
 
 export default function ProviderDrawer({ provider: p, onClose }: { provider: Provider; onClose: () => void }) {
@@ -35,6 +36,7 @@ export default function ProviderDrawer({ provider: p, onClose }: { provider: Pro
           </div>
           <h2 className="text-xl font-semibold leading-tight text-stone-900">{p.title_en}</h2>
           {hasNative && <p className="mt-1 text-stone-500">{p.title_native}</p>}
+          {p.summary_en && <p className="mt-2 text-sm text-stone-600">{p.summary_en}</p>}
           <p className="mt-2 text-sm font-medium text-stone-700">{p.name}</p>
         </div>
         <button onClick={onClose} className="rounded-full p-2 text-stone-400 hover:bg-stone-100" aria-label="Close">

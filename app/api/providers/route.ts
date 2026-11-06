@@ -1,53 +1,35 @@
 import { readDB, updateDB, newId } from "@/lib/db";
-import { areaById } from "@/lib/areas";
-import type { Provider } from "@/lib/types";
+import { publicProvider } from "@/lib/publicProvider";
+import type { Lang, Provider } from "@/lib/types";
 
 export async function GET() {
   const db = await readDB();
-  return Response.json(db.providers);
+  return Response.json(db.providers.filter((p) => p.status !== "draft").map(publicProvider));
 }
 
+/** Sign-up: creates a draft provider. No passwords, no SSN, no status fields. */
 export async function POST(req: Request) {
-  const body = (await req.json()) as Partial<Provider>;
-  if (!body.areaId || !areaById(body.areaId)) {
-    return Response.json({ error: "Unknown area" }, { status: 400 });
-  }
-  const isShop = body.locationPrecision === "exact" && !!body.address;
-  // Only storefronts get a pin. Geocode the public shop address; fall back to the area center.
-  if (isShop && !(body.lat && body.lng)) {
-    const area = areaById(body.areaId)!;
-    body.lat = area.lat;
-    body.lng = area.lng;
-    try {
-      const r = await fetch(
-        `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(body.address!)}`,
-        { headers: { "User-Agent": "kolo-hackathon-demo" } }
-      );
-      const [hit] = await r.json();
-      if (hit) {
-        body.lat = +hit.lat;
-        body.lng = +hit.lon;
-      }
-    } catch {}
+  const b = (await req.json()) as { name?: string; contact?: string; language?: Lang };
+  if (!b.name?.trim() || !b.contact?.trim()) {
+    return Response.json({ error: "name and contact required" }, { status: 400 });
   }
   const provider: Provider = {
     id: newId("p"),
-    name: body.name || "New provider",
-    language: body.language || "en",
-    category: body.category || "other",
-    title_en: body.title_en || "",
-    title_native: body.title_native || "",
-    story_en: body.story_en || "",
-    story_native: body.story_native || "",
-    services: body.services || [],
-    areaId: body.areaId,
-    // Home-based providers never get exact coordinates; they render at the area center.
-    locationPrecision: isShop ? "exact" : areaById(body.areaId)!.level,
-    ...(isShop && body.lat && body.lng ? { lat: body.lat, lng: body.lng, address: body.address } : {}),
-    travelRadius: body.travelRadius ?? 0,
-    availability: body.availability,
+    name: b.name.trim().slice(0, 60),
+    contact: b.contact.trim().slice(0, 120),
+    language: b.language || "en",
+    category: "other",
+    title_en: "",
+    title_native: "",
+    story_en: "",
+    story_native: "",
+    services: [],
+    areaId: "bay-area",
+    locationPrecision: "region",
+    travelRadius: 0,
+    status: "draft",
     verified: false,
   };
   await updateDB((db) => db.providers.push(provider));
-  return Response.json(provider);
+  return Response.json(publicProvider(provider));
 }

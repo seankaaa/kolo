@@ -1,10 +1,11 @@
 export type Lang = "es" | "uk" | "ru" | "en";
-export type Precision = "region" | "subregion" | "city" | "neighborhood" | "exact";
+export type Precision = "state" | "region" | "subregion" | "city" | "neighborhood" | "exact";
 
 export interface Area {
   id: string;
   name: string;
-  level: "region" | "subregion" | "city" | "neighborhood";
+  level: "state" | "region" | "subregion" | "city" | "neighborhood";
+  aliases: string[];
   parentId: string | null;
   lat: number;
   lng: number;
@@ -34,6 +35,14 @@ export interface Provider {
   lng?: number;
   travelRadius: number;
   availability?: string;
+  /** City she named when it isn't in areas.json; she is shown at the state level. */
+  otherCity?: string;
+  summary_en?: string;
+  summary_native?: string;
+  languages?: string[];
+  /** Synthetic contact for order notifications; never returned by public APIs. */
+  contact?: string;
+  status?: "draft" | "live";
   verified: boolean;
 }
 

@@ -1,29 +1,2222 @@
 [
-  { "id": "bay-area", "name": "Bay Area", "level": "region", "parentId": null, "lat": 37.75, "lng": -122.25, "radius_km": 60 },
-
-  { "id": "sf", "name": "San Francisco", "level": "subregion", "parentId": "bay-area", "lat": 37.76, "lng": -122.44, "radius_km": 8 },
-  { "id": "east-bay", "name": "East Bay", "level": "subregion", "parentId": "bay-area", "lat": 37.80, "lng": -122.22, "radius_km": 20 },
-  { "id": "south-bay", "name": "South Bay", "level": "subregion", "parentId": "bay-area", "lat": 37.34, "lng": -121.93, "radius_km": 20 },
-  { "id": "peninsula", "name": "Peninsula", "level": "subregion", "parentId": "bay-area", "lat": 37.52, "lng": -122.30, "radius_km": 15 },
-  { "id": "north-bay", "name": "North Bay", "level": "subregion", "parentId": "bay-area", "lat": 38.10, "lng": -122.60, "radius_km": 25 },
-
-  { "id": "oakland", "name": "Oakland", "level": "city", "parentId": "east-bay", "lat": 37.8044, "lng": -122.2712, "radius_km": 5 },
-  { "id": "berkeley", "name": "Berkeley", "level": "city", "parentId": "east-bay", "lat": 37.8715, "lng": -122.2730, "radius_km": 5 },
-  { "id": "fremont", "name": "Fremont", "level": "city", "parentId": "east-bay", "lat": 37.5485, "lng": -121.9886, "radius_km": 5 },
-  { "id": "hayward", "name": "Hayward", "level": "city", "parentId": "east-bay", "lat": 37.6688, "lng": -122.0808, "radius_km": 5 },
-  { "id": "san-jose", "name": "San Jose", "level": "city", "parentId": "south-bay", "lat": 37.3382, "lng": -121.8863, "radius_km": 5 },
-  { "id": "sunnyvale", "name": "Sunnyvale", "level": "city", "parentId": "south-bay", "lat": 37.3688, "lng": -122.0363, "radius_km": 5 },
-  { "id": "santa-clara", "name": "Santa Clara", "level": "city", "parentId": "south-bay", "lat": 37.3541, "lng": -121.9552, "radius_km": 5 },
-  { "id": "daly-city", "name": "Daly City", "level": "city", "parentId": "peninsula", "lat": 37.6879, "lng": -122.4702, "radius_km": 5 },
-  { "id": "san-mateo", "name": "San Mateo", "level": "city", "parentId": "peninsula", "lat": 37.5630, "lng": -122.3255, "radius_km": 5 },
-  { "id": "redwood-city", "name": "Redwood City", "level": "city", "parentId": "peninsula", "lat": 37.4852, "lng": -122.2364, "radius_km": 5 },
-  { "id": "san-rafael", "name": "San Rafael", "level": "city", "parentId": "north-bay", "lat": 37.9735, "lng": -122.5311, "radius_km": 5 },
-  { "id": "santa-rosa", "name": "Santa Rosa", "level": "city", "parentId": "north-bay", "lat": 38.4404, "lng": -122.7141, "radius_km": 5 },
-
-  { "id": "mission", "name": "Mission", "level": "neighborhood", "parentId": "sf", "lat": 37.7599, "lng": -122.4148, "radius_km": 1.2 },
-  { "id": "excelsior", "name": "Excelsior", "level": "neighborhood", "parentId": "sf", "lat": 37.7244, "lng": -122.4272, "radius_km": 1.2 },
-  { "id": "sunset", "name": "Sunset", "level": "neighborhood", "parentId": "sf", "lat": 37.7530, "lng": -122.4940, "radius_km": 1.2 },
-  { "id": "richmond", "name": "Richmond", "level": "neighborhood", "parentId": "sf", "lat": 37.7800, "lng": -122.4830, "radius_km": 1.2 },
-  { "id": "bayview", "name": "Bayview", "level": "neighborhood", "parentId": "sf", "lat": 37.7290, "lng": -122.3920, "radius_km": 1.2 },
-  { "id": "outer-mission", "name": "Outer Mission", "level": "neighborhood", "parentId": "sf", "lat": 37.7190, "lng": -122.4420, "radius_km": 1.2 }
+ {
+  "id": "al",
+  "name": "Alabama",
+  "aliases": [
+   "AL"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   32.8,
+   -86.8
+  ],
+  "radius_km": 170
+ },
+ {
+  "id": "ak",
+  "name": "Alaska",
+  "aliases": [
+   "AK"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   64.0,
+   -152.0
+  ],
+  "radius_km": 600
+ },
+ {
+  "id": "az",
+  "name": "Arizona",
+  "aliases": [
+   "AZ"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   34.2,
+   -111.7
+  ],
+  "radius_km": 240
+ },
+ {
+  "id": "ar",
+  "name": "Arkansas",
+  "aliases": [
+   "AR"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   34.9,
+   -92.4
+  ],
+  "radius_km": 170
+ },
+ {
+  "id": "ca",
+  "name": "California",
+  "aliases": [
+   "CA",
+   "Cali"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   37.2,
+   -119.5
+  ],
+  "radius_km": 350
+ },
+ {
+  "id": "co",
+  "name": "Colorado",
+  "aliases": [
+   "CO"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   39.0,
+   -105.5
+  ],
+  "radius_km": 230
+ },
+ {
+  "id": "ct",
+  "name": "Connecticut",
+  "aliases": [
+   "CT"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   41.6,
+   -72.7
+  ],
+  "radius_km": 60
+ },
+ {
+  "id": "de",
+  "name": "Delaware",
+  "aliases": [
+   "DE"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   39.0,
+   -75.5
+  ],
+  "radius_km": 45
+ },
+ {
+  "id": "dc",
+  "name": "District of Columbia",
+  "aliases": [
+   "Washington DC",
+   "D.C."
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   38.905,
+   -77.03
+  ],
+  "radius_km": 9
+ },
+ {
+  "id": "fl",
+  "name": "Florida",
+  "aliases": [
+   "FL"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   28.6,
+   -82.4
+  ],
+  "radius_km": 260
+ },
+ {
+  "id": "ga",
+  "name": "Georgia",
+  "aliases": [
+   "GA"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   32.7,
+   -83.4
+  ],
+  "radius_km": 200
+ },
+ {
+  "id": "hi",
+  "name": "Hawaii",
+  "aliases": [
+   "HI"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   20.8,
+   -156.3
+  ],
+  "radius_km": 200
+ },
+ {
+  "id": "id",
+  "name": "Idaho",
+  "aliases": [
+   "ID"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   44.4,
+   -114.6
+  ],
+  "radius_km": 230
+ },
+ {
+  "id": "il",
+  "name": "Illinois",
+  "aliases": [
+   "IL"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   40.0,
+   -89.2
+  ],
+  "radius_km": 200
+ },
+ {
+  "id": "in",
+  "name": "Indiana",
+  "aliases": [
+   "IN"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   39.9,
+   -86.3
+  ],
+  "radius_km": 150
+ },
+ {
+  "id": "ia",
+  "name": "Iowa",
+  "aliases": [
+   "IA"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   42.1,
+   -93.5
+  ],
+  "radius_km": 170
+ },
+ {
+  "id": "ks",
+  "name": "Kansas",
+  "aliases": [
+   "KS"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   38.5,
+   -98.4
+  ],
+  "radius_km": 220
+ },
+ {
+  "id": "ky",
+  "name": "Kentucky",
+  "aliases": [
+   "KY"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   37.5,
+   -85.3
+  ],
+  "radius_km": 170
+ },
+ {
+  "id": "la",
+  "name": "Louisiana",
+  "aliases": [],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   31.0,
+   -92.0
+  ],
+  "radius_km": 180
+ },
+ {
+  "id": "me",
+  "name": "Maine",
+  "aliases": [
+   "ME"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   45.4,
+   -69.2
+  ],
+  "radius_km": 150
+ },
+ {
+  "id": "md",
+  "name": "Maryland",
+  "aliases": [
+   "MD"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   39.0,
+   -76.8
+  ],
+  "radius_km": 90
+ },
+ {
+  "id": "ma",
+  "name": "Massachusetts",
+  "aliases": [
+   "MA"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   42.3,
+   -71.8
+  ],
+  "radius_km": 90
+ },
+ {
+  "id": "mi",
+  "name": "Michigan",
+  "aliases": [
+   "MI"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   44.3,
+   -85.4
+  ],
+  "radius_km": 230
+ },
+ {
+  "id": "mn",
+  "name": "Minnesota",
+  "aliases": [
+   "MN"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   46.3,
+   -94.3
+  ],
+  "radius_km": 250
+ },
+ {
+  "id": "ms",
+  "name": "Mississippi",
+  "aliases": [
+   "MS"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   32.7,
+   -89.7
+  ],
+  "radius_km": 170
+ },
+ {
+  "id": "mo",
+  "name": "Missouri",
+  "aliases": [
+   "MO"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   38.4,
+   -92.5
+  ],
+  "radius_km": 210
+ },
+ {
+  "id": "mt",
+  "name": "Montana",
+  "aliases": [
+   "MT"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   47.0,
+   -109.6
+  ],
+  "radius_km": 330
+ },
+ {
+  "id": "ne",
+  "name": "Nebraska",
+  "aliases": [
+   "NE"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   41.5,
+   -99.8
+  ],
+  "radius_km": 230
+ },
+ {
+  "id": "nv",
+  "name": "Nevada",
+  "aliases": [
+   "NV"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   39.3,
+   -116.6
+  ],
+  "radius_km": 270
+ },
+ {
+  "id": "nh",
+  "name": "New Hampshire",
+  "aliases": [
+   "NH"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   43.7,
+   -71.6
+  ],
+  "radius_km": 80
+ },
+ {
+  "id": "nj",
+  "name": "New Jersey",
+  "aliases": [
+   "NJ"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   40.1,
+   -74.7
+  ],
+  "radius_km": 80
+ },
+ {
+  "id": "nm",
+  "name": "New Mexico",
+  "aliases": [
+   "NM"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   34.4,
+   -106.1
+  ],
+  "radius_km": 260
+ },
+ {
+  "id": "ny",
+  "name": "New York State",
+  "aliases": [
+   "NY",
+   "New York State"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   42.9,
+   -75.5
+  ],
+  "radius_km": 200
+ },
+ {
+  "id": "nc",
+  "name": "North Carolina",
+  "aliases": [
+   "NC"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   35.5,
+   -79.4
+  ],
+  "radius_km": 200
+ },
+ {
+  "id": "nd",
+  "name": "North Dakota",
+  "aliases": [
+   "ND"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   47.5,
+   -100.5
+  ],
+  "radius_km": 210
+ },
+ {
+  "id": "oh",
+  "name": "Ohio",
+  "aliases": [
+   "OH"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   40.3,
+   -82.8
+  ],
+  "radius_km": 170
+ },
+ {
+  "id": "ok",
+  "name": "Oklahoma",
+  "aliases": [
+   "OK"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   35.6,
+   -97.5
+  ],
+  "radius_km": 210
+ },
+ {
+  "id": "or",
+  "name": "Oregon",
+  "aliases": [
+   "OR"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   43.9,
+   -120.6
+  ],
+  "radius_km": 250
+ },
+ {
+  "id": "pa",
+  "name": "Pennsylvania",
+  "aliases": [
+   "PA"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   40.9,
+   -77.8
+  ],
+  "radius_km": 180
+ },
+ {
+  "id": "ri",
+  "name": "Rhode Island",
+  "aliases": [
+   "RI"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   41.7,
+   -71.5
+  ],
+  "radius_km": 30
+ },
+ {
+  "id": "sc",
+  "name": "South Carolina",
+  "aliases": [
+   "SC"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   33.9,
+   -80.9
+  ],
+  "radius_km": 140
+ },
+ {
+  "id": "sd",
+  "name": "South Dakota",
+  "aliases": [],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   44.4,
+   -100.2
+  ],
+  "radius_km": 210
+ },
+ {
+  "id": "tn",
+  "name": "Tennessee",
+  "aliases": [
+   "TN"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   35.9,
+   -86.4
+  ],
+  "radius_km": 170
+ },
+ {
+  "id": "tx",
+  "name": "Texas",
+  "aliases": [
+   "TX"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   31.5,
+   -99.3
+  ],
+  "radius_km": 420
+ },
+ {
+  "id": "ut",
+  "name": "Utah",
+  "aliases": [
+   "UT"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   39.3,
+   -111.7
+  ],
+  "radius_km": 220
+ },
+ {
+  "id": "vt",
+  "name": "Vermont",
+  "aliases": [
+   "VT"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   44.1,
+   -72.7
+  ],
+  "radius_km": 70
+ },
+ {
+  "id": "va",
+  "name": "Virginia",
+  "aliases": [
+   "VA"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   37.5,
+   -78.8
+  ],
+  "radius_km": 190
+ },
+ {
+  "id": "wa",
+  "name": "Washington",
+  "aliases": [
+   "Washington State",
+   "WA"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   47.4,
+   -120.5
+  ],
+  "radius_km": 230
+ },
+ {
+  "id": "wv",
+  "name": "West Virginia",
+  "aliases": [
+   "WV"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   38.6,
+   -80.6
+  ],
+  "radius_km": 130
+ },
+ {
+  "id": "wi",
+  "name": "Wisconsin",
+  "aliases": [
+   "WI"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   44.6,
+   -89.9
+  ],
+  "radius_km": 200
+ },
+ {
+  "id": "wy",
+  "name": "Wyoming",
+  "aliases": [
+   "WY"
+  ],
+  "level": "state",
+  "parentId": null,
+  "center": [
+   43.0,
+   -107.5
+  ],
+  "radius_km": 250
+ },
+ {
+  "id": "bay-area",
+  "name": "Bay Area",
+  "aliases": [
+   "SF Bay Area",
+   "San Francisco Bay Area",
+   "Bay"
+  ],
+  "level": "region",
+  "parentId": "ca",
+  "center": [
+   37.75,
+   -122.25
+  ],
+  "radius_km": 60
+ },
+ {
+  "id": "sf",
+  "name": "San Francisco",
+  "aliases": [
+   "SF",
+   "San Fran",
+   "Frisco"
+  ],
+  "level": "subregion",
+  "parentId": "bay-area",
+  "center": [
+   37.76,
+   -122.44
+  ],
+  "radius_km": 8
+ },
+ {
+  "id": "east-bay",
+  "name": "East Bay",
+  "aliases": [],
+  "level": "subregion",
+  "parentId": "bay-area",
+  "center": [
+   37.8,
+   -122.22
+  ],
+  "radius_km": 20
+ },
+ {
+  "id": "south-bay",
+  "name": "South Bay",
+  "aliases": [
+   "Silicon Valley"
+  ],
+  "level": "subregion",
+  "parentId": "bay-area",
+  "center": [
+   37.34,
+   -121.93
+  ],
+  "radius_km": 20
+ },
+ {
+  "id": "peninsula",
+  "name": "Peninsula",
+  "aliases": [],
+  "level": "subregion",
+  "parentId": "bay-area",
+  "center": [
+   37.52,
+   -122.3
+  ],
+  "radius_km": 15
+ },
+ {
+  "id": "north-bay",
+  "name": "North Bay",
+  "aliases": [
+   "Marin"
+  ],
+  "level": "subregion",
+  "parentId": "bay-area",
+  "center": [
+   38.1,
+   -122.6
+  ],
+  "radius_km": 25
+ },
+ {
+  "id": "oakland",
+  "name": "Oakland",
+  "aliases": [],
+  "level": "city",
+  "parentId": "east-bay",
+  "center": [
+   37.8044,
+   -122.2712
+  ],
+  "radius_km": 5
+ },
+ {
+  "id": "berkeley",
+  "name": "Berkeley",
+  "aliases": [],
+  "level": "city",
+  "parentId": "east-bay",
+  "center": [
+   37.8715,
+   -122.273
+  ],
+  "radius_km": 5
+ },
+ {
+  "id": "fremont",
+  "name": "Fremont",
+  "aliases": [],
+  "level": "city",
+  "parentId": "east-bay",
+  "center": [
+   37.5485,
+   -121.9886
+  ],
+  "radius_km": 5
+ },
+ {
+  "id": "hayward",
+  "name": "Hayward",
+  "aliases": [],
+  "level": "city",
+  "parentId": "east-bay",
+  "center": [
+   37.6688,
+   -122.0808
+  ],
+  "radius_km": 5
+ },
+ {
+  "id": "san-jose",
+  "name": "San Jose",
+  "aliases": [],
+  "level": "city",
+  "parentId": "south-bay",
+  "center": [
+   37.3382,
+   -121.8863
+  ],
+  "radius_km": 5
+ },
+ {
+  "id": "sunnyvale",
+  "name": "Sunnyvale",
+  "aliases": [],
+  "level": "city",
+  "parentId": "south-bay",
+  "center": [
+   37.3688,
+   -122.0363
+  ],
+  "radius_km": 5
+ },
+ {
+  "id": "santa-clara",
+  "name": "Santa Clara",
+  "aliases": [],
+  "level": "city",
+  "parentId": "south-bay",
+  "center": [
+   37.3541,
+   -121.9552
+  ],
+  "radius_km": 5
+ },
+ {
+  "id": "daly-city",
+  "name": "Daly City",
+  "aliases": [],
+  "level": "city",
+  "parentId": "peninsula",
+  "center": [
+   37.6879,
+   -122.4702
+  ],
+  "radius_km": 5
+ },
+ {
+  "id": "san-mateo",
+  "name": "San Mateo",
+  "aliases": [],
+  "level": "city",
+  "parentId": "peninsula",
+  "center": [
+   37.563,
+   -122.3255
+  ],
+  "radius_km": 5
+ },
+ {
+  "id": "redwood-city",
+  "name": "Redwood City",
+  "aliases": [],
+  "level": "city",
+  "parentId": "peninsula",
+  "center": [
+   37.4852,
+   -122.2364
+  ],
+  "radius_km": 5
+ },
+ {
+  "id": "san-rafael",
+  "name": "San Rafael",
+  "aliases": [],
+  "level": "city",
+  "parentId": "north-bay",
+  "center": [
+   37.9735,
+   -122.5311
+  ],
+  "radius_km": 5
+ },
+ {
+  "id": "santa-rosa",
+  "name": "Santa Rosa",
+  "aliases": [],
+  "level": "city",
+  "parentId": "north-bay",
+  "center": [
+   38.4404,
+   -122.7141
+  ],
+  "radius_km": 5
+ },
+ {
+  "id": "mission",
+  "name": "Mission",
+  "aliases": [],
+  "level": "neighborhood",
+  "parentId": "sf",
+  "center": [
+   37.7599,
+   -122.4148
+  ],
+  "radius_km": 1.2
+ },
+ {
+  "id": "excelsior",
+  "name": "Excelsior",
+  "aliases": [],
+  "level": "neighborhood",
+  "parentId": "sf",
+  "center": [
+   37.7244,
+   -122.4272
+  ],
+  "radius_km": 1.2
+ },
+ {
+  "id": "sunset",
+  "name": "Sunset",
+  "aliases": [],
+  "level": "neighborhood",
+  "parentId": "sf",
+  "center": [
+   37.753,
+   -122.494
+  ],
+  "radius_km": 1.2
+ },
+ {
+  "id": "richmond",
+  "name": "Richmond",
+  "aliases": [],
+  "level": "neighborhood",
+  "parentId": "sf",
+  "center": [
+   37.78,
+   -122.483
+  ],
+  "radius_km": 1.2
+ },
+ {
+  "id": "bayview",
+  "name": "Bayview",
+  "aliases": [],
+  "level": "neighborhood",
+  "parentId": "sf",
+  "center": [
+   37.729,
+   -122.392
+  ],
+  "radius_km": 1.2
+ },
+ {
+  "id": "outer-mission",
+  "name": "Outer Mission",
+  "aliases": [],
+  "level": "neighborhood",
+  "parentId": "sf",
+  "center": [
+   37.719,
+   -122.442
+  ],
+  "radius_km": 1.2
+ },
+ {
+  "id": "nyc",
+  "name": "New York City",
+  "aliases": [
+   "NYC",
+   "New York",
+   "NY City",
+   "The City",
+   "Big Apple"
+  ],
+  "level": "region",
+  "parentId": "ny",
+  "center": [
+   40.71,
+   -74.0
+  ],
+  "radius_km": 30
+ },
+ {
+  "id": "brooklyn",
+  "name": "Brooklyn",
+  "aliases": [
+   "BK"
+  ],
+  "level": "subregion",
+  "parentId": "nyc",
+  "center": [
+   40.65,
+   -73.95
+  ],
+  "radius_km": 9
+ },
+ {
+  "id": "brighton-beach",
+  "name": "Brighton Beach",
+  "aliases": [],
+  "level": "neighborhood",
+  "parentId": "brooklyn",
+  "center": [
+   40.5776,
+   -73.9614
+  ],
+  "radius_km": 1.4
+ },
+ {
+  "id": "sunset-park",
+  "name": "Sunset Park",
+  "aliases": [],
+  "level": "neighborhood",
+  "parentId": "brooklyn",
+  "center": [
+   40.6455,
+   -74.0124
+  ],
+  "radius_km": 1.4
+ },
+ {
+  "id": "queens",
+  "name": "Queens",
+  "aliases": [],
+  "level": "subregion",
+  "parentId": "nyc",
+  "center": [
+   40.73,
+   -73.82
+  ],
+  "radius_km": 11
+ },
+ {
+  "id": "jackson-heights",
+  "name": "Jackson Heights",
+  "aliases": [],
+  "level": "neighborhood",
+  "parentId": "queens",
+  "center": [
+   40.7557,
+   -73.8831
+  ],
+  "radius_km": 1.4
+ },
+ {
+  "id": "corona",
+  "name": "Corona",
+  "aliases": [],
+  "level": "neighborhood",
+  "parentId": "queens",
+  "center": [
+   40.745,
+   -73.8642
+  ],
+  "radius_km": 1.4
+ },
+ {
+  "id": "flushing",
+  "name": "Flushing",
+  "aliases": [],
+  "level": "neighborhood",
+  "parentId": "queens",
+  "center": [
+   40.7675,
+   -73.8331
+  ],
+  "radius_km": 1.4
+ },
+ {
+  "id": "bronx",
+  "name": "Bronx",
+  "aliases": [
+   "The Bronx"
+  ],
+  "level": "subregion",
+  "parentId": "nyc",
+  "center": [
+   40.845,
+   -73.865
+  ],
+  "radius_km": 7
+ },
+ {
+  "id": "manhattan",
+  "name": "Manhattan",
+  "aliases": [],
+  "level": "subregion",
+  "parentId": "nyc",
+  "center": [
+   40.78,
+   -73.97
+  ],
+  "radius_km": 6
+ },
+ {
+  "id": "washington-heights",
+  "name": "Washington Heights",
+  "aliases": [],
+  "level": "neighborhood",
+  "parentId": "manhattan",
+  "center": [
+   40.8417,
+   -73.9394
+  ],
+  "radius_km": 1.4
+ },
+ {
+  "id": "staten-island",
+  "name": "Staten Island",
+  "aliases": [],
+  "level": "subregion",
+  "parentId": "nyc",
+  "center": [
+   40.58,
+   -74.15
+  ],
+  "radius_km": 8
+ },
+ {
+  "id": "northern-nj",
+  "name": "Northern NJ",
+  "aliases": [
+   "North Jersey",
+   "Jersey City",
+   "Newark",
+   "Paterson"
+  ],
+  "level": "subregion",
+  "parentId": "nyc",
+  "center": [
+   40.78,
+   -74.15
+  ],
+  "radius_km": 18
+ },
+ {
+  "id": "los-angeles",
+  "name": "Greater Los Angeles",
+  "aliases": [
+   "LA",
+   "L.A.",
+   "Los Angeles",
+   "SoCal"
+  ],
+  "level": "region",
+  "parentId": "ca",
+  "center": [
+   34.05,
+   -118.25
+  ],
+  "radius_km": 50
+ },
+ {
+  "id": "san-fernando-valley",
+  "name": "San Fernando Valley",
+  "aliases": [
+   "The Valley",
+   "SFV"
+  ],
+  "level": "subregion",
+  "parentId": "los-angeles",
+  "center": [
+   34.2,
+   -118.45
+  ],
+  "radius_km": 15
+ },
+ {
+  "id": "east-la",
+  "name": "East LA",
+  "aliases": [
+   "East Los Angeles",
+   "Boyle Heights"
+  ],
+  "level": "subregion",
+  "parentId": "los-angeles",
+  "center": [
+   34.03,
+   -118.17
+  ],
+  "radius_km": 6
+ },
+ {
+  "id": "south-la",
+  "name": "South LA",
+  "aliases": [
+   "South Central"
+  ],
+  "level": "subregion",
+  "parentId": "los-angeles",
+  "center": [
+   33.96,
+   -118.28
+  ],
+  "radius_km": 8
+ },
+ {
+  "id": "westside",
+  "name": "Westside",
+  "aliases": [
+   "Santa Monica"
+  ],
+  "level": "subregion",
+  "parentId": "los-angeles",
+  "center": [
+   34.03,
+   -118.45
+  ],
+  "radius_km": 8
+ },
+ {
+  "id": "san-gabriel-valley",
+  "name": "San Gabriel Valley",
+  "aliases": [
+   "SGV",
+   "Alhambra",
+   "El Monte"
+  ],
+  "level": "subregion",
+  "parentId": "los-angeles",
+  "center": [
+   34.08,
+   -118.05
+  ],
+  "radius_km": 14
+ },
+ {
+  "id": "orange-county",
+  "name": "Orange County",
+  "aliases": [
+   "OC",
+   "Anaheim",
+   "Santa Ana"
+  ],
+  "level": "subregion",
+  "parentId": "los-angeles",
+  "center": [
+   33.72,
+   -117.83
+  ],
+  "radius_km": 25
+ },
+ {
+  "id": "chicago",
+  "name": "Chicago",
+  "aliases": [
+   "Chi-town",
+   "Chi",
+   "Chicagoland"
+  ],
+  "level": "region",
+  "parentId": "il",
+  "center": [
+   41.88,
+   -87.65
+  ],
+  "radius_km": 35
+ },
+ {
+  "id": "pilsen",
+  "name": "Pilsen",
+  "aliases": [],
+  "level": "neighborhood",
+  "parentId": "chicago",
+  "center": [
+   41.8565,
+   -87.6566
+  ],
+  "radius_km": 1.5
+ },
+ {
+  "id": "little-village",
+  "name": "Little Village",
+  "aliases": [
+   "La Villita"
+  ],
+  "level": "neighborhood",
+  "parentId": "chicago",
+  "center": [
+   41.8445,
+   -87.711
+  ],
+  "radius_km": 1.8
+ },
+ {
+  "id": "ukrainian-village",
+  "name": "Ukrainian Village",
+  "aliases": [],
+  "level": "neighborhood",
+  "parentId": "chicago",
+  "center": [
+   41.899,
+   -87.6855
+  ],
+  "radius_km": 1.2
+ },
+ {
+  "id": "rogers-park",
+  "name": "Rogers Park",
+  "aliases": [],
+  "level": "neighborhood",
+  "parentId": "chicago",
+  "center": [
+   42.0106,
+   -87.6696
+  ],
+  "radius_km": 1.8
+ },
+ {
+  "id": "chicago-suburbs",
+  "name": "Chicago Suburbs",
+  "aliases": [
+   "Suburbs",
+   "Cicero",
+   "Schaumburg",
+   "Palatine"
+  ],
+  "level": "subregion",
+  "parentId": "chicago",
+  "center": [
+   41.95,
+   -87.95
+  ],
+  "radius_km": 25
+ },
+ {
+  "id": "houston",
+  "name": "Houston",
+  "aliases": [
+   "H-Town",
+   "HTX"
+  ],
+  "level": "region",
+  "parentId": "tx",
+  "center": [
+   29.76,
+   -95.37
+  ],
+  "radius_km": 40
+ },
+ {
+  "id": "gulfton",
+  "name": "Gulfton",
+  "aliases": [],
+  "level": "neighborhood",
+  "parentId": "houston",
+  "center": [
+   29.723,
+   -95.468
+  ],
+  "radius_km": 2
+ },
+ {
+  "id": "alief",
+  "name": "Alief",
+  "aliases": [],
+  "level": "neighborhood",
+  "parentId": "houston",
+  "center": [
+   29.711,
+   -95.596
+  ],
+  "radius_km": 4
+ },
+ {
+  "id": "pasadena-tx",
+  "name": "Pasadena TX",
+  "aliases": [
+   "Pasadena"
+  ],
+  "level": "city",
+  "parentId": "houston",
+  "center": [
+   29.6911,
+   -95.2091
+  ],
+  "radius_km": 6
+ },
+ {
+  "id": "bellaire-chinatown",
+  "name": "Bellaire / Chinatown",
+  "aliases": [
+   "Houston Chinatown"
+  ],
+  "level": "neighborhood",
+  "parentId": "houston",
+  "center": [
+   29.705,
+   -95.545
+  ],
+  "radius_km": 3
+ },
+ {
+  "id": "dfw",
+  "name": "Dallas–Fort Worth",
+  "aliases": [
+   "DFW",
+   "Dallas",
+   "Fort Worth"
+  ],
+  "level": "region",
+  "parentId": "tx",
+  "center": [
+   32.8,
+   -97.0
+  ],
+  "radius_km": 50
+ },
+ {
+  "id": "dallas",
+  "name": "Dallas",
+  "aliases": [],
+  "level": "city",
+  "parentId": "dfw",
+  "center": [
+   32.78,
+   -96.8
+  ],
+  "radius_km": 12
+ },
+ {
+  "id": "fort-worth",
+  "name": "Fort Worth",
+  "aliases": [],
+  "level": "city",
+  "parentId": "dfw",
+  "center": [
+   32.75,
+   -97.33
+  ],
+  "radius_km": 12
+ },
+ {
+  "id": "irving",
+  "name": "Irving",
+  "aliases": [],
+  "level": "city",
+  "parentId": "dfw",
+  "center": [
+   32.81,
+   -96.95
+  ],
+  "radius_km": 7
+ },
+ {
+  "id": "garland",
+  "name": "Garland",
+  "aliases": [],
+  "level": "city",
+  "parentId": "dfw",
+  "center": [
+   32.91,
+   -96.64
+  ],
+  "radius_km": 7
+ },
+ {
+  "id": "san-antonio",
+  "name": "San Antonio",
+  "aliases": [
+   "SA",
+   "SATX"
+  ],
+  "level": "region",
+  "parentId": "tx",
+  "center": [
+   29.42,
+   -98.49
+  ],
+  "radius_km": 30
+ },
+ {
+  "id": "west-side-san-antonio",
+  "name": "West Side San Antonio",
+  "aliases": [
+   "West Side"
+  ],
+  "level": "subregion",
+  "parentId": "san-antonio",
+  "center": [
+   29.42,
+   -98.55
+  ],
+  "radius_km": 6
+ },
+ {
+  "id": "south-side-san-antonio",
+  "name": "South Side San Antonio",
+  "aliases": [
+   "South Side"
+  ],
+  "level": "subregion",
+  "parentId": "san-antonio",
+  "center": [
+   29.35,
+   -98.48
+  ],
+  "radius_km": 7
+ },
+ {
+  "id": "northeast-san-antonio",
+  "name": "Northeast San Antonio",
+  "aliases": [],
+  "level": "subregion",
+  "parentId": "san-antonio",
+  "center": [
+   29.53,
+   -98.41
+  ],
+  "radius_km": 8
+ },
+ {
+  "id": "miami",
+  "name": "Miami",
+  "aliases": [
+   "Miami-Dade",
+   "South Florida",
+   "MIA"
+  ],
+  "level": "region",
+  "parentId": "fl",
+  "center": [
+   25.76,
+   -80.3
+  ],
+  "radius_km": 35
+ },
+ {
+  "id": "hialeah",
+  "name": "Hialeah",
+  "aliases": [],
+  "level": "city",
+  "parentId": "miami",
+  "center": [
+   25.8576,
+   -80.2781
+  ],
+  "radius_km": 5
+ },
+ {
+  "id": "little-havana",
+  "name": "Little Havana",
+  "aliases": [
+   "Pequeña Habana"
+  ],
+  "level": "neighborhood",
+  "parentId": "miami",
+  "center": [
+   25.7731,
+   -80.2194
+  ],
+  "radius_km": 1.6
+ },
+ {
+  "id": "doral",
+  "name": "Doral",
+  "aliases": [],
+  "level": "city",
+  "parentId": "miami",
+  "center": [
+   25.8195,
+   -80.3553
+  ],
+  "radius_km": 5
+ },
+ {
+  "id": "kendall",
+  "name": "Kendall",
+  "aliases": [],
+  "level": "city",
+  "parentId": "miami",
+  "center": [
+   25.6793,
+   -80.3173
+  ],
+  "radius_km": 6
+ },
+ {
+  "id": "phoenix",
+  "name": "Phoenix",
+  "aliases": [
+   "PHX",
+   "Valley of the Sun"
+  ],
+  "level": "region",
+  "parentId": "az",
+  "center": [
+   33.45,
+   -112.07
+  ],
+  "radius_km": 40
+ },
+ {
+  "id": "maryvale",
+  "name": "Maryvale",
+  "aliases": [],
+  "level": "neighborhood",
+  "parentId": "phoenix",
+  "center": [
+   33.495,
+   -112.185
+  ],
+  "radius_km": 4
+ },
+ {
+  "id": "mesa",
+  "name": "Mesa",
+  "aliases": [],
+  "level": "city",
+  "parentId": "phoenix",
+  "center": [
+   33.4152,
+   -111.8315
+  ],
+  "radius_km": 10
+ },
+ {
+  "id": "glendale-az",
+  "name": "Glendale AZ",
+  "aliases": [
+   "Glendale"
+  ],
+  "level": "city",
+  "parentId": "phoenix",
+  "center": [
+   33.5387,
+   -112.186
+  ],
+  "radius_km": 8
+ },
+ {
+  "id": "tempe",
+  "name": "Tempe",
+  "aliases": [],
+  "level": "city",
+  "parentId": "phoenix",
+  "center": [
+   33.4255,
+   -111.94
+  ],
+  "radius_km": 6
+ },
+ {
+  "id": "san-diego",
+  "name": "San Diego",
+  "aliases": [
+   "SD",
+   "SoCal"
+  ],
+  "level": "region",
+  "parentId": "ca",
+  "center": [
+   32.75,
+   -117.1
+  ],
+  "radius_km": 30
+ },
+ {
+  "id": "chula-vista",
+  "name": "Chula Vista",
+  "aliases": [],
+  "level": "city",
+  "parentId": "san-diego",
+  "center": [
+   32.6401,
+   -117.0842
+  ],
+  "radius_km": 7
+ },
+ {
+  "id": "city-heights",
+  "name": "City Heights",
+  "aliases": [],
+  "level": "neighborhood",
+  "parentId": "san-diego",
+  "center": [
+   32.748,
+   -117.1
+  ],
+  "radius_km": 2
+ },
+ {
+  "id": "escondido",
+  "name": "Escondido",
+  "aliases": [],
+  "level": "city",
+  "parentId": "san-diego",
+  "center": [
+   33.1192,
+   -117.0864
+  ],
+  "radius_km": 7
+ },
+ {
+  "id": "denver",
+  "name": "Denver",
+  "aliases": [
+   "Mile High"
+  ],
+  "level": "region",
+  "parentId": "co",
+  "center": [
+   39.74,
+   -104.99
+  ],
+  "radius_km": 30
+ },
+ {
+  "id": "aurora",
+  "name": "Aurora",
+  "aliases": [],
+  "level": "city",
+  "parentId": "denver",
+  "center": [
+   39.7294,
+   -104.8319
+  ],
+  "radius_km": 9
+ },
+ {
+  "id": "westwood-denver",
+  "name": "Westwood Denver",
+  "aliases": [
+   "Westwood"
+  ],
+  "level": "neighborhood",
+  "parentId": "denver",
+  "center": [
+   39.699,
+   -105.039
+  ],
+  "radius_km": 1.5
+ },
+ {
+  "id": "lakewood",
+  "name": "Lakewood",
+  "aliases": [],
+  "level": "city",
+  "parentId": "denver",
+  "center": [
+   39.7047,
+   -105.0814
+  ],
+  "radius_km": 7
+ },
+ {
+  "id": "seattle",
+  "name": "Seattle",
+  "aliases": [
+   "SEA",
+   "Puget Sound"
+  ],
+  "level": "region",
+  "parentId": "wa",
+  "center": [
+   47.55,
+   -122.25
+  ],
+  "radius_km": 35
+ },
+ {
+  "id": "kent",
+  "name": "Kent",
+  "aliases": [],
+  "level": "city",
+  "parentId": "seattle",
+  "center": [
+   47.3809,
+   -122.2348
+  ],
+  "radius_km": 6
+ },
+ {
+  "id": "federal-way",
+  "name": "Federal Way",
+  "aliases": [],
+  "level": "city",
+  "parentId": "seattle",
+  "center": [
+   47.3223,
+   -122.3126
+  ],
+  "radius_km": 6
+ },
+ {
+  "id": "bellevue",
+  "name": "Bellevue",
+  "aliases": [],
+  "level": "city",
+  "parentId": "seattle",
+  "center": [
+   47.6101,
+   -122.2015
+  ],
+  "radius_km": 6
+ },
+ {
+  "id": "seattle-city",
+  "name": "Seattle City",
+  "aliases": [
+   "Downtown Seattle"
+  ],
+  "level": "city",
+  "parentId": "seattle",
+  "center": [
+   47.6062,
+   -122.3321
+  ],
+  "radius_km": 7
+ },
+ {
+  "id": "sacramento",
+  "name": "Sacramento",
+  "aliases": [
+   "Sac",
+   "Sactown"
+  ],
+  "level": "region",
+  "parentId": "ca",
+  "center": [
+   38.58,
+   -121.4
+  ],
+  "radius_km": 30
+ },
+ {
+  "id": "rancho-cordova",
+  "name": "Rancho Cordova",
+  "aliases": [],
+  "level": "city",
+  "parentId": "sacramento",
+  "center": [
+   38.5891,
+   -121.3027
+  ],
+  "radius_km": 6
+ },
+ {
+  "id": "citrus-heights",
+  "name": "Citrus Heights",
+  "aliases": [],
+  "level": "city",
+  "parentId": "sacramento",
+  "center": [
+   38.7071,
+   -121.2811
+  ],
+  "radius_km": 5
+ },
+ {
+  "id": "west-sacramento",
+  "name": "West Sacramento",
+  "aliases": [
+   "West Sac"
+  ],
+  "level": "city",
+  "parentId": "sacramento",
+  "center": [
+   38.5805,
+   -121.5302
+  ],
+  "radius_km": 5
+ },
+ {
+  "id": "north-highlands",
+  "name": "North Highlands",
+  "aliases": [],
+  "level": "city",
+  "parentId": "sacramento",
+  "center": [
+   38.6857,
+   -121.3722
+  ],
+  "radius_km": 4
+ },
+ {
+  "id": "philadelphia",
+  "name": "Philadelphia",
+  "aliases": [
+   "Philly",
+   "PHL"
+  ],
+  "level": "region",
+  "parentId": "pa",
+  "center": [
+   39.98,
+   -75.15
+  ],
+  "radius_km": 25
+ },
+ {
+  "id": "northeast-philly",
+  "name": "Northeast Philly",
+  "aliases": [
+   "Northeast Philadelphia",
+   "NE Philly"
+  ],
+  "level": "subregion",
+  "parentId": "philadelphia",
+  "center": [
+   40.06,
+   -75.05
+  ],
+  "radius_km": 8
+ },
+ {
+  "id": "south-philly",
+  "name": "South Philly",
+  "aliases": [
+   "South Philadelphia"
+  ],
+  "level": "subregion",
+  "parentId": "philadelphia",
+  "center": [
+   39.925,
+   -75.17
+  ],
+  "radius_km": 4
+ },
+ {
+  "id": "north-philly",
+  "name": "North Philly",
+  "aliases": [],
+  "level": "subregion",
+  "parentId": "philadelphia",
+  "center": [
+   40.0,
+   -75.15
+  ],
+  "radius_km": 5
+ },
+ {
+  "id": "dc-metro",
+  "name": "Washington DC area",
+  "aliases": [
+   "DC",
+   "DMV",
+   "D.C. area",
+   "Washington DC"
+  ],
+  "level": "region",
+  "parentId": "dc",
+  "center": [
+   38.92,
+   -77.05
+  ],
+  "radius_km": 30
+ },
+ {
+  "id": "silver-spring",
+  "name": "Silver Spring",
+  "aliases": [],
+  "level": "city",
+  "parentId": "dc-metro",
+  "center": [
+   38.9907,
+   -77.0261
+  ],
+  "radius_km": 5
+ },
+ {
+  "id": "arlington",
+  "name": "Arlington",
+  "aliases": [],
+  "level": "city",
+  "parentId": "dc-metro",
+  "center": [
+   38.8816,
+   -77.091
+  ],
+  "radius_km": 5
+ },
+ {
+  "id": "columbia-heights",
+  "name": "Columbia Heights",
+  "aliases": [],
+  "level": "neighborhood",
+  "parentId": "dc-metro",
+  "center": [
+   38.9283,
+   -77.0326
+  ],
+  "radius_km": 1.3
+ },
+ {
+  "id": "langley-park",
+  "name": "Langley Park",
+  "aliases": [],
+  "level": "city",
+  "parentId": "dc-metro",
+  "center": [
+   38.9887,
+   -76.9811
+  ],
+  "radius_km": 2
+ },
+ {
+  "id": "boston",
+  "name": "Boston",
+  "aliases": [
+   "Beantown",
+   "BOS"
+  ],
+  "level": "region",
+  "parentId": "ma",
+  "center": [
+   42.36,
+   -71.06
+  ],
+  "radius_km": 25
+ },
+ {
+  "id": "east-boston",
+  "name": "East Boston",
+  "aliases": [
+   "Eastie"
+  ],
+  "level": "neighborhood",
+  "parentId": "boston",
+  "center": [
+   42.375,
+   -71.039
+  ],
+  "radius_km": 2
+ },
+ {
+  "id": "chelsea",
+  "name": "Chelsea",
+  "aliases": [],
+  "level": "city",
+  "parentId": "boston",
+  "center": [
+   42.3918,
+   -71.0328
+  ],
+  "radius_km": 2.5
+ },
+ {
+  "id": "dorchester",
+  "name": "Dorchester",
+  "aliases": [],
+  "level": "neighborhood",
+  "parentId": "boston",
+  "center": [
+   42.3,
+   -71.06
+  ],
+  "radius_km": 3
+ },
+ {
+  "id": "somerville",
+  "name": "Somerville",
+  "aliases": [],
+  "level": "city",
+  "parentId": "boston",
+  "center": [
+   42.3876,
+   -71.0995
+  ],
+  "radius_km": 3
+ },
+ {
+  "id": "atlanta",
+  "name": "Atlanta",
+  "aliases": [
+   "ATL",
+   "Hotlanta"
+  ],
+  "level": "region",
+  "parentId": "ga",
+  "center": [
+   33.75,
+   -84.39
+  ],
+  "radius_km": 35
+ },
+ {
+  "id": "buford-highway",
+  "name": "Buford Highway",
+  "aliases": [
+   "Doraville",
+   "Chamblee"
+  ],
+  "level": "subregion",
+  "parentId": "atlanta",
+  "center": [
+   33.87,
+   -84.3
+  ],
+  "radius_km": 6
+ },
+ {
+  "id": "decatur",
+  "name": "Decatur",
+  "aliases": [],
+  "level": "city",
+  "parentId": "atlanta",
+  "center": [
+   33.7748,
+   -84.2963
+  ],
+  "radius_km": 4
+ },
+ {
+  "id": "marietta",
+  "name": "Marietta",
+  "aliases": [],
+  "level": "city",
+  "parentId": "atlanta",
+  "center": [
+   33.9526,
+   -84.5499
+  ],
+  "radius_km": 6
+ },
+ {
+  "id": "minneapolis",
+  "name": "Minneapolis–St. Paul",
+  "aliases": [
+   "Twin Cities",
+   "Minneapolis",
+   "St. Paul",
+   "MSP"
+  ],
+  "level": "region",
+  "parentId": "mn",
+  "center": [
+   44.97,
+   -93.2
+  ],
+  "radius_km": 30
+ },
+ {
+  "id": "lake-street",
+  "name": "Lake Street",
+  "aliases": [],
+  "level": "neighborhood",
+  "parentId": "minneapolis",
+  "center": [
+   44.948,
+   -93.26
+  ],
+  "radius_km": 2.5
+ },
+ {
+  "id": "st-paul",
+  "name": "St. Paul",
+  "aliases": [
+   "Saint Paul"
+  ],
+  "level": "city",
+  "parentId": "minneapolis",
+  "center": [
+   44.9537,
+   -93.09
+  ],
+  "radius_km": 8
+ },
+ {
+  "id": "brooklyn-park",
+  "name": "Brooklyn Park",
+  "aliases": [],
+  "level": "city",
+  "parentId": "minneapolis",
+  "center": [
+   45.0941,
+   -93.3563
+  ],
+  "radius_km": 6
+ }
 ]
