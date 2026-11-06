@@ -49,7 +49,9 @@ export default function OrderChat({ orderId, role }: { orderId: string; role: "c
     };
   }, [orderId]);
 
-  useEffect(() => endRef.current?.scrollIntoView({ behavior: "smooth" }), [count, sending]);
+  useEffect(() => {
+    endRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [count, sending]);
 
   const myLang: Lang = role === "customer" ? order?.customerLanguage ?? "en" : provider?.language ?? "en";
   const t = CHAT_T[myLang];

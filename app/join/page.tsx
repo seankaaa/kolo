@@ -133,7 +133,9 @@ export default function Join() {
     setInput((cur) => (cur ? cur + " " : "") + text)
   );
 
-  useEffect(() => endRef.current?.scrollIntoView({ behavior: "smooth" }), [messages, listing, flags]);
+  useEffect(() => {
+    endRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, listing, flags]);
 
   async function ask(history: Msg[]) {
     setBusy(true);
