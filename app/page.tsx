@@ -7,13 +7,13 @@ import Header from "@/components/Header";
 import ProviderDrawer, { servesLabel, VerifiedBadge } from "@/components/ProviderDrawer";
 import type { Bounds, MapTarget } from "@/components/MapView";
 import { AREAS, areaById, CATEGORIES, distanceKm, LANG_NAMES, nearestArea, parentLabel, searchAreas } from "@/lib/areas";
-import { useUILang } from "@/lib/i18n";
+import { catLabel, pick, useUILang, type UIKey } from "@/lib/i18n";
 import type { Area, Provider } from "@/lib/types";
 import type { Suggestion } from "@/app/api/suggest/route";
 
 const MapView = dynamic(() => import("@/components/MapView"), {
   ssr: false,
-  loading: () => <div className="grid h-full place-items-center text-stone-400">Loading map…</div>,
+  loading: () => <div className="grid h-full place-items-center text-stone-400">…</div>,
 });
 
 function posOf(p: Provider): [number, number] | null {
@@ -37,7 +37,7 @@ export default function Home() {
   const [group, setGroup] = useState<{ areaId: string; list: Provider[] } | null>(null);
   const [liveId, setLiveId] = useState<string | null>(null);
   const [geoMsg, setGeoMsg] = useState("");
-  const { t } = useUILang();
+  const { lang, t } = useUILang();
   // AI fallback when the keyword matches nothing: keyed by the search it answers, so stale results never show.
   const [suggest, setSuggest] = useState<{ key: string; items: Suggestion[] | null } | null>(null);
 
@@ -137,14 +137,14 @@ export default function Home() {
 
   function nearMe() {
     setGeoMsg("");
-    if (!navigator.geolocation) return setGeoMsg("Location isn't available in this browser.");
+    if (!navigator.geolocation) return setGeoMsg(t("geoUnavailable"));
     // Used once, in the browser only: never stored or sent anywhere.
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const a = nearestArea(pos.coords.latitude, pos.coords.longitude);
         if (a) pick(a);
       },
-      () => setGeoMsg("Couldn't get your location. Try typing a city.")
+      () => setGeoMsg(t("geoFailed"))
     );
   }
 
@@ -182,14 +182,14 @@ export default function Home() {
         <section className="flex max-h-[45vh] w-full flex-col border-b border-stone-200 bg-white md:max-h-none md:max-w-sm md:border-b-0 md:border-r">
           <div className="space-y-3 border-b border-stone-100 p-4">
             <div className="relative">
-              <label htmlFor="area-q" className="sr-only">Area</label>
+              <label htmlFor="area-q" className="sr-only">{t("areaLabel")}</label>
               <input
                 id="area-q"
                 value={areaQuery}
                 onChange={(e) => { setAreaQuery(e.target.value); setShowSuggest(true); }}
                 onFocus={() => setShowSuggest(true)}
                 onKeyDown={(e) => e.key === "Enter" && suggestions[0] && pick(suggestions[0])}
-                placeholder="📍 City or area: Brooklyn, LA, Ohio…"
+                placeholder={t("areaPlaceholder")}
                 autoComplete="off"
                 className="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm"
               />
@@ -202,30 +202,30 @@ export default function Home() {
                           {a.name}
                           {parentLabel(a) && <span className="text-stone-400"> · {parentLabel(a)}</span>}
                         </span>
-                        <span className="text-xs text-stone-400">{a.level}</span>
+                        <span className="text-xs text-stone-400">{t(`lvl_${a.level}` as UIKey)}</span>
                       </button>
                     </li>
                   ))}
                 </ul>
               )}
-              {noMatch && <p className="mt-1 text-xs text-amber-700">We couldn&apos;t find that place. Try a city or state.</p>}
+              {noMatch && <p className="mt-1 text-xs text-amber-700">{t("noPlace")}</p>}
             </div>
             <div className="flex gap-2">
-              <button onClick={nearMe} className="min-h-9 flex-1 rounded-full border border-stone-300 text-xs font-medium hover:bg-stone-100">📍 Near me</button>
+              <button onClick={nearMe} className="min-h-9 flex-1 rounded-full border border-stone-300 text-xs font-medium hover:bg-stone-100">📍 {t("nearMe")}</button>
               <button onClick={() => { setFocusArea(null); setGroup(null); setTarget({ us: true, nonce: Date.now() }); }} className="min-h-9 flex-1 rounded-full border border-stone-300 text-xs font-medium hover:bg-stone-100">
-                🇺🇸 All US
+                🇺🇸 {t("allUS")}
               </button>
             </div>
             {geoMsg && <p className="text-xs text-amber-700">{geoMsg}</p>}
             <input
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
-              placeholder="🔎 Search: tamales, manicure, медівник…"
-              aria-label="Search listings"
+              placeholder={t("searchPlaceholder")}
+              aria-label={t("searchLabel")}
               className="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm"
             />
             <div className="flex flex-wrap gap-1.5">
-              {Object.entries(CATEGORIES).map(([k, v]) => (
+              {Object.keys(CATEGORIES).map((k) => (
                 <button
                   key={k}
                   onClick={() => setCategory(category === k ? null : k)}
@@ -234,7 +234,7 @@ export default function Home() {
                     category === k ? "border-orange-600 bg-orange-600 text-white" : "border-stone-300 text-stone-700 hover:bg-stone-100"
                   }`}
                 >
-                  {v}
+                  {catLabel(lang, k)}
                 </button>
               ))}
             </div>
@@ -242,8 +242,8 @@ export default function Home() {
 
           {group && (
             <div className="flex items-center justify-between bg-orange-50 px-4 py-2 text-sm text-orange-900">
-              <span>{group.list.length} providers serving <b>{areaById(group.areaId)?.name}</b></span>
-              <button onClick={() => setGroup(null)} className="text-xs underline">Show all in view</button>
+              <span>{t("servingArea", { n: group.list.length, area: areaById(group.areaId)?.name ?? "" })}</span>
+              <button onClick={() => setGroup(null)} className="text-xs underline">{t("showAllInView")}</button>
             </div>
           )}
 
@@ -256,12 +256,12 @@ export default function Home() {
             {visibleList.length === 0 && !wantSuggestions && (
               <li className="space-y-3 p-6 text-center text-sm text-stone-500">
                 <p>
-                  No one here yet. Be the first:{" "}
-                  <Link href="/join" className="font-semibold text-orange-700 underline">Offer your services →</Link>
+                  {t("emptyHere")}{" "}
+                  <Link href="/join" className="font-semibold text-orange-700 underline">{t("offer")} →</Link>
                 </p>
                 {nearestWithProviders.length > 0 && (
                   <div>
-                    <p className="text-xs text-stone-400">Nearby areas with providers:</p>
+                    <p className="text-xs text-stone-400">{t("nearbyWithProviders")}</p>
                     <div className="mt-2 flex flex-wrap justify-center gap-2">
                       {nearestWithProviders.map((a) => (
                         <button key={a.id} onClick={() => pick(a)} className="rounded-full border border-stone-300 px-3 py-1 text-xs hover:bg-orange-50">
@@ -276,7 +276,7 @@ export default function Home() {
             {wantSuggestions && suggested.length > 0 && (
               <>
                 <li className="bg-orange-50 px-4 py-3 text-sm text-orange-900">
-                  No exact matches for <b>“{kw}”</b>, but these providers might be able to help. Ask them in chat to confirm.
+                  {t("suggestIntro", { kw })}
                 </li>
                 {suggested.map(({ provider: p, reason }) => (
                   <li key={p.id}>
@@ -286,10 +286,10 @@ export default function Home() {
               </>
             )}
             {wantSuggestions && !suggestState && (
-              <li className="p-6 text-center text-sm text-stone-400">No exact matches. Looking for someone who might help…</li>
+              <li className="p-6 text-center text-sm text-stone-400">{t("suggestLooking")}</li>
             )}
             {wantSuggestions && suggestState && suggested.length === 0 && (
-              <li className="p-6 text-center text-sm text-stone-400">No matches yet.</li>
+              <li className="p-6 text-center text-sm text-stone-400">{t("noMatches")}</li>
             )}
           </ul>
         </section>
@@ -311,15 +311,16 @@ export default function Home() {
 }
 
 function ProviderRow({ p, onClick, reason }: { p: Provider; onClick: () => void; reason?: string }) {
+  const { lang, t } = useUILang();
   return (
     <button onClick={onClick} className="w-full px-4 py-3 text-left hover:bg-stone-50">
       <div className="flex items-center gap-2 text-xs text-stone-500">
-        <span>{CATEGORIES[p.category]}</span>·<span>{LANG_NAMES[p.language]}</span>
+        <span>{catLabel(lang, p.category)}</span>·<span>{LANG_NAMES[p.language]}</span>
         {p.verified && <VerifiedBadge />}
       </div>
-      <div className="font-medium text-stone-900">{p.title_en}</div>
+      <div className="font-medium text-stone-900">{pick(p, lang, p.title_en, p.title_native)}</div>
       <div className="text-xs text-stone-500">
-        {p.name} · {p.locationPrecision === "exact" ? "🏪" : "Serves"} {servesLabel(p)}
+        {p.name} · {p.locationPrecision === "exact" ? "🏪" : t("serves")} {servesLabel(p)}
       </div>
       {reason && <div className="mt-1 text-xs italic text-orange-800">✨ {reason}</div>}
     </button>

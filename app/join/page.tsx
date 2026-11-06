@@ -47,7 +47,7 @@ const btn = "inline-flex min-h-11 items-center justify-center gap-2 rounded-full
 
 export default function Join() {
   const router = useRouter();
-  const { setLang } = useUILang();
+  const { lang: uiLang, setLang } = useUILang();
   const [d, setD] = useState<Draft>(EMPTY);
   const [hydrated, setHydrated] = useState(false);
   const [answer, setAnswer] = useState("");
@@ -56,7 +56,8 @@ export default function Join() {
   const [voiceOn, setVoiceOn] = useState(true);
   const [authorized, setAuthorized] = useState(false);
   const [agreePublic, setAgreePublic] = useState(false);
-  const t = (k: UIKey, v?: Record<string, string | number>) => translate(d.lang, k, v);
+  // UI strings follow the language switcher; the conversation stays in the language she picked.
+  const t = (k: UIKey, v?: Record<string, string | number>) => translate(uiLang, k, v);
 
   // Resume a saved draft: no timeouts, she can leave and come back.
   useEffect(() => {

@@ -176,5 +176,8 @@
   "orderFor": "For",
   "customerSpeaks": "Customer speaks {lang}",
   "addressAfterAccept": "Share your exact address in the chat only after she accepts.",
-  "details": "Details"
+  "details": "Details",
+  "suggestIntro": "No exact matches for “{kw}”, but these providers might be able to help. Ask them in chat to confirm.",
+  "suggestLooking": "No exact matches. Looking for someone who might help…",
+  "noMatches": "No matches yet."
 }

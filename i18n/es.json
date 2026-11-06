@@ -176,5 +176,8 @@
   "orderFor": "Para",
   "customerSpeaks": "El cliente habla {lang}",
   "addressAfterAccept": "Comparte tu dirección exacta en el chat solo después de que ella acepte.",
-  "details": "Detalles"
+  "details": "Detalles",
+  "suggestIntro": "No hay coincidencias exactas para “{kw}”, pero estas personas podrían ayudarte. Pregúntales en el chat.",
+  "suggestLooking": "Sin coincidencias exactas. Buscando a alguien que pueda ayudar…",
+  "noMatches": "Todavía no hay coincidencias."
 }

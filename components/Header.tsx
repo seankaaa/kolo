@@ -25,6 +25,13 @@ export default function Header({ showOffer = true, children }: { showOffer?: boo
   }, []);
 
   const profileHref = myId ? `/her/${myId}` : "/join";
+  const [isCustomer, setIsCustomer] = useState(false);
+  useEffect(() => {
+    const check = () => setIsCustomer(!!load<string | null>("kolo.customerId", null));
+    check();
+    window.addEventListener("kolo-customer", check);
+    return () => window.removeEventListener("kolo-customer", check);
+  }, []);
 
   return (
     <header className="border-b border-stone-200 bg-white">
@@ -50,7 +57,7 @@ export default function Header({ showOffer = true, children }: { showOffer?: boo
           </select>
           {showOffer && (
             <Link href="/her/oksana" className={`${navBtn} hidden sm:inline-flex`} title="Demo: open a sample provider's inbox">
-              👩 Provider view
+              👩 {t("providerView")}
             </Link>
           )}
           {showOffer && !myId && (
@@ -76,6 +83,11 @@ export default function Header({ showOffer = true, children }: { showOffer?: boo
         >
           👤 {myId ? t("navProfile") : t("offer")}
         </Link>
+        {isCustomer && (
+          <Link href="/orders" aria-current={pathname === "/orders" ? "page" : undefined} className={`${navBtn} aria-[current=page]:border-orange-500 aria-[current=page]:bg-orange-50`}>
+            🧾 {t("myOrders")}
+          </Link>
+        )}
       </nav>
     </header>
   );

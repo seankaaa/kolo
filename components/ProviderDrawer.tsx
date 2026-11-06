@@ -131,6 +131,7 @@ function BookingForm({ provider, initial, onCancel }: { provider: Provider; init
     if (!customerId) {
       customerId = `c_${Math.random().toString(36).slice(2, 10)}`;
       save("kolo.customerId", customerId);
+      window.dispatchEvent(new Event("kolo-customer"));
     }
     try {
       const res = await fetch("/api/orders", {
@@ -169,7 +170,7 @@ function BookingForm({ provider, initial, onCancel }: { provider: Provider; init
   if (sentId) {
     return (
       <div role="status" className="space-y-3 rounded-xl border-2 border-emerald-200 bg-emerald-50 p-4 text-center">
-        <p className="text-lg font-semibold text-emerald-900">✅ {t("requestSent", { name: provider.name })}</p>
+        <p className="text-lg font-semibold text-emerald-900">✅ {t("requestSent", { name: provider.name.replace(/\.$/, "") })}</p>
         <Link href={`/order/${sentId}`} className="inline-flex min-h-11 items-center rounded-full bg-emerald-700 px-5 font-semibold text-white">
           💬 {t("openOrder")}
         </Link>
