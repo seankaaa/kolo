@@ -33,6 +33,8 @@ type Draft = {
 };
 
 const TOTAL = 7;
+/** Her language first, then English (or Spanish if she chose English). */
+const micLangs = (l: Lang): Lang[] => (l === "en" ? ["en", "es"] : [l, "en"]);
 const LANG_BUTTONS: { lang: Lang; label: string }[] = [
   { lang: "es", label: "Español" },
   { lang: "uk", label: "Українська" },
@@ -314,7 +316,7 @@ export default function Join() {
         {canSpeak && (
           <>
             <button
-              onClick={() => dictation.toggle()}
+              onClick={() => dictation.toggle(answer)}
               disabled={busy}
               aria-label={dictation.listening ? t("listening") : t("tapToSpeak")}
               className={`grid h-28 w-28 place-items-center rounded-full text-5xl shadow-lg transition focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-orange-500 disabled:opacity-40 ${
@@ -326,6 +328,22 @@ export default function Join() {
             <p className={`text-xl font-semibold ${dictation.listening ? "text-red-700" : "text-stone-700"}`}>
               {dictation.listening ? t("listening") : t("tapToSpeak")}
             </p>
+            {/* Speech recognition hears one language at a time: one tap switches mid-sentence, keeping her words. */}
+            <div role="group" aria-label={t("micLanguage")} className="flex items-center gap-2">
+              <span className="text-base text-stone-500">{t("micLanguage")}:</span>
+              {micLangs(d.lang).map((l) => (
+                <button
+                  key={l}
+                  onClick={() => dictation.switchLang(SPEECH_LANG[l], answer)}
+                  aria-pressed={dictation.lang === SPEECH_LANG[l]}
+                  className={`min-h-11 rounded-full border-2 px-4 text-base font-semibold ${
+                    dictation.lang === SPEECH_LANG[l] ? "border-orange-600 bg-orange-600 text-white" : "border-stone-300 bg-white text-stone-700"
+                  }`}
+                >
+                  🎙️ {translate(l, "langName")}
+                </button>
+              ))}
+            </div>
           </>
         )}
       </div>
@@ -354,7 +372,7 @@ export default function Join() {
           ➤ {t("send")}
         </button>
         {canSpeak && answer && (
-          <button onClick={() => { setAnswer(""); dictation.start(); }} disabled={busy} className={`${btn} border border-stone-300 bg-white`}>
+          <button onClick={() => { setAnswer(""); dictation.start(""); }} disabled={busy} className={`${btn} border border-stone-300 bg-white`}>
             🎙️ {t("rerecord")}
           </button>
         )}

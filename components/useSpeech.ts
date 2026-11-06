@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export function speechSupported() {
@@ -47,35 +47,69 @@ export function speak(text: string, lang: string) {
 
 /**
  * Tap-to-start / tap-to-stop dictation with live captions.
- * onUpdate receives the full transcript so far (final + interim) while she speaks.
+ * Web Speech recognizes one language per session, so switchLang() restarts
+ * recognition in another language and keeps everything said so far.
  */
-export function useDictation(lang: string, onUpdate: (t: string) => void) {
+export function useDictation(defaultLang: string, onUpdate: (t: string) => void) {
   const [listening, setListening] = useState(false);
+  const [lang, setLang] = useState(defaultLang);
   const recRef = useRef<any>(null);
+  const textRef = useRef("");
+  useEffect(() => setLang(defaultLang), [defaultLang]);
 
   function stop() {
-    recRef.current?.stop();
+    const rec = recRef.current;
+    recRef.current = null;
+    rec?.stop();
+    setListening(false);
   }
 
-  function start(prefix = "") {
+  function start(prefix = "", useLang = lang) {
     const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SR) return;
     window.speechSynthesis?.cancel();
     const rec = new SR();
-    rec.lang = lang;
+    rec.lang = useLang;
     rec.interimResults = true;
     rec.continuous = true;
+    const base = prefix.trim();
+    textRef.current = base;
     rec.onresult = (e: any) => {
       let text = "";
       for (let i = 0; i < e.results.length; i++) text += e.results[i][0].transcript;
-      onUpdate((prefix ? prefix + " " : "") + text.trim());
+      textRef.current = [base, text.trim()].filter(Boolean).join(" ");
+      onUpdate(textRef.current);
     };
-    rec.onend = () => setListening(false);
-    rec.onerror = () => setListening(false);
+    rec.onend = () => {
+      if (recRef.current === rec) {
+        recRef.current = null;
+        setListening(false);
+      }
+    };
+    rec.onerror = rec.onend;
     recRef.current = rec;
     setListening(true);
     rec.start();
   }
 
-  return { listening, start, stop, toggle: (prefix?: string) => (listening ? stop() : start(prefix)) };
+  /** Change recognition language; if recording, continue seamlessly in the new language. */
+  function switchLang(next: string, currentText: string) {
+    setLang(next);
+    if (recRef.current) {
+      const old = recRef.current;
+      recRef.current = null;
+      old.onresult = null;
+      old.stop();
+      start(currentText, next);
+    }
+  }
+
+  return {
+    listening,
+    lang,
+    start,
+    stop,
+    switchLang,
+    toggle: (prefix = "") => (recRef.current ? stop() : start(prefix)),
+  };
 }

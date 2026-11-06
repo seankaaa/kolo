@@ -65,5 +65,6 @@
   "languages": "Idiomas",
   "startOver": "Empezar de nuevo",
   "openOrders": "Abrir mis pedidos",
-  "close": "Cerrar"
+  "close": "Cerrar",
+  "micLanguage": "El micrófono escucha"
 }

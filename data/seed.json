@@ -10,8 +10,16 @@
       "story_en": "I learned to make tamales from my grandmother in Puebla. I cook for birthdays, baptisms, and office lunches, and I deliver warm trays across Oakland.",
       "story_native": "Aprendí a hacer tamales con mi abuela en Puebla. Cocino para cumpleaños, bautizos y comidas de oficina, y entrego charolas calientes en todo Oakland.",
       "services": [
-        { "name": "Tamales (dozen, pork or chicken)", "price": "$30", "kind": "product" },
-        { "name": "Party tray for 20 people", "price": "$180", "kind": "product" }
+        {
+          "name": "Tamales (dozen, pork or chicken)",
+          "price": "$30",
+          "kind": "product"
+        },
+        {
+          "name": "Party tray for 20 people",
+          "price": "$180",
+          "kind": "product"
+        }
       ],
       "areaId": "oakland",
       "locationPrecision": "city",
@@ -28,8 +36,16 @@
       "story_en": "Ten years of cleaning homes. I bring my own eco-friendly supplies and I am careful with pets.",
       "story_native": "Diez años limpiando casas. Traigo mis propios productos ecológicos y tengo mucho cuidado con las mascotas.",
       "services": [
-        { "name": "Standard clean (2 bedrooms)", "price": "$120", "kind": "service" },
-        { "name": "Deep clean / move-out", "price": "$220", "kind": "service" }
+        {
+          "name": "Standard clean (2 bedrooms)",
+          "price": "$120",
+          "kind": "service"
+        },
+        {
+          "name": "Deep clean / move-out",
+          "price": "$220",
+          "kind": "service"
+        }
       ],
       "areaId": "excelsior",
       "locationPrecision": "neighborhood",
@@ -46,8 +62,16 @@
       "story_en": "Our little shop bakes fresh pan dulce every morning. Order a tres leches cake for your next celebration.",
       "story_native": "Nuestra pequeña panadería hornea pan dulce fresco cada mañana. Encarga un pastel de tres leches para tu próxima celebración.",
       "services": [
-        { "name": "Conchas (6 pack)", "price": "$9", "kind": "product" },
-        { "name": "Tres leches cake (serves 12)", "price": "$45", "kind": "product" }
+        {
+          "name": "Conchas (6 pack)",
+          "price": "$9",
+          "kind": "product"
+        },
+        {
+          "name": "Tres leches cake (serves 12)",
+          "price": "$45",
+          "kind": "product"
+        }
       ],
       "areaId": "mission",
       "locationPrecision": "exact",
@@ -67,8 +91,16 @@
       "story_en": "I have cared for children for over eight years. I speak Spanish with the kids so they grow up bilingual.",
       "story_native": "He cuidado niños por más de ocho años. Hablo español con los niños para que crezcan bilingües.",
       "services": [
-        { "name": "Childcare (per hour)", "price": "$28/hr", "kind": "service" },
-        { "name": "Date-night evening (4 hrs)", "price": "$100", "kind": "service" }
+        {
+          "name": "Childcare (per hour)",
+          "price": "$28/hr",
+          "kind": "service"
+        },
+        {
+          "name": "Date-night evening (4 hrs)",
+          "price": "$100",
+          "kind": "service"
+        }
       ],
       "areaId": "south-bay",
       "locationPrecision": "subregion",
@@ -85,8 +117,16 @@
       "story_en": "Walk-in alterations and dress fittings. Most hems are ready in two days.",
       "story_native": "Arreglos de ropa sin cita y pruebas de vestidos. La mayoría de las bastillas están listas en dos días.",
       "services": [
-        { "name": "Pants hem", "price": "$15", "kind": "service" },
-        { "name": "Dress fitting & alteration", "price": "from $60", "kind": "service" }
+        {
+          "name": "Pants hem",
+          "price": "$15",
+          "kind": "service"
+        },
+        {
+          "name": "Dress fitting & alteration",
+          "price": "from $60",
+          "kind": "service"
+        }
       ],
       "areaId": "san-jose",
       "locationPrecision": "exact",
@@ -106,8 +146,16 @@
       "story_en": "I worked as a nail technician in Kharkiv for six years. I bring sterilized tools and everything needed for a salon-quality manicure at home.",
       "story_native": "Я шість років працювала майстринею манікюру в Харкові. Приношу стерилізовані інструменти й усе необхідне для салонного манікюру вдома.",
       "services": [
-        { "name": "Gel manicure", "price": "$45", "kind": "service" },
-        { "name": "Brow shaping & tint", "price": "$35", "kind": "service" }
+        {
+          "name": "Gel manicure",
+          "price": "$45",
+          "kind": "service"
+        },
+        {
+          "name": "Brow shaping & tint",
+          "price": "$35",
+          "kind": "service"
+        }
       ],
       "areaId": "sunset",
       "locationPrecision": "neighborhood",
@@ -124,8 +172,16 @@
       "story_en": "Careful, quiet, and on time. Weekly or one-time cleaning.",
       "story_native": "Акуратно, тихо й вчасно. Щотижневе або разове прибирання.",
       "services": [
-        { "name": "Apartment clean (up to 2 bedrooms)", "price": "$110", "kind": "service" },
-        { "name": "Small office clean", "price": "$150", "kind": "service" }
+        {
+          "name": "Apartment clean (up to 2 bedrooms)",
+          "price": "$110",
+          "kind": "service"
+        },
+        {
+          "name": "Small office clean",
+          "price": "$150",
+          "kind": "service"
+        }
       ],
       "areaId": "peninsula",
       "locationPrecision": "subregion",
@@ -142,8 +198,16 @@
       "story_en": "My medovyk is baked from my mother's recipe. I also make frozen varenyky with potato or cherries. Local delivery in Berkeley.",
       "story_native": "Мій медівник печу за маминим рецептом. Також ліплю заморожені вареники з картоплею або вишнями. Доставка по Берклі.",
       "services": [
-        { "name": "Honey cake medovyk (whole)", "price": "$55", "kind": "product" },
-        { "name": "Varenyky (30 pcs, frozen)", "price": "$25", "kind": "product" }
+        {
+          "name": "Honey cake medovyk (whole)",
+          "price": "$55",
+          "kind": "product"
+        },
+        {
+          "name": "Varenyky (30 pcs, frozen)",
+          "price": "$25",
+          "kind": "product"
+        }
       ],
       "areaId": "berkeley",
       "locationPrecision": "city",
@@ -160,8 +224,16 @@
       "story_en": "I sew and repair clothes: zippers, hems, taking in dresses and coats. Pickup and drop-off nearby.",
       "story_native": "Шью и ремонтирую одежду: молнии, подшив, ушивание платьев и пальто. Могу забрать и привезти поблизости.",
       "services": [
-        { "name": "Zipper replacement", "price": "$20", "kind": "service" },
-        { "name": "Coat alteration", "price": "from $40", "kind": "service" }
+        {
+          "name": "Zipper replacement",
+          "price": "$20",
+          "kind": "service"
+        },
+        {
+          "name": "Coat alteration",
+          "price": "from $40",
+          "kind": "service"
+        }
       ],
       "areaId": "san-mateo",
       "locationPrecision": "city",
@@ -178,8 +250,16 @@
       "story_en": "A small family café with homemade pelmeni, blini with sour cream, and tea from the samovar.",
       "story_native": "Маленькое семейное кафе с домашними пельменями, блинами со сметаной и чаем из самовара.",
       "services": [
-        { "name": "Pelmeni plate", "price": "$14", "kind": "product" },
-        { "name": "Blini (3) with sour cream", "price": "$10", "kind": "product" }
+        {
+          "name": "Pelmeni plate",
+          "price": "$14",
+          "kind": "product"
+        },
+        {
+          "name": "Blini (3) with sour cream",
+          "price": "$10",
+          "kind": "product"
+        }
       ],
       "areaId": "richmond",
       "locationPrecision": "exact",
@@ -199,7 +279,11 @@
       "story_en": "Former kindergarten teacher. I help with homework, read with kids, and cook simple healthy meals.",
       "story_native": "Бывшая воспитательница детского сада. Помогаю с домашними заданиями, читаю с детьми и готовлю простую полезную еду.",
       "services": [
-        { "name": "After-school care (per hour)", "price": "$26/hr", "kind": "service" }
+        {
+          "name": "After-school care (per hour)",
+          "price": "$26/hr",
+          "kind": "service"
+        }
       ],
       "areaId": "richmond",
       "locationPrecision": "neighborhood",
@@ -216,13 +300,1531 @@
       "story_en": "Braiding for 12 years. I work from a home studio or travel to you within Oakland.",
       "story_native": "Braiding for 12 years. I work from a home studio or travel to you within Oakland.",
       "services": [
-        { "name": "Box braids (medium)", "price": "$180", "kind": "service" },
-        { "name": "Kids' braids", "price": "$70", "kind": "service" }
+        {
+          "name": "Box braids (medium)",
+          "price": "$180",
+          "kind": "service"
+        },
+        {
+          "name": "Kids' braids",
+          "price": "$70",
+          "kind": "service"
+        }
       ],
       "areaId": "oakland",
       "locationPrecision": "city",
       "travelRadius": 8,
       "verified": true
+    },
+    {
+      "id": "us-halyna",
+      "name": "Halyna D.",
+      "language": "uk",
+      "category": "bakery",
+      "title_en": "Ukrainian pastries & paska to order",
+      "title_native": "Українська випічка та паски на замовлення",
+      "story_en": "I bake pampushky and makivnyk every Friday, just like in my mother's Poltava kitchen.",
+      "story_native": "Щоп’ятниці печу пампушки й маківник, як на маминій кухні в Полтаві.",
+      "services": [
+        {
+          "name": "Pampushky (dozen)",
+          "price": "$18",
+          "kind": "product"
+        },
+        {
+          "name": "Poppy-seed roll",
+          "price": "$22",
+          "kind": "product"
+        }
+      ],
+      "areaId": "brighton-beach",
+      "locationPrecision": "neighborhood",
+      "travelRadius": 5,
+      "verified": true
+    },
+    {
+      "id": "us-marina",
+      "name": "Marina V.",
+      "language": "ru",
+      "category": "beauty",
+      "title_en": "Lash extensions & brow lamination",
+      "title_native": "Наращивание ресниц и ламинирование бровей",
+      "story_en": "Clients say my studio chair is the calmest hour of their week.",
+      "story_native": "Клиентки говорят, что час у меня в кресле — самый спокойный за неделю.",
+      "services": [
+        {
+          "name": "Classic lash set",
+          "price": "$90",
+          "kind": "service"
+        },
+        {
+          "name": "Brow lamination",
+          "price": "$55",
+          "kind": "service"
+        }
+      ],
+      "areaId": "brooklyn",
+      "locationPrecision": "subregion",
+      "travelRadius": 6,
+      "verified": true
+    },
+    {
+      "id": "us-guadalupe",
+      "name": "Guadalupe R.",
+      "language": "es",
+      "category": "food",
+      "title_en": "Mole, tamales & party trays",
+      "title_native": "Mole, tamales y charolas para fiestas",
+      "story_en": "My mole poblano has 22 ingredients and a lot of patience.",
+      "story_native": "Mi mole poblano lleva 22 ingredientes y mucha paciencia.",
+      "services": [
+        {
+          "name": "Mole tray (serves 10)",
+          "price": "$85",
+          "kind": "product"
+        },
+        {
+          "name": "Tamales (dozen)",
+          "price": "$28",
+          "kind": "product"
+        }
+      ],
+      "areaId": "sunset-park",
+      "locationPrecision": "neighborhood",
+      "travelRadius": 8,
+      "verified": false
+    },
+    {
+      "id": "us-lucia",
+      "name": "Lucía M.",
+      "language": "es",
+      "category": "childcare",
+      "title_en": "Bilingual nanny & after-school pickup",
+      "title_native": "Niñera bilingüe y recogida después de la escuela",
+      "story_en": "I sing in Spanish, help with homework in English, and always bring snacks.",
+      "story_native": "Canto en español, ayudo con la tarea en inglés y siempre llevo meriendas.",
+      "services": [
+        {
+          "name": "Nanny (per hour)",
+          "price": "$25/hr",
+          "kind": "service"
+        }
+      ],
+      "areaId": "jackson-heights",
+      "locationPrecision": "neighborhood",
+      "travelRadius": 4,
+      "verified": true
+    },
+    {
+      "id": "us-sofia",
+      "name": "Sofía P.",
+      "language": "es",
+      "category": "cleaning",
+      "title_en": "Home & office cleaning, Queens",
+      "title_native": "Limpieza de casas y oficinas en Queens",
+      "story_en": "Spotless kitchens are my specialty; I bring all my own supplies.",
+      "story_native": "Las cocinas impecables son mi especialidad; llevo todos mis productos.",
+      "services": [
+        {
+          "name": "Apartment clean",
+          "price": "$110",
+          "kind": "service"
+        },
+        {
+          "name": "Office clean",
+          "price": "$160",
+          "kind": "service"
+        }
+      ],
+      "areaId": "corona",
+      "locationPrecision": "neighborhood",
+      "travelRadius": 10,
+      "verified": false
+    },
+    {
+      "id": "us-dulce",
+      "name": "Dulce Alterations",
+      "language": "es",
+      "category": "tailoring",
+      "title_en": "Tailor shop: hems, zippers, dresses",
+      "title_native": "Sastrería: bastillas, cierres y vestidos",
+      "story_en": "A neighborhood tailor shop with a bell on the door and fast turnaround.",
+      "story_native": "Una sastrería de barrio con campanita en la puerta y entregas rápidas.",
+      "services": [
+        {
+          "name": "Pants hem",
+          "price": "$14",
+          "kind": "service"
+        },
+        {
+          "name": "Zipper replacement",
+          "price": "$18",
+          "kind": "service"
+        }
+      ],
+      "areaId": "washington-heights",
+      "locationPrecision": "exact",
+      "travelRadius": 0,
+      "verified": true,
+      "address": "4127 Broadway, New York, NY",
+      "lat": 40.8476,
+      "lng": -73.9387
+    },
+    {
+      "id": "us-nadia-nj",
+      "name": "Nadia K.",
+      "language": "ru",
+      "category": "tutoring",
+      "title_en": "Math & piano lessons for kids",
+      "title_native": "Уроки математики и фортепиано для детей",
+      "story_en": "I taught piano at a music school for years and love seeing kids play their first song.",
+      "story_native": "Я много лет преподавала фортепиано в музыкальной школе и обожаю первые песни учеников.",
+      "services": [
+        {
+          "name": "Piano lesson (45 min)",
+          "price": "$45",
+          "kind": "service"
+        },
+        {
+          "name": "Math tutoring (1 hr)",
+          "price": "$40",
+          "kind": "service"
+        }
+      ],
+      "areaId": "northern-nj",
+      "locationPrecision": "subregion",
+      "travelRadius": 12,
+      "verified": false
+    },
+    {
+      "id": "us-veronica",
+      "name": "Verónica L.",
+      "language": "es",
+      "category": "food",
+      "title_en": "Pupusas & antojitos for events",
+      "title_native": "Pupusas y antojitos para eventos",
+      "story_en": "I bring my comal to your party and make pupusas fresh in front of your guests.",
+      "story_native": "Llevo mi comal a tu fiesta y hago pupusas frescas frente a tus invitados.",
+      "services": [
+        {
+          "name": "Pupusa party (50 pupusas)",
+          "price": "$150",
+          "kind": "product"
+        },
+        {
+          "name": "Curtido jar",
+          "price": "$8",
+          "kind": "product"
+        }
+      ],
+      "areaId": "east-la",
+      "locationPrecision": "subregion",
+      "travelRadius": 15,
+      "verified": true
+    },
+    {
+      "id": "us-rocio",
+      "name": "Rocío G.",
+      "language": "es",
+      "category": "cleaning",
+      "title_en": "Deep cleaning & move-outs, the Valley",
+      "title_native": "Limpieza profunda y mudanzas en el Valle",
+      "story_en": "Detail-oriented and on time, with references from families across the Valley.",
+      "story_native": "Detallista y puntual, con referencias de familias de todo el Valle.",
+      "services": [
+        {
+          "name": "Deep clean (3 bed)",
+          "price": "$240",
+          "kind": "service"
+        },
+        {
+          "name": "Move-out clean",
+          "price": "$280",
+          "kind": "service"
+        }
+      ],
+      "areaId": "san-fernando-valley",
+      "locationPrecision": "subregion",
+      "travelRadius": 20,
+      "verified": false
+    },
+    {
+      "id": "us-esperanza",
+      "name": "Panadería Esperanza",
+      "language": "es",
+      "category": "bakery",
+      "title_en": "Pan dulce bakery & birthday cakes",
+      "title_native": "Panadería de pan dulce y pasteles de cumpleaños",
+      "story_en": "Fresh bolillos at 6 a.m. and custom tres leches by order.",
+      "story_native": "Bolillos frescos a las 6 de la mañana y tres leches por encargo.",
+      "services": [
+        {
+          "name": "Pan dulce (6)",
+          "price": "$8",
+          "kind": "product"
+        },
+        {
+          "name": "Tres leches (serves 15)",
+          "price": "$50",
+          "kind": "product"
+        }
+      ],
+      "areaId": "south-la",
+      "locationPrecision": "exact",
+      "travelRadius": 0,
+      "verified": true,
+      "address": "5718 S Vermont Ave, Los Angeles, CA",
+      "lat": 33.9893,
+      "lng": -118.2916
+    },
+    {
+      "id": "us-yesenia",
+      "name": "Yesenia T.",
+      "language": "es",
+      "category": "eldercare",
+      "title_en": "Companion care for older adults",
+      "title_native": "Compañía y cuidado para personas mayores",
+      "story_en": "I help with meals, walks, and appointments, always with patience and good conversation.",
+      "story_native": "Ayudo con comidas, paseos y citas médicas, siempre con paciencia y buena plática.",
+      "services": [
+        {
+          "name": "Companion care (per hour)",
+          "price": "$26/hr",
+          "kind": "service"
+        }
+      ],
+      "areaId": "orange-county",
+      "locationPrecision": "subregion",
+      "travelRadius": 15,
+      "verified": true
+    },
+    {
+      "id": "us-olena",
+      "name": "Olena H.",
+      "language": "uk",
+      "category": "food",
+      "title_en": "Varenyky, holubtsi & borshch to go",
+      "title_native": "Вареники, голубці та борщ із собою",
+      "story_en": "Every batch is hand-pinched; Sunday is borshch day.",
+      "story_native": "Кожен вареник ліплю вручну; неділя — день борщу.",
+      "services": [
+        {
+          "name": "Varenyky (30, frozen)",
+          "price": "$24",
+          "kind": "product"
+        },
+        {
+          "name": "Borshch (1 quart)",
+          "price": "$14",
+          "kind": "product"
+        }
+      ],
+      "areaId": "ukrainian-village",
+      "locationPrecision": "neighborhood",
+      "travelRadius": 6,
+      "verified": true
+    },
+    {
+      "id": "us-carmen-chi",
+      "name": "Carmen V.",
+      "language": "es",
+      "category": "beauty",
+      "title_en": "Hair, color & quinceañera updos",
+      "title_native": "Cortes, tintes y peinados para quinceañeras",
+      "story_en": "I've done hair for three generations of the same families in Pilsen.",
+      "story_native": "He peinado a tres generaciones de las mismas familias en Pilsen.",
+      "services": [
+        {
+          "name": "Cut & style",
+          "price": "$40",
+          "kind": "service"
+        },
+        {
+          "name": "Quinceañera updo",
+          "price": "$85",
+          "kind": "service"
+        }
+      ],
+      "areaId": "pilsen",
+      "locationPrecision": "neighborhood",
+      "travelRadius": 5,
+      "verified": false
+    },
+    {
+      "id": "us-adriana",
+      "name": "Adriana S.",
+      "language": "es",
+      "category": "childcare",
+      "title_en": "Home daycare spots & babysitting",
+      "title_native": "Cuidado de niños en casa y niñera",
+      "story_en": "A cozy, bilingual space with crafts, naps, and a lot of laughing.",
+      "story_native": "Un espacio acogedor y bilingüe con manualidades, siestas y muchas risas.",
+      "services": [
+        {
+          "name": "Babysitting (per hour)",
+          "price": "$20/hr",
+          "kind": "service"
+        }
+      ],
+      "areaId": "little-village",
+      "locationPrecision": "neighborhood",
+      "travelRadius": 3,
+      "verified": false
+    },
+    {
+      "id": "us-tetiana-chi",
+      "name": "Tetiana Sewing Studio",
+      "language": "uk",
+      "category": "tailoring",
+      "title_en": "Sewing, alterations & embroidered blouses",
+      "title_native": "Пошиття, підгонка та вишиванки",
+      "story_en": "A small studio where I tailor everyday clothes and stitch vyshyvanka blouses.",
+      "story_native": "Маленька майстерня, де я підганяю одяг і вишиваю вишиванки.",
+      "services": [
+        {
+          "name": "Dress alteration",
+          "price": "from $35",
+          "kind": "service"
+        },
+        {
+          "name": "Custom vyshyvanka",
+          "price": "from $180",
+          "kind": "product"
+        }
+      ],
+      "areaId": "ukrainian-village",
+      "locationPrecision": "exact",
+      "travelRadius": 0,
+      "verified": true,
+      "address": "2219 W Chicago Ave, Chicago, IL",
+      "lat": 41.8957,
+      "lng": -87.6831
+    },
+    {
+      "id": "us-maribel",
+      "name": "Maribel C.",
+      "language": "es",
+      "category": "cleaning",
+      "title_en": "House cleaning, weekly or one-time",
+      "title_native": "Limpieza de casas, semanal o una vez",
+      "story_en": "I treat every home like my own and never rush.",
+      "story_native": "Trato cada casa como la mía y nunca trabajo con prisa.",
+      "services": [
+        {
+          "name": "Standard clean",
+          "price": "$100",
+          "kind": "service"
+        },
+        {
+          "name": "Deep clean",
+          "price": "$190",
+          "kind": "service"
+        }
+      ],
+      "areaId": "gulfton",
+      "locationPrecision": "neighborhood",
+      "travelRadius": 15,
+      "verified": true
+    },
+    {
+      "id": "us-araceli",
+      "name": "Araceli N.",
+      "language": "es",
+      "category": "food",
+      "title_en": "Tamales & barbacoa for weekends",
+      "title_native": "Tamales y barbacoa para el fin de semana",
+      "story_en": "My barbacoa slow-cooks overnight; order by Thursday for Sunday.",
+      "story_native": "Mi barbacoa se cocina toda la noche; pide antes del jueves para el domingo.",
+      "services": [
+        {
+          "name": "Barbacoa (1 lb)",
+          "price": "$16",
+          "kind": "product"
+        },
+        {
+          "name": "Tamales (dozen)",
+          "price": "$22",
+          "kind": "product"
+        }
+      ],
+      "areaId": "alief",
+      "locationPrecision": "neighborhood",
+      "travelRadius": 10,
+      "verified": false
+    },
+    {
+      "id": "us-lan",
+      "name": "Lan N.",
+      "language": "en",
+      "category": "beauty",
+      "title_en": "Nail salon: gel, dip & pedicures",
+      "title_native": "Nail salon: gel, dip & pedicures",
+      "story_en": "A bright, friendly little salon with a big polish wall.",
+      "story_native": "A bright, friendly little salon with a big polish wall.",
+      "services": [
+        {
+          "name": "Gel manicure",
+          "price": "$35",
+          "kind": "service"
+        },
+        {
+          "name": "Spa pedicure",
+          "price": "$40",
+          "kind": "service"
+        }
+      ],
+      "areaId": "bellaire-chinatown",
+      "locationPrecision": "exact",
+      "travelRadius": 0,
+      "verified": true,
+      "address": "9889 Bellaire Blvd, Houston, TX",
+      "lat": 29.7055,
+      "lng": -95.556
+    },
+    {
+      "id": "us-patricia",
+      "name": "Patricia O.",
+      "language": "es",
+      "category": "eldercare",
+      "title_en": "Home help for seniors",
+      "title_native": "Ayuda en casa para personas mayores",
+      "story_en": "Cooking, light cleaning, and company for the grandparents you love.",
+      "story_native": "Cocina, limpieza ligera y compañía para los abuelos que quieres.",
+      "services": [
+        {
+          "name": "Senior home help (per hour)",
+          "price": "$24/hr",
+          "kind": "service"
+        }
+      ],
+      "areaId": "dallas",
+      "locationPrecision": "city",
+      "travelRadius": 15,
+      "verified": true
+    },
+    {
+      "id": "us-inna",
+      "name": "Inna B.",
+      "language": "ru",
+      "category": "tutoring",
+      "title_en": "Russian lessons & SAT math",
+      "title_native": "Уроки русского и математика для SAT",
+      "story_en": "I help heritage-speaker kids read Pushkin and teens raise their math scores.",
+      "story_native": "Помогаю детям-билингвам читать Пушкина, а подросткам — подтянуть математику.",
+      "services": [
+        {
+          "name": "Russian for kids (1 hr)",
+          "price": "$35",
+          "kind": "service"
+        },
+        {
+          "name": "SAT math (1 hr)",
+          "price": "$50",
+          "kind": "service"
+        }
+      ],
+      "areaId": "irving",
+      "locationPrecision": "city",
+      "travelRadius": 20,
+      "verified": false
+    },
+    {
+      "id": "us-gabriela",
+      "name": "Gabriela E.",
+      "language": "es",
+      "category": "petsitting",
+      "title_en": "Dog walking & pet sitting",
+      "title_native": "Paseo de perros y cuidado de mascotas",
+      "story_en": "Big dogs, small dogs, shy cats: I send photos every visit.",
+      "story_native": "Perros grandes, perritos, gatos tímidos: mando fotos en cada visita.",
+      "services": [
+        {
+          "name": "Dog walk (30 min)",
+          "price": "$18",
+          "kind": "service"
+        },
+        {
+          "name": "Overnight pet sitting",
+          "price": "$60",
+          "kind": "service"
+        }
+      ],
+      "areaId": "fort-worth",
+      "locationPrecision": "city",
+      "travelRadius": 10,
+      "verified": false
+    },
+    {
+      "id": "us-josefina",
+      "name": "Josefina A.",
+      "language": "es",
+      "category": "bakery",
+      "title_en": "Empanadas & cookies for parties",
+      "title_native": "Empanadas y galletas para fiestas",
+      "story_en": "Pumpkin empanadas and pecan cookies from my grandmother's recipe box.",
+      "story_native": "Empanadas de calabaza y galletas de nuez de la receta de mi abuela.",
+      "services": [
+        {
+          "name": "Empanadas (dozen)",
+          "price": "$15",
+          "kind": "product"
+        },
+        {
+          "name": "Cookie tray",
+          "price": "$30",
+          "kind": "product"
+        }
+      ],
+      "areaId": "west-side-san-antonio",
+      "locationPrecision": "subregion",
+      "travelRadius": 10,
+      "verified": true
+    },
+    {
+      "id": "us-brenda",
+      "name": "Brenda Q.",
+      "language": "es",
+      "category": "cleaning",
+      "title_en": "Reliable home cleaning",
+      "title_native": "Limpieza de casas confiable",
+      "story_en": "Same cleaner every time, so you never have to explain twice.",
+      "story_native": "Siempre la misma persona, para que no tengas que explicar dos veces.",
+      "services": [
+        {
+          "name": "Home clean",
+          "price": "$95",
+          "kind": "service"
+        }
+      ],
+      "areaId": "south-side-san-antonio",
+      "locationPrecision": "subregion",
+      "travelRadius": 15,
+      "verified": false
+    },
+    {
+      "id": "us-café-luz",
+      "name": "Café Luz",
+      "language": "es",
+      "category": "cafe",
+      "title_en": "Breakfast tacos & café de olla",
+      "title_native": "Tacos de desayuno y café de olla",
+      "story_en": "Small family café; the café de olla is brewed with piloncillo and cinnamon.",
+      "story_native": "Café familiar; el café de olla se prepara con piloncillo y canela.",
+      "services": [
+        {
+          "name": "Breakfast tacos (3)",
+          "price": "$9",
+          "kind": "product"
+        },
+        {
+          "name": "Café de olla",
+          "price": "$4",
+          "kind": "product"
+        }
+      ],
+      "areaId": "northeast-san-antonio",
+      "locationPrecision": "exact",
+      "travelRadius": 0,
+      "verified": true,
+      "address": "4510 Walzem Rd, San Antonio, TX",
+      "lat": 29.5049,
+      "lng": -98.3895
+    },
+    {
+      "id": "us-yamile",
+      "name": "Yamilé R.",
+      "language": "es",
+      "category": "food",
+      "title_en": "Cuban home cooking: lunches by the week",
+      "title_native": "Comida cubana casera: almuerzos por semana",
+      "story_en": "Ropa vieja, congrí, and maduros packed for your work week.",
+      "story_native": "Ropa vieja, congrí y maduros listos para tu semana de trabajo.",
+      "services": [
+        {
+          "name": "Weekly lunch plan (5 meals)",
+          "price": "$60",
+          "kind": "product"
+        }
+      ],
+      "areaId": "hialeah",
+      "locationPrecision": "city",
+      "travelRadius": 8,
+      "verified": true
+    },
+    {
+      "id": "us-daniela",
+      "name": "Daniela F.",
+      "language": "es",
+      "category": "interpreting",
+      "title_en": "Spanish–English interpreting",
+      "title_native": "Interpretación español–inglés",
+      "story_en": "I interpret at school meetings and appointments so families feel understood.",
+      "story_native": "Interpreto en reuniones escolares y citas para que las familias se sientan entendidas.",
+      "services": [
+        {
+          "name": "Interpreting (per hour)",
+          "price": "$40/hr",
+          "kind": "service"
+        }
+      ],
+      "areaId": "doral",
+      "locationPrecision": "city",
+      "travelRadius": 25,
+      "verified": true
+    },
+    {
+      "id": "us-milagros",
+      "name": "Milagros Pastelería",
+      "language": "es",
+      "category": "bakery",
+      "title_en": "Pastelitos, croquetas & cakes",
+      "title_native": "Pastelitos, croquetas y cakes",
+      "story_en": "Guava pastelitos warm from the oven every morning.",
+      "story_native": "Pastelitos de guayaba recién salidos del horno cada mañana.",
+      "services": [
+        {
+          "name": "Guava pastelitos (6)",
+          "price": "$7",
+          "kind": "product"
+        },
+        {
+          "name": "Croquetas (dozen)",
+          "price": "$10",
+          "kind": "product"
+        }
+      ],
+      "areaId": "little-havana",
+      "locationPrecision": "exact",
+      "travelRadius": 0,
+      "verified": false,
+      "address": "1542 SW 8th St, Miami, FL",
+      "lat": 25.7655,
+      "lng": -80.219
+    },
+    {
+      "id": "us-svitlana-mia",
+      "name": "Svitlana P.",
+      "language": "uk",
+      "category": "cleaning",
+      "title_en": "Condo & Airbnb turnover cleaning",
+      "title_native": "Прибирання квартир і Airbnb між гостями",
+      "story_en": "Fast, careful turnovers with fresh linens and photos when done.",
+      "story_native": "Швидке й акуратне прибирання між гостями, свіжа постіль і фото після роботи.",
+      "services": [
+        {
+          "name": "Airbnb turnover",
+          "price": "$85",
+          "kind": "service"
+        }
+      ],
+      "areaId": "kendall",
+      "locationPrecision": "city",
+      "travelRadius": 15,
+      "verified": false
+    },
+    {
+      "id": "us-leticia",
+      "name": "Leticia M.",
+      "language": "es",
+      "category": "food",
+      "title_en": "Sonoran tamales & menudo Sundays",
+      "title_native": "Tamales sonorenses y menudo los domingos",
+      "story_en": "Green-corn tamales in summer, red chile all year.",
+      "story_native": "Tamales de elote en verano y de chile rojo todo el año.",
+      "services": [
+        {
+          "name": "Tamales (dozen)",
+          "price": "$24",
+          "kind": "product"
+        },
+        {
+          "name": "Menudo (quart)",
+          "price": "$12",
+          "kind": "product"
+        }
+      ],
+      "areaId": "maryvale",
+      "locationPrecision": "neighborhood",
+      "travelRadius": 12,
+      "verified": true
+    },
+    {
+      "id": "us-ana-phx",
+      "name": "Ana B.",
+      "language": "es",
+      "category": "childcare",
+      "title_en": "Nanny & infant care",
+      "title_native": "Niñera y cuidado de bebés",
+      "story_en": "Gentle, patient care for babies and toddlers.",
+      "story_native": "Cuidado tierno y paciente para bebés y niños pequeños.",
+      "services": [
+        {
+          "name": "Infant care (per hour)",
+          "price": "$22/hr",
+          "kind": "service"
+        }
+      ],
+      "areaId": "mesa",
+      "locationPrecision": "city",
+      "travelRadius": 15,
+      "verified": false
+    },
+    {
+      "id": "us-yulia",
+      "name": "Yulia S.",
+      "language": "ru",
+      "category": "beauty",
+      "title_en": "Facials & skincare at home",
+      "title_native": "Уход за лицом и кожей на дому",
+      "story_en": "Calm, simple facials using gentle products.",
+      "story_native": "Спокойные процедуры для лица с мягкой косметикой.",
+      "services": [
+        {
+          "name": "Classic facial",
+          "price": "$65",
+          "kind": "service"
+        }
+      ],
+      "areaId": "tempe",
+      "locationPrecision": "city",
+      "travelRadius": 10,
+      "verified": false
+    },
+    {
+      "id": "us-rosario",
+      "name": "Rosario H.",
+      "language": "es",
+      "category": "tailoring",
+      "title_en": "Alterations & uniform repairs",
+      "title_native": "Arreglos de ropa y uniformes",
+      "story_en": "School uniforms, work pants, and wedding dresses, all with care.",
+      "story_native": "Uniformes escolares, pantalones de trabajo y vestidos de novia, todo con cuidado.",
+      "services": [
+        {
+          "name": "Uniform repair",
+          "price": "$12",
+          "kind": "service"
+        },
+        {
+          "name": "Wedding dress fitting",
+          "price": "from $90",
+          "kind": "service"
+        }
+      ],
+      "areaId": "chula-vista",
+      "locationPrecision": "city",
+      "travelRadius": 8,
+      "verified": true
+    },
+    {
+      "id": "us-mai",
+      "name": "Mai T.",
+      "language": "en",
+      "category": "food",
+      "title_en": "Banh mi & spring rolls catering",
+      "title_native": "Banh mi & spring rolls catering",
+      "story_en": "Fresh herbs from my garden in every roll.",
+      "story_native": "Fresh herbs from my garden in every roll.",
+      "services": [
+        {
+          "name": "Spring rolls (20)",
+          "price": "$35",
+          "kind": "product"
+        },
+        {
+          "name": "Banh mi tray (10)",
+          "price": "$70",
+          "kind": "product"
+        }
+      ],
+      "areaId": "city-heights",
+      "locationPrecision": "neighborhood",
+      "travelRadius": 10,
+      "verified": false
+    },
+    {
+      "id": "us-karla",
+      "name": "Karla J.",
+      "language": "es",
+      "category": "cleaning",
+      "title_en": "House cleaning North County",
+      "title_native": "Limpieza de casas en North County",
+      "story_en": "Pet-friendly, eco products, flexible days.",
+      "story_native": "Amigable con mascotas, productos ecológicos, días flexibles.",
+      "services": [
+        {
+          "name": "Home clean",
+          "price": "$115",
+          "kind": "service"
+        }
+      ],
+      "areaId": "escondido",
+      "locationPrecision": "city",
+      "travelRadius": 20,
+      "verified": false
+    },
+    {
+      "id": "us-alejandra",
+      "name": "Alejandra D.",
+      "language": "es",
+      "category": "food",
+      "title_en": "Gorditas & weekend catering",
+      "title_native": "Gorditas y comida para fines de semana",
+      "story_en": "Handmade masa, slow-cooked guisados, big portions.",
+      "story_native": "Masa hecha a mano, guisados a fuego lento y porciones generosas.",
+      "services": [
+        {
+          "name": "Gorditas (10)",
+          "price": "$25",
+          "kind": "product"
+        }
+      ],
+      "areaId": "westwood-denver",
+      "locationPrecision": "neighborhood",
+      "travelRadius": 10,
+      "verified": true
+    },
+    {
+      "id": "us-larysa",
+      "name": "Larysa M.",
+      "language": "uk",
+      "category": "eldercare",
+      "title_en": "Caring help for older adults",
+      "title_native": "Турботлива допомога літнім людям",
+      "story_en": "I worked many years caring for my own parents and enjoy keeping people company.",
+      "story_native": "Багато років доглядала за своїми батьками й люблю складати людям компанію.",
+      "services": [
+        {
+          "name": "Elder care (per hour)",
+          "price": "$25/hr",
+          "kind": "service"
+        }
+      ],
+      "areaId": "aurora",
+      "locationPrecision": "city",
+      "travelRadius": 15,
+      "verified": false
+    },
+    {
+      "id": "us-silvia",
+      "name": "Silvia R.",
+      "language": "es",
+      "category": "petsitting",
+      "title_en": "Pet sitting & dog walks",
+      "title_native": "Cuidado de mascotas y paseos",
+      "story_en": "Your pets get walks, cuddles, and a report every day.",
+      "story_native": "Tus mascotas reciben paseos, cariño y un reporte diario.",
+      "services": [
+        {
+          "name": "Drop-in visit",
+          "price": "$20",
+          "kind": "service"
+        }
+      ],
+      "areaId": "lakewood",
+      "locationPrecision": "city",
+      "travelRadius": 8,
+      "verified": false
+    },
+    {
+      "id": "us-oksana-kent",
+      "name": "Oksana L.",
+      "language": "uk",
+      "category": "bakery",
+      "title_en": "Kyiv cake, honey cake & pyrizhky",
+      "title_native": "Київський торт, медівник і пиріжки",
+      "story_en": "Birthday cakes with real meringue layers and plenty of love.",
+      "story_native": "Святкові торти зі справжніми безе й великою любов’ю.",
+      "services": [
+        {
+          "name": "Kyiv cake",
+          "price": "$60",
+          "kind": "product"
+        },
+        {
+          "name": "Pyrizhky (dozen)",
+          "price": "$20",
+          "kind": "product"
+        }
+      ],
+      "areaId": "kent",
+      "locationPrecision": "city",
+      "travelRadius": 15,
+      "verified": true
+    },
+    {
+      "id": "us-galina",
+      "name": "Galina T.",
+      "language": "ru",
+      "category": "tailoring",
+      "title_en": "Sewing & alterations at home studio",
+      "title_native": "Шитьё и подгонка в домашней мастерской",
+      "story_en": "Coats, curtains, and prom dresses — I can fix almost anything.",
+      "story_native": "Пальто, шторы, выпускные платья — почти всё могу починить.",
+      "services": [
+        {
+          "name": "Curtain hemming (pair)",
+          "price": "$30",
+          "kind": "service"
+        },
+        {
+          "name": "Coat relining",
+          "price": "$70",
+          "kind": "service"
+        }
+      ],
+      "areaId": "federal-way",
+      "locationPrecision": "city",
+      "travelRadius": 10,
+      "verified": false
+    },
+    {
+      "id": "us-vera",
+      "name": "Vera's Tea Room",
+      "language": "ru",
+      "category": "cafe",
+      "title_en": "Tea room: blini, pirozhki, samovar tea",
+      "title_native": "Чайная: блины, пирожки, чай из самовара",
+      "story_en": "A little tea room that smells like home.",
+      "story_native": "Маленькая чайная, где пахнет домом.",
+      "services": [
+        {
+          "name": "Blini plate",
+          "price": "$11",
+          "kind": "product"
+        },
+        {
+          "name": "Pirozhki (3)",
+          "price": "$9",
+          "kind": "product"
+        }
+      ],
+      "areaId": "kent",
+      "locationPrecision": "exact",
+      "travelRadius": 0,
+      "verified": true,
+      "address": "23825 104th Ave SE, Kent, WA",
+      "lat": 47.387,
+      "lng": -122.201
+    },
+    {
+      "id": "us-rosa-bel",
+      "name": "Rosa E.",
+      "language": "es",
+      "category": "cleaning",
+      "title_en": "House cleaning on the Eastside",
+      "title_native": "Limpieza de casas en el Eastside",
+      "story_en": "Organized, quiet, and careful with fragile things.",
+      "story_native": "Organizada, tranquila y cuidadosa con lo delicado.",
+      "services": [
+        {
+          "name": "Home clean",
+          "price": "$130",
+          "kind": "service"
+        }
+      ],
+      "areaId": "bellevue",
+      "locationPrecision": "city",
+      "travelRadius": 15,
+      "verified": false
+    },
+    {
+      "id": "us-nataliya-sac",
+      "name": "Nataliya R.",
+      "language": "uk",
+      "category": "food",
+      "title_en": "Ukrainian home meals & pelmeni",
+      "title_native": "Українські домашні страви та пельмені",
+      "story_en": "Borshch, deruny, and pelmeni cooked fresh for busy families.",
+      "story_native": "Борщ, деруни й пельмені — свіже для зайнятих сімей.",
+      "services": [
+        {
+          "name": "Pelmeni (2 lb, frozen)",
+          "price": "$20",
+          "kind": "product"
+        },
+        {
+          "name": "Deruny (10)",
+          "price": "$15",
+          "kind": "product"
+        }
+      ],
+      "areaId": "rancho-cordova",
+      "locationPrecision": "city",
+      "travelRadius": 12,
+      "verified": true
+    },
+    {
+      "id": "us-lyudmila",
+      "name": "Lyudmila S.",
+      "language": "ru",
+      "category": "childcare",
+      "title_en": "Russian-speaking nanny",
+      "title_native": "Русскоговорящая няня",
+      "story_en": "Fairy tales, park walks, and simple healthy meals.",
+      "story_native": "Сказки, прогулки в парке и простая полезная еда.",
+      "services": [
+        {
+          "name": "Nanny (per hour)",
+          "price": "$22/hr",
+          "kind": "service"
+        }
+      ],
+      "areaId": "citrus-heights",
+      "locationPrecision": "city",
+      "travelRadius": 8,
+      "verified": true
+    },
+    {
+      "id": "us-iryna-sac",
+      "name": "Iryna's Beauty Studio",
+      "language": "uk",
+      "category": "beauty",
+      "title_en": "Nails & brows studio",
+      "title_native": "Студія манікюру та брів",
+      "story_en": "A cheerful studio with sterilized tools and cozy chairs.",
+      "story_native": "Затишна студія зі стерилізованими інструментами.",
+      "services": [
+        {
+          "name": "Gel manicure",
+          "price": "$40",
+          "kind": "service"
+        },
+        {
+          "name": "Brow tint",
+          "price": "$20",
+          "kind": "service"
+        }
+      ],
+      "areaId": "west-sacramento",
+      "locationPrecision": "exact",
+      "travelRadius": 0,
+      "verified": false,
+      "address": "1235 Jefferson Blvd, West Sacramento, CA",
+      "lat": 38.5622,
+      "lng": -121.5306
+    },
+    {
+      "id": "us-maria-sac",
+      "name": "María J.",
+      "language": "es",
+      "category": "cleaning",
+      "title_en": "Home cleaning, Sacramento area",
+      "title_native": "Limpieza de casas, área de Sacramento",
+      "story_en": "Honest, detailed work with flexible scheduling.",
+      "story_native": "Trabajo honesto y detallado con horarios flexibles.",
+      "services": [
+        {
+          "name": "Home clean",
+          "price": "$100",
+          "kind": "service"
+        }
+      ],
+      "areaId": "north-highlands",
+      "locationPrecision": "city",
+      "travelRadius": 20,
+      "verified": false
+    },
+    {
+      "id": "us-alla",
+      "name": "Alla G.",
+      "language": "ru",
+      "category": "bakery",
+      "title_en": "Napoleon cake & pirozhki",
+      "title_native": "Торт «Наполеон» и пирожки",
+      "story_en": "My Napoleon has twelve thin layers; I make it for every family celebration.",
+      "story_native": "В моём «Наполеоне» двенадцать тонких коржей; пеку его на все семейные праздники.",
+      "services": [
+        {
+          "name": "Napoleon cake",
+          "price": "$45",
+          "kind": "product"
+        },
+        {
+          "name": "Pirozhki (dozen)",
+          "price": "$18",
+          "kind": "product"
+        }
+      ],
+      "areaId": "northeast-philly",
+      "locationPrecision": "subregion",
+      "travelRadius": 10,
+      "verified": true
+    },
+    {
+      "id": "us-khrystyna",
+      "name": "Khrystyna V.",
+      "language": "uk",
+      "category": "interpreting",
+      "title_en": "Ukrainian–English interpreting",
+      "title_native": "Переклад з української та на українську",
+      "story_en": "I help with school, doctor, and landlord conversations.",
+      "story_native": "Допомагаю на розмовах у школі, у лікаря та з орендодавцем.",
+      "services": [
+        {
+          "name": "Interpreting (per hour)",
+          "price": "$35/hr",
+          "kind": "service"
+        }
+      ],
+      "areaId": "northeast-philly",
+      "locationPrecision": "subregion",
+      "travelRadius": 15,
+      "verified": false
+    },
+    {
+      "id": "us-marisol",
+      "name": "Marisol B.",
+      "language": "es",
+      "category": "food",
+      "title_en": "Tacos & tortas for parties",
+      "title_native": "Tacos y tortas para fiestas",
+      "story_en": "Al pastor on the trompo for your backyard party.",
+      "story_native": "Al pastor en trompo para tu fiesta en el patio.",
+      "services": [
+        {
+          "name": "Taco party (40 tacos)",
+          "price": "$120",
+          "kind": "product"
+        }
+      ],
+      "areaId": "south-philly",
+      "locationPrecision": "subregion",
+      "travelRadius": 10,
+      "verified": false
+    },
+    {
+      "id": "us-wendy",
+      "name": "Wendy A.",
+      "language": "es",
+      "category": "food",
+      "title_en": "Salvadoran pupusas & tamales de elote",
+      "title_native": "Pupusas salvadoreñas y tamales de elote",
+      "story_en": "Pupusas revueltas every Saturday morning.",
+      "story_native": "Pupusas revueltas todos los sábados por la mañana.",
+      "services": [
+        {
+          "name": "Pupusas (10)",
+          "price": "$22",
+          "kind": "product"
+        }
+      ],
+      "areaId": "langley-park",
+      "locationPrecision": "city",
+      "travelRadius": 10,
+      "verified": true
+    },
+    {
+      "id": "us-claudia",
+      "name": "Claudia R.",
+      "language": "es",
+      "category": "cleaning",
+      "title_en": "Home & office cleaning, MD/DC",
+      "title_native": "Limpieza de casas y oficinas, MD/DC",
+      "story_en": "Ten clients have been with me since the start.",
+      "story_native": "Diez clientes están conmigo desde el principio.",
+      "services": [
+        {
+          "name": "Home clean",
+          "price": "$125",
+          "kind": "service"
+        }
+      ],
+      "areaId": "silver-spring",
+      "locationPrecision": "city",
+      "travelRadius": 15,
+      "verified": false
+    },
+    {
+      "id": "us-elena-dc",
+      "name": "Elena P.",
+      "language": "ru",
+      "category": "tutoring",
+      "title_en": "Piano & music theory",
+      "title_native": "Фортепиано и сольфеджио",
+      "story_en": "Patient lessons for beginners of every age.",
+      "story_native": "Терпеливые уроки для начинающих любого возраста.",
+      "services": [
+        {
+          "name": "Piano lesson (45 min)",
+          "price": "$50",
+          "kind": "service"
+        }
+      ],
+      "areaId": "arlington",
+      "locationPrecision": "city",
+      "travelRadius": 10,
+      "verified": true
+    },
+    {
+      "id": "us-columbia-cafe",
+      "name": "Café Cuscatlán",
+      "language": "es",
+      "category": "cafe",
+      "title_en": "Café: pupusas, horchata, pan dulce",
+      "title_native": "Café: pupusas, horchata y pan dulce",
+      "story_en": "A sunny corner café with homemade horchata.",
+      "story_native": "Un café soleado en la esquina con horchata casera.",
+      "services": [
+        {
+          "name": "Pupusa plate",
+          "price": "$10",
+          "kind": "product"
+        },
+        {
+          "name": "Horchata",
+          "price": "$4",
+          "kind": "product"
+        }
+      ],
+      "areaId": "columbia-heights",
+      "locationPrecision": "exact",
+      "travelRadius": 0,
+      "verified": false,
+      "address": "3410 14th St NW, Washington, DC",
+      "lat": 38.9318,
+      "lng": -77.0327
+    },
+    {
+      "id": "us-ingrid",
+      "name": "Ingrid M.",
+      "language": "es",
+      "category": "childcare",
+      "title_en": "Bilingual babysitting, East Boston",
+      "title_native": "Niñera bilingüe en East Boston",
+      "story_en": "Kids learn songs in Spanish while I keep them safe and busy.",
+      "story_native": "Los niños aprenden canciones en español mientras los cuido.",
+      "services": [
+        {
+          "name": "Babysitting (per hour)",
+          "price": "$24/hr",
+          "kind": "service"
+        }
+      ],
+      "areaId": "east-boston",
+      "locationPrecision": "neighborhood",
+      "travelRadius": 5,
+      "verified": true
+    },
+    {
+      "id": "us-mirna",
+      "name": "Mirna C.",
+      "language": "es",
+      "category": "food",
+      "title_en": "Guatemalan tamales & chuchitos",
+      "title_native": "Tamales guatemaltecos y chuchitos",
+      "story_en": "Wrapped in banana leaves, the way we make them for Christmas.",
+      "story_native": "Envueltos en hoja de plátano, como los hacemos en Navidad.",
+      "services": [
+        {
+          "name": "Tamales (dozen)",
+          "price": "$30",
+          "kind": "product"
+        }
+      ],
+      "areaId": "chelsea",
+      "locationPrecision": "city",
+      "travelRadius": 8,
+      "verified": false
+    },
+    {
+      "id": "us-oksana-bos",
+      "name": "Oksana M.",
+      "language": "uk",
+      "category": "cleaning",
+      "title_en": "Apartment cleaning, Somerville & Cambridge",
+      "title_native": "Прибирання квартир у Сомервілі та Кембриджі",
+      "story_en": "Students and families trust me with their keys.",
+      "story_native": "Студенти й сім’ї довіряють мені свої ключі.",
+      "services": [
+        {
+          "name": "Apartment clean",
+          "price": "$120",
+          "kind": "service"
+        }
+      ],
+      "areaId": "somerville",
+      "locationPrecision": "city",
+      "travelRadius": 8,
+      "verified": false
+    },
+    {
+      "id": "us-hoa",
+      "name": "Hoa P.",
+      "language": "en",
+      "category": "food",
+      "title_en": "Pho & home-style Vietnamese meals",
+      "title_native": "Pho & home-style Vietnamese meals",
+      "story_en": "My pho broth simmers for twelve hours.",
+      "story_native": "My pho broth simmers for twelve hours.",
+      "services": [
+        {
+          "name": "Pho kit (serves 4)",
+          "price": "$40",
+          "kind": "product"
+        }
+      ],
+      "areaId": "buford-highway",
+      "locationPrecision": "subregion",
+      "travelRadius": 12,
+      "verified": true
+    },
+    {
+      "id": "us-teresa",
+      "name": "Teresa L.",
+      "language": "es",
+      "category": "cleaning",
+      "title_en": "Cleaning for homes & small offices",
+      "title_native": "Limpieza para casas y oficinas pequeñas",
+      "story_en": "Reliable, kind, and detail-focused.",
+      "story_native": "Confiable, amable y detallista.",
+      "services": [
+        {
+          "name": "Home clean",
+          "price": "$110",
+          "kind": "service"
+        }
+      ],
+      "areaId": "marietta",
+      "locationPrecision": "city",
+      "travelRadius": 20,
+      "verified": false
+    },
+    {
+      "id": "us-natasha-atl",
+      "name": "Natasha I.",
+      "language": "ru",
+      "category": "beauty",
+      "title_en": "Hair coloring & haircuts at home",
+      "title_native": "Окрашивание и стрижки на дому",
+      "story_en": "Soft balayage and easy-care cuts.",
+      "story_native": "Мягкий балаяж и стрижки, которые легко укладывать.",
+      "services": [
+        {
+          "name": "Haircut",
+          "price": "$45",
+          "kind": "service"
+        },
+        {
+          "name": "Balayage",
+          "price": "$150",
+          "kind": "service"
+        }
+      ],
+      "areaId": "decatur",
+      "locationPrecision": "city",
+      "travelRadius": 10,
+      "verified": false
+    },
+    {
+      "id": "us-guillermina",
+      "name": "Guillermina F.",
+      "language": "es",
+      "category": "food",
+      "title_en": "Tamales & champurrado for winter",
+      "title_native": "Tamales y champurrado para el invierno",
+      "story_en": "Warm champurrado for snowy days and tamales for every holiday.",
+      "story_native": "Champurrado calientito para días de nieve y tamales para cada fiesta.",
+      "services": [
+        {
+          "name": "Tamales (dozen)",
+          "price": "$26",
+          "kind": "product"
+        },
+        {
+          "name": "Champurrado (half gallon)",
+          "price": "$12",
+          "kind": "product"
+        }
+      ],
+      "areaId": "lake-street",
+      "locationPrecision": "neighborhood",
+      "travelRadius": 10,
+      "verified": true
+    },
+    {
+      "id": "us-tamara",
+      "name": "Tamara K.",
+      "language": "ru",
+      "category": "eldercare",
+      "title_en": "Companion care & help at home",
+      "title_native": "Компаньон и помощь по дому",
+      "story_en": "I'm patient, cheerful, and a very good listener.",
+      "story_native": "Я терпеливая, весёлая и умею слушать.",
+      "services": [
+        {
+          "name": "Companion care (per hour)",
+          "price": "$23/hr",
+          "kind": "service"
+        }
+      ],
+      "areaId": "st-paul",
+      "locationPrecision": "city",
+      "travelRadius": 12,
+      "verified": false
+    },
+    {
+      "id": "us-anya-oh",
+      "name": "Anya R.",
+      "language": "ru",
+      "category": "interpreting",
+      "title_en": "Russian–English interpreting by video",
+      "title_native": "Устный перевод с русского и на русский по видео",
+      "story_en": "I work by video call anywhere in Ohio, and in person around Columbus.",
+      "story_native": "Работаю по видеосвязи по всему Огайо и лично в районе Колумбуса.",
+      "services": [
+        {
+          "name": "Video interpreting (per hour)",
+          "price": "$35/hr",
+          "kind": "service"
+        }
+      ],
+      "areaId": "oh",
+      "locationPrecision": "state",
+      "travelRadius": 0,
+      "verified": true
+    },
+    {
+      "id": "us-beatriz-oh",
+      "name": "Beatriz S.",
+      "language": "es",
+      "category": "tutoring",
+      "title_en": "Online Spanish tutoring for kids",
+      "title_native": "Clases de español en línea para niños",
+      "story_en": "Fun, game-based Spanish for kids anywhere in Ohio.",
+      "story_native": "Español divertido con juegos para niños de todo Ohio.",
+      "services": [
+        {
+          "name": "Online lesson (45 min)",
+          "price": "$25",
+          "kind": "service"
+        }
+      ],
+      "areaId": "oh",
+      "locationPrecision": "state",
+      "travelRadius": 0,
+      "verified": false
+    },
+    {
+      "id": "us-mariana-tx",
+      "name": "Mariana H.",
+      "language": "es",
+      "category": "interpreting",
+      "title_en": "Medical & school interpreting statewide",
+      "title_native": "Interpretación médica y escolar en todo el estado",
+      "story_en": "I interpret by phone or video for families across Texas.",
+      "story_native": "Interpreto por teléfono o video para familias de todo Texas.",
+      "services": [
+        {
+          "name": "Phone interpreting (per hour)",
+          "price": "$38/hr",
+          "kind": "service"
+        }
+      ],
+      "areaId": "tx",
+      "locationPrecision": "state",
+      "travelRadius": 0,
+      "verified": false
     }
   ],
   "orders": []
