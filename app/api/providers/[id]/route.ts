@@ -45,6 +45,7 @@ export async function PATCH(req: Request, ctx: RouteContext<"/api/providers/[id]
     const p = db.providers.find((x) => x.id === id);
     if (!p) return null;
     if (typeof body.verified === "boolean") p.verified = body.verified;
+    if (typeof body.paused === "boolean") p.paused = body.paused;
     if (l) {
       Object.assign(p, {
         category: l.category || "other",

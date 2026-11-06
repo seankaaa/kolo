@@ -176,7 +176,7 @@ export default function Join() {
       });
       if (!res.ok) throw new Error();
       save("kolo.draft", null);
-      router.push(`/?live=${d.providerId}`);
+      router.push(`/her/${d.providerId}?live=1`);
     } catch {
       setError(t("errNetwork"));
       setBusy(false);

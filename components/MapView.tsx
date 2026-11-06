@@ -63,8 +63,15 @@ export default function MapView({
   onFly: (areaId: string) => void;
 }) {
   const [zoom, setZoom] = useState(9);
+  // A fresh container per effect run: Fast Refresh / StrictMode re-run effects on the same
+  // DOM, and Leaflet refuses to initialize twice on one <div> ("Map container is being reused").
+  const [mountId, setMountId] = useState(0);
+  useEffect(() => {
+    setMountId((n) => n + 1);
+  }, []);
+  if (mountId === 0) return <div className="h-full w-full bg-stone-100" />;
   return (
-    <MapContainer center={[37.7, -122.25]} zoom={9} className="h-full w-full" zoomControl={false}>
+    <MapContainer key={mountId} center={[37.7, -122.25]} zoom={9} className="h-full w-full" zoomControl={false}>
       <Tiles />
       <Controller target={target} onBounds={onBounds} onZoom={setZoom} />
       {zoom < CLUSTER_BELOW_ZOOM ? (

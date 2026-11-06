@@ -1,14 +1,16 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { areaById, CATEGORIES, LANG_NAMES } from "@/lib/areas";
+import { areaById, LANG_NAMES } from "@/lib/areas";
+import { catLabel, load, pick, save, useUILang } from "@/lib/i18n";
 import type { Lang, Provider, ServiceItem } from "@/lib/types";
 
 export function VerifiedBadge() {
+  const { t } = useUILang();
   return (
     <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-800">
-      ✓ Verified
+      ✓ {t("verified")}
     </span>
   );
 }
@@ -19,152 +21,229 @@ export function servesLabel(p: Provider) {
   return p.otherCity ? `${name} (${p.otherCity})` : name;
 }
 
+/** Parse "$30", "$28/hr", "from $60" -> 30 / 28 / 60; null when there is no price. */
+export function priceNumber(price: string): number | null {
+  const m = price.match(/\$\s*(\d+(?:\.\d+)?)/);
+  return m ? parseFloat(m[1]) : null;
+}
+
 export default function ProviderDrawer({ provider: p, onClose }: { provider: Provider; onClose: () => void }) {
-  const [native, setNative] = useState(false);
+  const { lang, t } = useUILang();
+  const [showNative, setShowNative] = useState(lang === p.language);
   const [booking, setBooking] = useState<ServiceItem | null>(null);
-  const hasNative = p.language !== "en";
+  const hasNative = p.language !== "en" && !!p.story_native;
+  const title = pick(p, lang, p.title_en, p.title_native);
 
   return (
     <aside className="absolute right-0 top-0 z-[1000] flex h-full w-full max-w-md flex-col overflow-y-auto border-l border-stone-200 bg-white shadow-2xl">
       <div className="flex items-start justify-between gap-3 border-b border-stone-100 p-5">
         <div>
           <div className="mb-1 flex flex-wrap items-center gap-2 text-xs text-stone-500">
-            <span>{CATEGORIES[p.category] || p.category}</span>
+            <span>{catLabel(lang, p.category)}</span>
             <span>·</span>
-            <span>Speaks {LANG_NAMES[p.language]}</span>
+            <span>{t("speaks", { lang: LANG_NAMES[p.language] })}</span>
             {p.verified && <VerifiedBadge />}
           </div>
-          <h2 className="text-xl font-semibold leading-tight text-stone-900">{p.title_en}</h2>
-          {hasNative && <p className="mt-1 text-stone-500">{p.title_native}</p>}
-          {p.summary_en && <p className="mt-2 text-sm text-stone-600">{p.summary_en}</p>}
+          <h2 className="text-xl font-semibold leading-tight text-stone-900">{title}</h2>
+          {p.language !== "en" && title !== p.title_native && <p className="mt-1 text-stone-500">{p.title_native}</p>}
+          {p.summary_en && <p className="mt-2 text-sm text-stone-600">{pick(p, lang, p.summary_en, p.summary_native || "")}</p>}
           <p className="mt-2 text-sm font-medium text-stone-700">{p.name}</p>
         </div>
-        <button onClick={onClose} className="rounded-full p-2 text-stone-400 hover:bg-stone-100" aria-label="Close">
+        <button onClick={onClose} className="min-h-11 min-w-11 rounded-full text-stone-400 hover:bg-stone-100" aria-label={t("close")}>
           ✕
         </button>
       </div>
 
       <div className="space-y-5 p-5">
         <div className="rounded-xl bg-orange-50 px-4 py-3 text-sm text-orange-900">
-          📍 {p.locationPrecision === "exact" ? "Shop at" : "Serves"} <b>{servesLabel(p)}</b>
-          {p.travelRadius > 0 && <span className="text-orange-700"> · travels/delivers up to {p.travelRadius} km</span>}
+          📍 {p.locationPrecision === "exact" ? t("shopAt") : t("serves")} <b>{servesLabel(p)}</b>
+          {p.travelRadius > 0 && <span className="text-orange-700"> · {t("travelsUpTo", { km: p.travelRadius })}</span>}
         </div>
 
         {p.story_en && (
           <div>
             <div className="mb-1 flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-stone-800">Her story</h3>
+              <h3 className="text-sm font-semibold text-stone-800">{t("story")}</h3>
               {hasNative && (
-                <button onClick={() => setNative(!native)} className="text-xs font-medium text-orange-700 hover:underline">
-                  {native ? "Read in English" : "Read in her words"}
+                <button onClick={() => setShowNative(!showNative)} className="min-h-8 text-xs font-medium text-orange-700 hover:underline">
+                  {showNative ? t("readTranslated") : t("readHerWords")}
                 </button>
               )}
             </div>
-            <p className="text-sm leading-relaxed text-stone-600">{native ? p.story_native : p.story_en}</p>
+            <p className="text-sm leading-relaxed text-stone-600">{showNative && hasNative ? p.story_native : p.story_en}</p>
           </div>
         )}
 
         {p.availability && <p className="text-sm text-stone-600">🕒 {p.availability}</p>}
 
         <div>
-          <h3 className="mb-2 text-sm font-semibold text-stone-800">Services & prices</h3>
+          <h3 className="mb-2 text-sm font-semibold text-stone-800">{t("services")}</h3>
           <ul className="divide-y divide-stone-100 rounded-xl border border-stone-200">
             {p.services.map((s) => (
               <li key={s.name} className="flex items-center justify-between gap-3 px-4 py-3">
                 <div>
                   <div className="text-sm text-stone-800">{s.name}</div>
-                  <div className="text-sm font-semibold text-stone-900">{s.price}</div>
+                  <div className="text-sm font-semibold text-stone-900">{s.price === "price on request" ? t("priceOnRequest") : s.price}</div>
                 </div>
                 <button
                   onClick={() => setBooking(s)}
-                  className="shrink-0 rounded-full bg-stone-900 px-4 py-1.5 text-sm font-medium text-white hover:bg-stone-700"
+                  className="min-h-11 shrink-0 rounded-full bg-stone-900 px-4 text-sm font-medium text-white hover:bg-stone-700"
                 >
-                  {s.kind === "product" ? "Order" : "Book"}
+                  {s.kind === "product" ? t("order") : t("book")}
                 </button>
               </li>
             ))}
           </ul>
         </div>
 
-        {booking && <BookingForm provider={p} item={booking} onCancel={() => setBooking(null)} />}
+        {booking && <BookingForm key={booking.name} provider={p} initial={booking} onCancel={() => setBooking(null)} />}
       </div>
     </aside>
   );
 }
 
-function BookingForm({ provider, item, onCancel }: { provider: Provider; item: ServiceItem; onCancel: () => void }) {
-  const router = useRouter();
-  const [name, setName] = useState("");
-  const [lang, setLang] = useState<Lang>("en");
+function BookingForm({ provider, initial, onCancel }: { provider: Provider; initial: ServiceItem; onCancel: () => void }) {
+  const { lang, t } = useUILang();
+  const [itemName, setItemName] = useState(initial.name);
+  const item = provider.services.find((s) => s.name === itemName) || initial;
+  const [qty, setQty] = useState(1);
+  const [when, setWhen] = useState("");
+  const [areaText, setAreaText] = useState("");
   const [details, setDetails] = useState("");
+  const [name, setName] = useState("");
+  const [custLang, setCustLang] = useState<Lang>(lang);
+  const [contact, setContact] = useState("");
   const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const [sentId, setSentId] = useState<string | null>(null);
+
+  const unit = priceNumber(item.price);
+  const total = unit !== null ? unit * (item.kind === "product" ? qty : 1) : null;
+  // Advance notice: at least 24h so she can plan (cakes, catering, cleaning slots).
+  const tooSoon = !!when && new Date(when).getTime() < Date.now() + 24 * 3600 * 1000;
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+    if (tooSoon) return setError(t("dateTooSoon"));
     setBusy(true);
-    const res = await fetch("/api/orders", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        providerId: provider.id,
-        customerName: name,
-        customerLanguage: lang,
-        item: `${item.name} (${item.price})`,
-        details,
-      }),
-    });
-    const order = await res.json();
-    // Details become the first chat message so they get translated for her.
-    if (details.trim()) {
-      await fetch(`/api/orders/${order.id}/messages`, {
+    setError("");
+    let customerId = load<string | null>("kolo.customerId", null);
+    if (!customerId) {
+      customerId = `c_${Math.random().toString(36).slice(2, 10)}`;
+      save("kolo.customerId", customerId);
+    }
+    try {
+      const res = await fetch("/api/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ from: "customer", text: details.trim() }),
+        body: JSON.stringify({
+          providerId: provider.id,
+          customerId,
+          customerName: name,
+          customerLanguage: custLang,
+          contact,
+          item: `${item.name} (${item.price})`,
+          quantity: item.kind === "product" ? qty : 1,
+          when,
+          areaText,
+          details,
+        }),
       });
+      const order = await res.json();
+      // Notes become the first chat message so they get translated for her.
+      if (details.trim()) {
+        await fetch(`/api/orders/${order.id}/messages`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ from: "customer", text: details.trim() }),
+        });
+      }
+      setSentId(order.id);
+    } catch {
+      setError(t("errNetwork"));
+    } finally {
+      setBusy(false);
     }
-    router.push(`/order/${order.id}`);
   }
+
+  if (sentId) {
+    return (
+      <div role="status" className="space-y-3 rounded-xl border-2 border-emerald-200 bg-emerald-50 p-4 text-center">
+        <p className="text-lg font-semibold text-emerald-900">✅ {t("requestSent", { name: provider.name })}</p>
+        <Link href={`/order/${sentId}`} className="inline-flex min-h-11 items-center rounded-full bg-emerald-700 px-5 font-semibold text-white">
+          💬 {t("openOrder")}
+        </Link>
+      </div>
+    );
+  }
+
+  const field = "w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm min-h-11";
 
   return (
     <form onSubmit={submit} className="space-y-3 rounded-xl border-2 border-orange-200 bg-orange-50/50 p-4">
-      <h3 className="font-semibold text-stone-900">
-        {item.kind === "product" ? "Order" : "Book"}: {item.name}
-      </h3>
-      <input
-        required
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Your first name"
-        className="w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm"
-      />
-      <label className="block text-xs text-stone-600">
-        Your language
-        <select
-          value={lang}
-          onChange={(e) => setLang(e.target.value as Lang)}
-          className="mt-1 w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm"
-        >
-          {Object.entries(LANG_NAMES).map(([k, v]) => (
-            <option key={k} value={k}>{v}</option>
+      <h3 className="font-semibold text-stone-900">{item.kind === "product" ? t("order") : t("book")} · {provider.name}</h3>
+      <L label={t("chooseItem")}>
+        <select value={itemName} onChange={(e) => setItemName(e.target.value)} className={field}>
+          {provider.services.map((s) => (
+            <option key={s.name} value={s.name}>{s.name} — {s.price}</option>
           ))}
         </select>
-      </label>
-      <textarea
-        value={details}
-        onChange={(e) => setDetails(e.target.value)}
-        placeholder={item.kind === "product" ? "When do you need it? Pickup or delivery?" : "Preferred date and time, any details"}
-        rows={3}
-        className="w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm"
-      />
-      <p className="text-xs text-stone-500">Demo only: no payment is taken. You can chat with {provider.name} in your language after sending.</p>
+      </L>
+      {item.kind === "product" && (
+        <L label={t("quantity")}>
+          <input type="number" min={1} max={99} value={qty} onChange={(e) => setQty(Math.max(1, +e.target.value || 1))} className={field} />
+        </L>
+      )}
+      <L label={t("dateTime")}>
+        <input type="datetime-local" required value={when} onChange={(e) => { setWhen(e.target.value); setError(""); }} className={field} />
+      </L>
+      {tooSoon && <p className="text-xs text-amber-800">⏰ {t("dateTooSoon")}</p>}
+      <L label={t("generalArea")}>
+        <input value={areaText} onChange={(e) => setAreaText(e.target.value)} className={field} />
+      </L>
+      <L label={t("notes")}>
+        <textarea value={details} onChange={(e) => setDetails(e.target.value)} rows={2} placeholder={item.kind === "product" ? t("detailsProduct") : t("detailsService")} className={field} />
+      </L>
+      <div className="grid grid-cols-2 gap-2">
+        <L label={t("yourFirstName")}>
+          <input required value={name} onChange={(e) => setName(e.target.value)} className={field} />
+        </L>
+        <L label={t("yourLanguage")}>
+          <select value={custLang} onChange={(e) => setCustLang(e.target.value as Lang)} className={field}>
+            {Object.entries(LANG_NAMES).map(([k, v]) => (
+              <option key={k} value={k}>{v}</option>
+            ))}
+          </select>
+        </L>
+      </div>
+      <L label={t("yourContact")}>
+        <input required value={contact} onChange={(e) => setContact(e.target.value)} className={field} />
+      </L>
+      {total !== null && (
+        <div className="rounded-lg bg-white px-3 py-2 text-sm">
+          <div className="flex justify-between font-semibold text-stone-900"><span>{t("estTotal")}</span><span>${total}</span></div>
+          <div className="text-xs text-stone-500">{t("paidDirectly")}</div>
+        </div>
+      )}
+      <p className="text-xs text-stone-500">🔒 {t("addressAfterAccept")}</p>
+      {error && <p role="alert" className="text-sm text-red-700">{error}</p>}
       <div className="flex gap-2">
-        <button disabled={busy} className="flex-1 rounded-full bg-orange-600 py-2 text-sm font-semibold text-white hover:bg-orange-700 disabled:opacity-50">
-          {busy ? "Sending…" : "Send request"}
+        <button disabled={busy || tooSoon} className="min-h-11 flex-1 rounded-full bg-orange-600 text-sm font-semibold text-white hover:bg-orange-700 disabled:opacity-50">
+          {busy ? t("sending") : t("sendRequest")}
         </button>
-        <button type="button" onClick={onCancel} className="rounded-full px-4 py-2 text-sm text-stone-600 hover:bg-stone-100">
-          Cancel
+        <button type="button" onClick={onCancel} className="min-h-11 rounded-full px-4 text-sm text-stone-600 hover:bg-stone-100">
+          {t("cancel")}
         </button>
       </div>
     </form>
+  );
+}
+
+function L({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <label className="block text-xs font-medium text-stone-600">
+      {label}
+      <div className="mt-1">{children}</div>
+    </label>
   );
 }

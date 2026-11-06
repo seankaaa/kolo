@@ -1827,5 +1827,80 @@
       "verified": false
     }
   ],
-  "orders": []
+  "orders": [
+    {
+      "id": "o_seed_maria_new",
+      "providerId": "maria",
+      "customerName": "Emily",
+      "customerLanguage": "en",
+      "customerId": "c_seed_emily",
+      "item": "Standard clean (2 bedrooms) ($120)",
+      "quantity": 1,
+      "when": "2026-11-08T10:00",
+      "areaText": "Glen Park",
+      "contact": "emily@example.com",
+      "details": "Two cats at home, they're friendly!",
+      "status": "new",
+      "createdAt": 1793991173407,
+      "messages": [
+        {
+          "id": "m_s1",
+          "from": "customer",
+          "original": "Hi María! Could you come this Saturday morning? We have two friendly cats.",
+          "lang": "en",
+          "translations": {
+            "es": "¡Hola María! ¿Podrías venir este sábado por la mañana? Tenemos dos gatos amigables."
+          },
+          "at": 1793991273407
+        }
+      ]
+    },
+    {
+      "id": "o_seed_maria_acc",
+      "providerId": "maria",
+      "customerName": "David",
+      "customerLanguage": "en",
+      "customerId": "c_seed_david",
+      "item": "Deep clean / move-out ($220)",
+      "quantity": 1,
+      "when": "2026-11-10T09:00",
+      "areaText": "Bernal Heights",
+      "contact": "555-0177",
+      "details": "Moving out of a 2-bedroom apartment.",
+      "status": "accepted",
+      "createdAt": 1793908373407,
+      "messages": [
+        {
+          "id": "m_s2",
+          "from": "customer",
+          "original": "Hi! I'm moving out on the 10th. Can you do a deep clean that morning?",
+          "lang": "en",
+          "translations": {
+            "es": "¡Hola! Me mudo el día 10. ¿Puedes hacer una limpieza profunda esa mañana?"
+          },
+          "at": 1793908773407
+        },
+        {
+          "id": "m_s3",
+          "from": "provider",
+          "original": "¡Claro que sí! Llego a las 9 con todos mis productos. ¿El departamento está vacío?",
+          "lang": "es",
+          "translations": {
+            "en": "Of course! I'll arrive at 9 with all my supplies. Is the apartment empty?"
+          },
+          "at": 1793909773407
+        },
+        {
+          "id": "m_s4",
+          "from": "customer",
+          "original": "Yes, completely empty. Thank you so much!",
+          "lang": "en",
+          "translations": {
+            "es": "Sí, completamente vacío. ¡Muchas gracias!"
+          },
+          "at": 1793910773407
+        }
+      ]
+    }
+  ]
 }

@@ -30,24 +30,54 @@ export function save(key: string, value: unknown) {
 const EVT = "kolo-lang";
 
 export function translate(lang: Lang, key: UIKey, vars?: Record<string, string | number>) {
-  let s = DICTS[lang]?.[key] ?? DICTS.en[key] ?? key;
+  let s: string = DICTS[lang]?.[key] ?? DICTS.en[key] ?? key;
   for (const [k, v] of Object.entries(vars || {})) s = s.replace(`{${k}}`, String(v));
   return s;
 }
 
-/** UI language, persisted in localStorage and shared across components on the page. */
-export function useUILang() {
+function tabLang(): Lang | null {
+  try {
+    return (sessionStorage.getItem("kolo.lang") as Lang) || null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * The UI language for every string on every page. It is per browser tab (sessionStorage),
+ * so a two-window demo can show the customer in English and the provider in Ukrainian;
+ * new tabs start from the last choice (localStorage). A page can pass a default (e.g. her
+ * language on her profile) used only when this tab hasn't chosen yet.
+ */
+export function useUILang(pageDefault?: Lang | null) {
   const [lang, setLangState] = useState<Lang>("en");
   useEffect(() => {
-    setLangState(load<Lang>("kolo.lang", "en"));
+    const chosen = tabLang();
+    if (chosen) setLangState(chosen);
+    else if (pageDefault) {
+      setLangState(pageDefault);
+      try { sessionStorage.setItem("kolo.lang", pageDefault); } catch {}
+      window.dispatchEvent(new CustomEvent(EVT, { detail: pageDefault }));
+    } else setLangState(load<Lang>("kolo.lang", "en"));
     const on = (e: Event) => setLangState((e as CustomEvent<Lang>).detail);
     window.addEventListener(EVT, on);
     return () => window.removeEventListener(EVT, on);
-  }, []);
+  }, [pageDefault]);
   const setLang = useCallback((l: Lang) => {
     save("kolo.lang", l);
+    try { sessionStorage.setItem("kolo.lang", l); } catch {}
     window.dispatchEvent(new CustomEvent(EVT, { detail: l }));
   }, []);
   const t = useCallback((key: UIKey, vars?: Record<string, string | number>) => translate(lang, key, vars), [lang]);
   return { lang, setLang, t };
+}
+
+/** Category label in the UI language. */
+export function catLabel(lang: Lang, cat: string) {
+  return translate(lang, `cat_${cat}` as UIKey) || cat;
+}
+
+/** Listing text in the UI language when it matches her language, otherwise English. */
+export function pick<T extends { language: Lang }>(p: T, lang: Lang, en: string, native: string) {
+  return lang === p.language && native ? native : en;
 }

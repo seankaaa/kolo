@@ -4,7 +4,7 @@ import type { Lang, Provider } from "@/lib/types";
 
 export async function GET() {
   const db = await readDB();
-  return Response.json(db.providers.filter((p) => p.status !== "draft").map(publicProvider));
+  return Response.json(db.providers.filter((p) => p.status !== "draft" && !p.paused).map(publicProvider));
 }
 
 /** Sign-up: creates a draft provider. No passwords, no SSN, no status fields. */

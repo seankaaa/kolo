@@ -43,6 +43,8 @@ export interface Provider {
   /** Synthetic contact for order notifications; never returned by public APIs. */
   contact?: string;
   status?: "draft" | "live";
+  /** Paused listings are hidden from the map. */
+  paused?: boolean;
   verified: boolean;
 }
 
@@ -62,6 +64,14 @@ export interface Order {
   customerLanguage: Lang;
   item: string;
   details: string;
+  quantity?: number;
+  /** Preferred date/time, ISO local (e.g. 2026-11-08T10:00). */
+  when?: string;
+  /** General area only; the exact address is shared in chat after she accepts. */
+  areaText?: string;
+  /** Synthetic contact for notifications; never shown to other customers. */
+  contact?: string;
+  customerId?: string;
   status: "new" | "accepted" | "declined" | "done";
   messages: Message[];
   createdAt: number;
