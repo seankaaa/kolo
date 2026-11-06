@@ -2,39 +2,37 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { load, save, UI_LANGS, useUILang, translate } from "@/lib/i18n";
+import { useEffect, useRef, useState } from "react";
+import { UI_LANGS, useUILang, translate } from "@/lib/i18n";
+import { logout, useSession } from "@/lib/session";
 
 const navBtn =
   "inline-flex min-h-11 items-center gap-1.5 rounded-full border border-stone-300 bg-white px-3 text-sm font-medium text-stone-700 hover:bg-stone-50 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-orange-500";
 
-export default function Header({ showOffer = true, children }: { showOffer?: boolean; children?: React.ReactNode }) {
+export default function Header({ children }: { showOffer?: boolean; children?: React.ReactNode }) {
   const { lang, setLang, t } = useUILang();
+  const { user } = useSession();
   const router = useRouter();
   const pathname = usePathname();
-  const [myId, setMyId] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Only offer "My profile" if that provider still exists (demo data can be reset).
-    const id = load<string | null>("kolo.providerId", null);
-    if (!id) return;
-    fetch(`/api/providers/${id}`).then((r) => {
-      if (r.ok) setMyId(id);
-      else save("kolo.providerId", null);
-    });
+    const close = (e: MouseEvent) => menuRef.current && !menuRef.current.contains(e.target as Node) && setOpen(false);
+    document.addEventListener("click", close);
+    return () => document.removeEventListener("click", close);
   }, []);
 
-  const profileHref = myId ? `/her/${myId}` : "/join";
-  const [isCustomer, setIsCustomer] = useState(false);
-  useEffect(() => {
-    const check = () => setIsCustomer(!!load<string | null>("kolo.customerId", null));
-    check();
-    window.addEventListener("kolo-customer", check);
-    return () => window.removeEventListener("kolo-customer", check);
-  }, []);
+  function doLogout() {
+    setOpen(false);
+    logout();
+    router.push("/");
+  }
+
+  const item = "flex min-h-11 w-full items-center gap-2 px-4 text-left text-sm text-stone-800 hover:bg-orange-50";
 
   return (
-    <header className="border-b border-stone-200 bg-white">
+    <header className="relative z-[1200] border-b border-stone-200 bg-white">
       <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3">
         <div className="flex items-baseline gap-3">
           <Link href="/" className="rounded text-2xl font-bold tracking-tight text-stone-900 focus-visible:outline-3 focus-visible:outline-orange-500">
@@ -55,17 +53,23 @@ export default function Header({ showOffer = true, children }: { showOffer?: boo
               <option key={l} value={l}>🌐 {translate(l, "langName")}</option>
             ))}
           </select>
-          {showOffer && (
-            <Link href="/her/oksana" className={`${navBtn} hidden sm:inline-flex`} title="Demo: open a sample provider's inbox">
-              👩 {t("providerView")}
-            </Link>
-          )}
-          {showOffer && !myId && (
-            <Link
-              href="/join"
-              className="flex min-h-11 items-center rounded-full bg-orange-600 px-4 text-sm font-semibold text-white hover:bg-orange-700 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
-            >
-              ✋ {t("offer")} →
+          {user ? (
+            <div ref={menuRef} className="relative">
+              <button onClick={() => setOpen(!open)} aria-expanded={open} aria-haspopup="menu" className={navBtn}>
+                👤 {user.name} ▾
+              </button>
+              {open && (
+                <div role="menu" className="absolute right-0 mt-2 w-56 overflow-hidden rounded-xl border border-stone-200 bg-white py-1 shadow-xl">
+                  <Link role="menuitem" href="/me" onClick={() => setOpen(false)} className={item}>👤 {t("navProfile")}</Link>
+                  <Link role="menuitem" href="/me#listings" onClick={() => setOpen(false)} className={item}>📋 {t("myListings")}</Link>
+                  <Link role="menuitem" href="/me#orders" onClick={() => setOpen(false)} className={item}>🧾 {t("myOrders")}</Link>
+                  <button role="menuitem" onClick={doLogout} className={`${item} border-t border-stone-100`}>🚪 {t("logout")}</button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link href={`/login?next=${encodeURIComponent(pathname || "/")}`} className="flex min-h-11 items-center rounded-full bg-stone-900 px-4 text-sm font-semibold text-white hover:bg-stone-700">
+              {t("login")}
             </Link>
           )}
         </div>
@@ -73,19 +77,15 @@ export default function Header({ showOffer = true, children }: { showOffer?: boo
       <nav aria-label="Navigation" className="flex flex-wrap items-center gap-2 border-t border-stone-100 px-4 py-2">
         <button onClick={() => router.back()} className={navBtn}>← {t("navBack")}</button>
         <button onClick={() => window.history.forward()} className={navBtn}>{t("navForward")} →</button>
-        <Link href="/" aria-current={pathname === "/" ? "page" : undefined} className={`${navBtn} aria-[current=page]:border-orange-500 aria-[current=page]:bg-orange-50`}>
+        <Link href="/" aria-current={pathname === "/" || pathname === "/explore" ? "page" : undefined} className={`${navBtn} aria-[current=page]:border-orange-500 aria-[current=page]:bg-orange-50`}>
           🏠 {t("navHome")}
         </Link>
-        <Link
-          href={profileHref}
-          aria-current={pathname.startsWith("/her/") || pathname === "/join" ? "page" : undefined}
-          className={`${navBtn} aria-[current=page]:border-orange-500 aria-[current=page]:bg-orange-50`}
-        >
-          👤 {myId ? t("navProfile") : t("offer")}
+        <Link href="/join" aria-current={pathname === "/join" ? "page" : undefined} className={`${navBtn} aria-[current=page]:border-orange-500 aria-[current=page]:bg-orange-50`}>
+          ✋ {t("offer")}
         </Link>
-        {isCustomer && (
-          <Link href="/orders" aria-current={pathname === "/orders" ? "page" : undefined} className={`${navBtn} aria-[current=page]:border-orange-500 aria-[current=page]:bg-orange-50`}>
-            🧾 {t("myOrders")}
+        {user && (
+          <Link href="/me" aria-current={pathname === "/me" ? "page" : undefined} className={`${navBtn} aria-[current=page]:border-orange-500 aria-[current=page]:bg-orange-50`}>
+            👤 {t("navProfile")}
           </Link>
         )}
       </nav>

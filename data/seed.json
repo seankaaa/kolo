@@ -50,7 +50,8 @@
       "areaId": "excelsior",
       "locationPrecision": "neighborhood",
       "travelRadius": 8,
-      "verified": true
+      "verified": true,
+      "ownerId": "u_maria"
     },
     {
       "id": "rosa",
@@ -160,7 +161,8 @@
       "areaId": "sunset",
       "locationPrecision": "neighborhood",
       "travelRadius": 6,
-      "verified": true
+      "verified": true,
+      "ownerId": "u_oksana"
     },
     {
       "id": "iryna",
@@ -1853,14 +1855,15 @@
           },
           "at": 1793991273407
         }
-      ]
+      ],
+      "providerUserId": "u_maria"
     },
     {
       "id": "o_seed_maria_acc",
       "providerId": "maria",
-      "customerName": "David",
+      "customerName": "Alex",
       "customerLanguage": "en",
-      "customerId": "c_seed_david",
+      "customerId": null,
       "item": "Deep clean / move-out ($220)",
       "quantity": 1,
       "when": "2026-11-10T09:00",
@@ -1900,7 +1903,32 @@
           },
           "at": 1793910773407
         }
-      ]
+      ],
+      "providerUserId": "u_maria",
+      "customerUserId": "u_alex"
+    }
+  ],
+  "users": [
+    {
+      "id": "u_maria",
+      "email": "maria@example.com",
+      "name": "María T.",
+      "language": "es",
+      "createdAt": 1793995315589
+    },
+    {
+      "id": "u_oksana",
+      "email": "oksana@example.com",
+      "name": "Oksana K.",
+      "language": "uk",
+      "createdAt": 1793995315589
+    },
+    {
+      "id": "u_alex",
+      "email": "alex@example.com",
+      "name": "Alex",
+      "language": "en",
+      "createdAt": 1793995315589
     }
   ]
 }

@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useSession } from "@/lib/session";
 import { areaById, LANG_NAMES } from "@/lib/areas";
-import { catLabel, load, pick, save, useUILang } from "@/lib/i18n";
+import { catLabel, pick, useUILang } from "@/lib/i18n";
 import type { Lang, Provider, ServiceItem } from "@/lib/types";
 
 export function VerifiedBadge() {
@@ -29,6 +31,8 @@ export function priceNumber(price: string): number | null {
 
 export default function ProviderDrawer({ provider: p, onClose }: { provider: Provider; onClose: () => void }) {
   const { lang, t } = useUILang();
+  const router = useRouter();
+  const { user } = useSession();
   const [showNative, setShowNative] = useState(lang === p.language);
   const [booking, setBooking] = useState<ServiceItem | null>(null);
   const hasNative = p.language !== "en" && !!p.story_native;
@@ -86,7 +90,8 @@ export default function ProviderDrawer({ provider: p, onClose }: { provider: Pro
                   <div className="text-sm font-semibold text-stone-900">{s.price === "price on request" ? t("priceOnRequest") : s.price}</div>
                 </div>
                 <button
-                  onClick={() => setBooking(s)}
+                  // Ordering requires (demo) login; come back to this same listing afterwards.
+                  onClick={() => (user ? setBooking(s) : router.push(`/login?next=${encodeURIComponent(`/explore?open=${p.id}`)}`))}
                   className="min-h-11 shrink-0 rounded-full bg-stone-900 px-4 text-sm font-medium text-white hover:bg-stone-700"
                 >
                   {s.kind === "product" ? t("order") : t("book")}
@@ -104,15 +109,16 @@ export default function ProviderDrawer({ provider: p, onClose }: { provider: Pro
 
 function BookingForm({ provider, initial, onCancel }: { provider: Provider; initial: ServiceItem; onCancel: () => void }) {
   const { lang, t } = useUILang();
+  const { user } = useSession();
   const [itemName, setItemName] = useState(initial.name);
   const item = provider.services.find((s) => s.name === itemName) || initial;
   const [qty, setQty] = useState(1);
   const [when, setWhen] = useState("");
   const [areaText, setAreaText] = useState("");
   const [details, setDetails] = useState("");
-  const [name, setName] = useState("");
-  const [custLang, setCustLang] = useState<Lang>(lang);
-  const [contact, setContact] = useState("");
+  const [name, setName] = useState(user?.name ?? "");
+  const [custLang, setCustLang] = useState<Lang>(user?.language ?? lang);
+  const [contact, setContact] = useState(user?.email ?? "");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [sentId, setSentId] = useState<string | null>(null);
@@ -127,19 +133,13 @@ function BookingForm({ provider, initial, onCancel }: { provider: Provider; init
     if (tooSoon) return setError(t("dateTooSoon"));
     setBusy(true);
     setError("");
-    let customerId = load<string | null>("kolo.customerId", null);
-    if (!customerId) {
-      customerId = `c_${Math.random().toString(36).slice(2, 10)}`;
-      save("kolo.customerId", customerId);
-      window.dispatchEvent(new Event("kolo-customer"));
-    }
     try {
       const res = await fetch("/api/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           providerId: provider.id,
-          customerId,
+          customerUserId: user?.id,
           customerName: name,
           customerLanguage: custLang,
           contact,
@@ -171,7 +171,7 @@ function BookingForm({ provider, initial, onCancel }: { provider: Provider; init
     return (
       <div role="status" className="space-y-3 rounded-xl border-2 border-emerald-200 bg-emerald-50 p-4 text-center">
         <p className="text-lg font-semibold text-emerald-900">✅ {t("requestSent", { name: provider.name.replace(/\.$/, "") })}</p>
-        <Link href={`/order/${sentId}`} className="inline-flex min-h-11 items-center rounded-full bg-emerald-700 px-5 font-semibold text-white">
+        <Link href="/me#orders" className="inline-flex min-h-11 items-center rounded-full bg-emerald-700 px-5 font-semibold text-white">
           💬 {t("openOrder")}
         </Link>
       </div>

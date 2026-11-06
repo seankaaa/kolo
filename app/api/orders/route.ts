@@ -13,6 +13,9 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   const b = await req.json();
+  const db0 = await readDB();
+  const listing = db0.providers.find((p) => p.id === b.providerId);
+  if (!listing) return Response.json({ error: "Unknown listing" }, { status: 400 });
   const order: Order = {
     id: newId("o"),
     providerId: b.providerId,
@@ -24,7 +27,8 @@ export async function POST(req: Request) {
     when: typeof b.when === "string" ? b.when.slice(0, 16) : undefined,
     areaText: typeof b.areaText === "string" ? b.areaText.slice(0, 80) : undefined,
     contact: typeof b.contact === "string" ? b.contact.slice(0, 120) : undefined,
-    customerId: typeof b.customerId === "string" ? b.customerId.slice(0, 40) : undefined,
+    customerUserId: typeof b.customerUserId === "string" ? b.customerUserId : undefined,
+    providerUserId: listing.ownerId,
     status: "new",
     messages: [],
     createdAt: Date.now(),

@@ -43,9 +43,19 @@ export interface Provider {
   /** Synthetic contact for order notifications; never returned by public APIs. */
   contact?: string;
   status?: "draft" | "live";
+  /** Account that owns this listing (a user can own many). */
+  ownerId?: string;
   /** Paused listings are hidden from the map. */
   paused?: boolean;
   verified: boolean;
+}
+
+export interface User {
+  id: string;
+  email: string; // lowercased
+  name: string;
+  language: Lang;
+  createdAt: number;
 }
 
 export interface Message {
@@ -72,12 +82,15 @@ export interface Order {
   /** Synthetic contact for notifications; never shown to other customers. */
   contact?: string;
   customerId?: string;
+  customerUserId?: string;
+  providerUserId?: string;
   status: "new" | "accepted" | "declined" | "done";
   messages: Message[];
   createdAt: number;
 }
 
 export interface DB {
+  users: User[];
   providers: Provider[];
   orders: Order[];
 }

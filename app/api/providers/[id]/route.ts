@@ -30,6 +30,10 @@ export async function PATCH(req: Request, ctx: RouteContext<"/api/providers/[id]
   const { id } = await ctx.params;
   const body = await req.json();
   const l = body.listing as Partial<Provider> | undefined;
+  // Mock auth: owned listings can only be changed by their owner (user id sent by the client).
+  const actor = req.headers.get("x-kolo-user");
+  const existing = (await readDB()).providers.find((x) => x.id === id);
+  if (existing?.ownerId && existing.ownerId !== actor) return Response.json({ error: "forbidden" }, { status: 403 });
 
   let coords: { lat: number; lng: number } | null = null;
   const isShop = !!(l && l.locationPrecision === "exact" && l.address);
@@ -72,4 +76,16 @@ export async function PATCH(req: Request, ctx: RouteContext<"/api/providers/[id]
     return p;
   });
   return p ? Response.json(publicProvider(p)) : Response.json({ error: "Not found" }, { status: 404 });
+}
+
+export async function DELETE(req: Request, ctx: RouteContext<"/api/providers/[id]">) {
+  const { id } = await ctx.params;
+  const actor = req.headers.get("x-kolo-user");
+  const ok = await updateDB((db) => {
+    const p = db.providers.find((x) => x.id === id);
+    if (!p || (p.ownerId && p.ownerId !== actor)) return false;
+    db.providers = db.providers.filter((x) => x.id !== id);
+    return true;
+  });
+  return ok ? Response.json({ ok }) : Response.json({ error: "forbidden" }, { status: 403 });
 }

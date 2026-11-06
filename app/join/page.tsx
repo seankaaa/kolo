@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import { speak, speechSupported, useDictation } from "@/components/useSpeech";
 import { AREAS, areaChain, CATEGORIES, parentLabel, searchAreas, SPEECH_LANG } from "@/lib/areas";
 import { load, save, translate, useUILang, type UIKey } from "@/lib/i18n";
+import { draftKey, listDrafts, useSession } from "@/lib/session";
 import type { ChatMsg } from "@/lib/intake";
 import type { Area, Lang } from "@/lib/types";
 
@@ -59,15 +60,30 @@ export default function Join() {
   // UI strings follow the language switcher; the conversation stays in the language she picked.
   const t = (k: UIKey, v?: Record<string, string | number>) => translate(uiLang, k, v);
 
-  // Resume a saved draft: no timeouts, she can leave and come back.
+  // Login required. Every visit starts a NEW listing intake; drafts are keyed by user + draft id,
+  // so she can also continue an unfinished one (no timeouts).
+  const { user, ready } = useSession();
+  const [draftId, setDraftId] = useState<string | null>(null);
+  const [resumable, setResumable] = useState<{ id: string; d: Draft }[]>([]);
   useEffect(() => {
-    setD(load<Draft>("kolo.draft", EMPTY));
+    if (!ready) return;
+    if (!user) {
+      router.replace("/login?next=/join");
+      return;
+    }
     setVoiceOn(load("kolo.voice", true));
+    const drafts = listDrafts(user.id)
+      .map((id) => ({ id, d: load<Draft | null>(draftKey(user.id, id), null) }))
+      .filter((x): x is { id: string; d: Draft } => !!x.d && x.d.step !== "lang");
+    setResumable(drafts);
+    setDraftId(`d${Date.now().toString(36)}`);
+    setD({ ...EMPTY, lang: user.language, name: user.name, contact: user.email });
     setHydrated(true);
-  }, []);
+  }, [ready, user, router]);
   useEffect(() => {
-    if (hydrated) save("kolo.draft", d);
-  }, [d, hydrated]);
+    // Save once she has started (past the language screen), under this draft's key.
+    if (hydrated && user && draftId && d.step !== "lang") save(draftKey(user.id, draftId), d);
+  }, [d, hydrated, user, draftId]);
 
   const dictation = useDictation(SPEECH_LANG[d.lang], setAnswer);
   const canSpeak = hydrated && speechSupported();
@@ -147,37 +163,29 @@ export default function Join() {
   }
 
   async function signup() {
-    if (!d.name.trim() || !d.contact.trim() || !authorized || !agreePublic) {
+    if (!authorized || !agreePublic) {
       setError(t("errRequired"));
       return;
     }
-    setBusy(true);
     setError("");
-    try {
-      const p = await post<{ id: string }>("/api/providers", { name: d.name, contact: d.contact, language: d.lang });
-      save("kolo.providerId", p.id);
-      const next = { ...d, providerId: p.id, step: "intake" as const };
-      setD(next);
-      setBusy(false);
-      await nextTurn([], [], next);
-    } catch {
-      setError(t("errNetwork"));
-      setBusy(false);
-    }
+    const next = { ...d, step: "intake" as const };
+    setD(next);
+    await nextTurn([], [], next);
   }
 
   async function publish() {
-    if (!d.listing || !d.providerId) return;
+    if (!d.listing || !user) return;
     setBusy(true);
     try {
-      const res = await fetch(`/api/providers/${d.providerId}`, {
-        method: "PATCH",
+      const res = await fetch("/api/providers", {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ listing: d.listing }),
+        body: JSON.stringify({ ownerId: user.id, language: d.lang, listing: d.listing }),
       });
       if (!res.ok) throw new Error();
-      save("kolo.draft", null);
-      router.push(`/her/${d.providerId}?live=1`);
+      const p: { id: string } = await res.json();
+      if (draftId) save(draftKey(user.id, draftId), null);
+      router.push(`/me?live=${p.id}`);
     } catch {
       setError(t("errNetwork"));
       setBusy(false);
@@ -210,8 +218,8 @@ export default function Join() {
   }
 
   function startOver() {
-    save("kolo.draft", null);
-    setD({ ...EMPTY, lang: d.lang, step: "lang" });
+    if (user && draftId) save(draftKey(user.id, draftId), null);
+    setD({ ...EMPTY, lang: d.lang, name: d.name, contact: d.contact, step: "lang" });
     setAnswer("");
     setError("");
   }
@@ -222,6 +230,20 @@ export default function Join() {
   if (d.step === "lang") {
     return (
       <Page>
+        {resumable.length > 0 && (
+          <div className="mb-8 rounded-2xl border-2 border-sky-200 bg-sky-50 p-4">
+            {resumable.slice(-3).map((r) => (
+              <button
+                key={r.id}
+                onClick={() => { setDraftId(r.id); setD(r.d); }}
+                className={`${btn} mb-2 w-full bg-sky-700 py-3 text-lg text-white`}
+              >
+                ↩︎ {t("continueDraft")}{r.d.turn?.reply ? ` · “${r.d.turn.reply.slice(0, 40)}…”` : ""}
+              </button>
+            ))}
+            <p className="text-center text-base text-sky-900">⬇︎ {t("startNew")}</p>
+          </div>
+        )}
         <h1 className="text-center text-3xl font-bold text-stone-900">🌐 {t("chooseLanguage")}</h1>
         <div className="mt-8 grid gap-4 sm:grid-cols-2">
           {LANG_BUTTONS.map((b) => (
@@ -255,12 +277,7 @@ export default function Join() {
             signup();
           }}
         >
-          <Field id="name" label={t("firstName")} hint={t("firstNameHint")}>
-            <input id="name" value={d.name} onChange={(e) => update({ name: e.target.value })} autoComplete="given-name" className="input" />
-          </Field>
-          <Field id="contact" label={t("contact")} hint={t("contactHint")}>
-            <input id="contact" value={d.contact} onChange={(e) => update({ contact: e.target.value })} autoComplete="tel" className="input" />
-          </Field>
+          <p className="rounded-xl bg-white p-4 text-lg text-stone-700">👤 {t("loggedInAs", { name: d.name })} · {d.contact}</p>
           <Check checked={authorized} onChange={setAuthorized} label={t("authorized")} hint={t("authorizedNote")} />
           <Check checked={agreePublic} onChange={setAgreePublic} label={t("publicAgree")} />
           {error && <p role="alert" className="rounded-xl bg-red-50 p-3 text-lg text-red-800">{error}</p>}

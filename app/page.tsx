@@ -8,6 +8,7 @@ import ProviderDrawer, { servesLabel, VerifiedBadge } from "@/components/Provide
 import type { Bounds, MapTarget } from "@/components/MapView";
 import { AREAS, areaById, CATEGORIES, distanceKm, LANG_NAMES, nearestArea, parentLabel, searchAreas } from "@/lib/areas";
 import { catLabel, pick, useUILang, type UIKey } from "@/lib/i18n";
+import { authHeaders } from "@/lib/session";
 import type { Area, Provider } from "@/lib/types";
 import type { Suggestion } from "@/app/api/suggest/route";
 
@@ -49,14 +50,16 @@ export default function Home() {
 
   useEffect(() => {
     // After publishing, /join redirects to /?live=<id>: center on her area and open her drawer.
-    const live = new URLSearchParams(window.location.search).get("live");
+    const params = new URLSearchParams(window.location.search);
+    const live = params.get("live");
+    const open = params.get("open"); // e.g. coming back from login to order
     fetch("/api/providers")
       .then((r) => r.json())
       .then((list: Provider[]) => {
         setProviders(list);
-        const me = live && list.find((p) => p.id === live);
+        const me = (live || open) && list.find((p) => p.id === (live || open));
         if (me) {
-          setLiveId(me.id);
+          if (live) setLiveId(me.id);
           setSelected(me);
           const a = areaById(me.areaId);
           if (a) flyToArea(a);
@@ -68,7 +71,7 @@ export default function Home() {
     if (!liveId) return;
     const res = await fetch(`/api/providers/${liveId}`, {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      headers: authHeaders(),
       body: JSON.stringify({ verified: true }),
     });
     const p: Provider = await res.json();
