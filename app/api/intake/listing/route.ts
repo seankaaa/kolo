@@ -72,7 +72,7 @@ export async function POST(req: Request) {
       max_tokens: 3000,
       system: listingSystem(lang),
       tools: [LISTING_TOOL],
-      tool_choice: { type: "tool", name: LISTING_TOOL.name },
+      tool_choice: { type: "auto" },
       messages: [
         {
           role: "user",

@@ -13,12 +13,14 @@ export async function POST(req: Request) {
       max_tokens: 1500,
       system: turnSystem(lang, name || "friend"),
       tools: [TURN_TOOL],
-      tool_choice: { type: "tool", name: TURN_TOOL.name },
+      tool_choice: { type: "auto" }, // forced tool choice isn't supported on this model; the prompt requires the tool
       messages: [{ role: "user", content: KICKOFF }, ...messages],
     });
     const tool = msg.content.find((b): b is Anthropic.ToolUseBlock => b.type === "tool_use");
-    if (!tool) throw new Error("no tool call");
-    return Response.json(tool.input);
+    if (tool) return Response.json(tool.input);
+    // Fallback: plain-text reply; keep the conversation going.
+    const text = msg.content.filter((b): b is Anthropic.TextBlock => b.type === "text").map((b) => b.text).join("").trim();
+    return Response.json({ reply: text, asking: "none", collected: {}, missing: ["services"], done: false });
   } catch (e) {
     console.error("intake failed", (e as Error).message);
     return Response.json({ error: "intake_failed" }, { status: 500 });
