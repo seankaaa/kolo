@@ -8,6 +8,7 @@ import ProviderDrawer, { servesLabel, VerifiedBadge } from "@/components/Provide
 import type { Bounds, MapTarget } from "@/components/MapView";
 import { AREAS, areaById, CATEGORIES, distanceKm, LANG_NAMES, nearestArea, parentLabel, searchAreas } from "@/lib/areas";
 import { catLabel, pick, useUILang, type UIKey } from "@/lib/i18n";
+import { categoryStyle } from "@/lib/categoryStyle";
 import { authHeaders } from "@/lib/session";
 import type { Area, Provider } from "@/lib/types";
 import type { Suggestion } from "@/app/api/suggest/route";
@@ -221,7 +222,7 @@ export default function Home() {
               <button
                 onClick={() => setSupportOnly(!supportOnly)}
                 aria-pressed={supportOnly}
-                className={`rounded-full border px-2.5 py-1 text-xs ${supportOnly ? "border-beauty bg-pine text-white" : "border-beauty text-beauty-ink hover:bg-beauty-tint"}`}
+                className={`inline-flex h-9 items-center rounded-full border px-3 text-sm font-medium ${supportOnly ? "border-beauty bg-pine text-white" : "border-beauty text-beauty-ink hover:bg-beauty-tint"}`}
               >
                 💛 {t("openToSupport")}
               </button>
@@ -230,11 +231,12 @@ export default function Home() {
                   key={k}
                   onClick={() => setCategory(category === k ? null : k)}
                   aria-pressed={category === k}
-                  className={`rounded-full border px-2.5 py-1 text-xs ${
-                    category === k ? "border-ink bg-ink text-white" : "border-line-strong text-ink-2 hover:bg-sand"
+                  className={`inline-flex h-9 items-center gap-1.5 rounded-full border px-3 text-sm font-medium ${
+                    category === k ? "border-ink bg-ink text-white" : "border-line-strong bg-white text-ink-2 hover:bg-sand"
                   }`}
                 >
-                  {catLabel(lang, k)}
+                  <span aria-hidden className="h-[9px] w-[9px] shrink-0 rounded-full" style={{ background: categoryStyle(k).color }} />
+                  {catLabel(lang, k).replace(/^\S+\s/, "")}
                 </button>
               ))}
             </div>
@@ -247,7 +249,7 @@ export default function Home() {
             </div>
           )}
 
-          <ul className="flex-1 divide-y divide-line overflow-y-auto">
+          <ul className="flex-1 overflow-y-auto">
             {visibleList.map((p) => (
               <li key={p.id}>
                 <ProviderRow p={p} onClick={() => setSelected(p)} />
@@ -312,8 +314,12 @@ export default function Home() {
 
 function ProviderRow({ p, onClick, reason }: { p: Provider; onClick: () => void; reason?: string }) {
   const { lang, t } = useUILang();
+  const cs = categoryStyle(p.category);
+  const initials = p.name.split(/\s+/).map((w) => w[0]).join("").slice(0, 2).toUpperCase();
   return (
-    <button onClick={onClick} className="w-full px-4 py-3 text-left hover:bg-sand">
+    <button onClick={onClick} className="m-1 flex w-[calc(100%-0.5rem)] gap-3 rounded-2xl p-3 text-left hover:bg-sand">
+      <span aria-hidden className="grid h-11 w-11 shrink-0 place-items-center rounded-full text-sm font-semibold" style={{ background: cs.tint, color: cs.ink }}>{initials}</span>
+      <span className="min-w-0 flex-1">
       <div className="flex items-center gap-2 text-xs text-muted">
         <span>{catLabel(lang, p.category)}</span>·<span>{LANG_NAMES[p.language]}</span>
         {p.verified && <VerifiedBadge />}
@@ -324,6 +330,7 @@ function ProviderRow({ p, onClick, reason }: { p: Provider; onClick: () => void;
         {p.name} · {p.locationPrecision === "exact" ? "🏪" : t("serves")} {servesLabel(p)}
       </div>
       {reason && <div className="mt-1 text-xs italic text-pine">✨ {reason}</div>}
+      </span>
     </button>
   );
 }

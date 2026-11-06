@@ -5,6 +5,7 @@ import L from "leaflet";
 import { MapContainer, TileLayer, Marker, Circle, useMap, useMapEvents } from "react-leaflet";
 import { useEffect, useState } from "react";
 import { areaById, metroOf } from "@/lib/areas";
+import { categoryStyle } from "@/lib/categoryStyle";
 import type { Provider } from "@/lib/types";
 
 export type MapTarget = { lat: number; lng: number; radius_km: number; nonce: number } | { us: true; nonce: number };
@@ -37,10 +38,10 @@ function Controller({ target, onBounds, onZoom }: { target: MapTarget | null; on
   return null;
 }
 
-const countIcon = (count: number, verified: boolean, big = false) =>
+const countIcon = (count: number, verified: boolean, big = false, color?: string) =>
   L.divIcon({
     className: "",
-    html: `<div class="kolo-group${verified ? " kolo-verified" : ""}${big ? " kolo-metro" : ""}">${count}</div>`,
+    html: `<div class="kolo-group${verified ? " kolo-verified" : ""}${big ? " kolo-metro" : ""}"${color ? ` style="background:${color}"` : ""}>${count}</div>`,
     iconSize: big ? [44, 44] : [34, 34],
     iconAnchor: big ? [22, 22] : [17, 17],
   });
@@ -124,11 +125,12 @@ function AreaLayers({ providers, onSelectGroup, onSelectProvider }: {
             <Circle
               center={[area.lat, area.lng]}
               radius={area.radius_km * 1000}
-              pathOptions={{ color: "#c2410c", fillColor: "#fb923c", fillOpacity: area.level === "state" ? 0.05 : 0.12, weight: 1 }}
+              // Home-based areas: category color, dashed edge (approximate area, never an exact spot).
+              pathOptions={{ color: categoryStyle(list[0].category).color, fillColor: categoryStyle(list[0].category).color, fillOpacity: area.level === "state" ? 0.06 : 0.16, weight: 1.5, dashArray: "5 6" }}
             />
             <Marker
               position={[area.lat, area.lng]}
-              icon={countIcon(list.length, list.some((p) => p.verified))}
+              icon={countIcon(list.length, list.some((p) => p.verified), false, categoryStyle(list[0].category).color)}
               title={area.name}
               eventHandlers={{ click: () => (list.length === 1 ? onSelectProvider(list[0]) : onSelectGroup(areaId, list)) }}
             />

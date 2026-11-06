@@ -7,6 +7,7 @@ import { useSession } from "@/lib/session";
 import { areaById, LANG_NAMES } from "@/lib/areas";
 import { catLabel, pick, useUILang } from "@/lib/i18n";
 import type { Lang, Need, Provider, ServiceItem } from "@/lib/types";
+import { categoryStyle } from "@/lib/categoryStyle";
 
 export function VerifiedBadge() {
   const { t } = useUILang();
@@ -39,7 +40,7 @@ export default function ProviderDrawer({ provider: p, onClose }: { provider: Pro
   const title = pick(p, lang, p.title_en, p.title_native);
 
   return (
-    <aside className="absolute right-0 top-0 z-[1000] flex h-full w-full max-w-md flex-col overflow-y-auto border-l border-line-strong bg-white shadow-2xl">
+    <aside className="absolute right-0 top-0 z-[1000] flex h-full w-full max-w-md flex-col overflow-y-auto rounded-l-[22px] border-l border-line bg-white shadow-[0_10px_40px_rgba(34,32,30,0.18)]">
       <div className="flex items-start justify-between gap-3 border-b border-line p-5">
         <div>
           <div className="mb-1 flex flex-wrap items-center gap-2 text-xs text-muted">
@@ -65,7 +66,7 @@ export default function ProviderDrawer({ provider: p, onClose }: { provider: Pro
         </div>
 
         {p.story_en && (
-          <div>
+          <div className="rounded-2xl p-4" style={{ background: categoryStyle(p.category).tint }}>
             <div className="mb-1 flex items-center justify-between">
               <h3 className="text-sm font-semibold text-ink-2">{t("story")}</h3>
               {hasNative && (
@@ -92,7 +93,7 @@ export default function ProviderDrawer({ provider: p, onClose }: { provider: Pro
                 <button
                   // Ordering requires (demo) login; come back to this same listing afterwards.
                   onClick={() => (user ? setBooking(s) : router.push(`/login?next=${encodeURIComponent(`/explore?open=${p.id}`)}`))}
-                  className="min-h-11 shrink-0 rounded-full bg-ink px-4 text-sm font-medium text-white hover:bg-ink-2"
+                  className="min-h-11 shrink-0 rounded-full bg-pine px-4 text-sm font-semibold text-white hover:bg-pine-dark"
                 >
                   {s.kind === "product" ? t("order") : t("book")}
                 </button>

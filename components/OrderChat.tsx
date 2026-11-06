@@ -135,7 +135,7 @@ export default function OrderChat({ orderId, role }: { orderId: string; role: "c
           const translated = m.lang !== readLang;
           return (
             <div key={m.id} className={`flex ${mine ? "justify-end" : "justify-start"}`}>
-              <div className={`max-w-[80%] rounded-2xl px-4 py-2.5 ${mine ? "bg-ink text-white" : "border border-line-strong bg-white text-ink-2"}`}>
+              <div className={`max-w-[80%] rounded-2xl px-4 py-2.5 ${m.from === "customer" ? "bg-ink text-white" : "border border-line-strong bg-white text-ink"}`}>
                 <div className="flex items-start gap-2">
                   <span className="whitespace-pre-wrap">{shown}</span>
                   {!mine && (
@@ -145,12 +145,12 @@ export default function OrderChat({ orderId, role }: { orderId: string; role: "c
                   )}
                 </div>
                 {translated && (
-                  <div className={`mt-1 border-t pt-1 text-xs ${mine ? "border-white/30 text-white/70" : "border-line text-faint"}`}>
+                  <div className={`mt-1 border-t pt-1 text-xs ${m.from === "customer" ? "border-white/30 text-white/70" : "border-line text-faint"}`}>
                     {t("original")} ({LANG_NAMES[m.lang]}): <span className="font-serif italic">{m.original}</span>
                   </div>
                 )}
                 {mine && m.lang !== otherLang && m.translations[otherLang] && (
-                  <div className="mt-1 border-t border-white/30 pt-1 text-xs text-white/70">→ {m.translations[otherLang]}</div>
+                  <div className={`mt-1 border-t pt-1 text-xs ${m.from === "customer" ? "border-white/30 text-white/70" : "border-line text-faint"}`}>→ {m.translations[otherLang]}</div>
                 )}
               </div>
             </div>
