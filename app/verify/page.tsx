@@ -25,8 +25,8 @@ const CHECKS: UIKey[] = ["vC1", "vC2", "vC3", "vC4"];
 const EMPTY = { first: "", last: "", dob: "", phone: "", zip: "", last4: "", idType: "", front: false, back: false, selfie: false, consent: false, partner: "", code: "" };
 
 const cta = "flex min-h-14 w-full items-center justify-center gap-2 rounded-2xl bg-pine px-5 text-xl font-bold text-white hover:bg-pine-dark disabled:opacity-40 focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-pine";
-const big = "mt-1 min-h-14 w-full rounded-2xl border-2 border-stone-300 bg-white px-4 text-xl focus:border-pine focus:outline-none";
-const lbl = "block text-lg font-semibold text-stone-800";
+const big = "mt-1 min-h-14 w-full rounded-2xl border-2 border-line-strong bg-white px-4 text-xl focus:border-pine focus:outline-none";
+const lbl = "block text-lg font-semibold text-ink-2";
 
 function Flow() {
   const router = useRouter();
@@ -94,33 +94,33 @@ function Flow() {
 
       <div className="mt-5 flex items-center justify-between gap-2">
         {aIndex >= 0 || step === "partner" ? (
-          <button onClick={step === "partner" ? () => setStep("choose") : back} className="min-h-11 rounded-full border border-stone-300 bg-white px-4 text-base font-semibold">← {t("vBack")}</button>
+          <button onClick={step === "partner" ? () => setStep("choose") : back} className="min-h-11 rounded-full border border-line-strong bg-white px-4 text-base font-semibold">← {t("vBack")}</button>
         ) : <span />}
-        <button onClick={() => speak(listenText, SPEECH_LANG[lang])} className="min-h-11 rounded-full border border-stone-300 bg-white px-4 text-base font-semibold">🔊 {t("vListen")}</button>
+        <button onClick={() => speak(listenText, SPEECH_LANG[lang])} className="min-h-11 rounded-full border border-line-strong bg-white px-4 text-base font-semibold">🔊 {t("vListen")}</button>
       </div>
 
       {aIndex >= 0 && (
         <div className="mt-4">
-          <p className="text-base text-stone-500">{t("vStepOf", { n: aIndex + 1, total: A_STEPS.length })}</p>
+          <p className="text-base text-muted">{t("vStepOf", { n: aIndex + 1, total: A_STEPS.length })}</p>
           <div className="mt-1 flex gap-1.5" aria-hidden>
-            {A_STEPS.map((s, i) => <div key={s} className={`h-2 flex-1 rounded-full ${i <= aIndex ? "bg-pine" : "bg-stone-200"}`} />)}
+            {A_STEPS.map((s, i) => <div key={s} className={`h-2 flex-1 rounded-full ${i <= aIndex ? "bg-pine" : "bg-line-strong"}`} />)}
           </div>
         </div>
       )}
 
-      <h1 aria-live="polite" className="mt-5 text-[28px] font-bold leading-snug text-stone-900">{t(title[step])}</h1>
-      {helpFor[step] && step !== "consent" && <p className="mt-1 text-stone-600">{t(helpFor[step]!)}</p>}
+      <h1 aria-live="polite" className="mt-5 text-[28px] font-bold leading-snug text-ink">{t(title[step])}</h1>
+      {helpFor[step] && step !== "consent" && <p className="mt-1 text-muted">{t(helpFor[step]!)}</p>}
 
       {step === "choose" && (
         <div className="mt-6 space-y-3">
-          {!listingId && <p className="rounded-xl bg-stone-100 p-3 text-base text-stone-600">{t("vNoListing")}</p>}
-          <button onClick={() => setStep("details")} className="flex min-h-20 w-full items-center gap-4 rounded-2xl border-2 border-stone-200 bg-white p-4 text-left hover:border-pine">
+          {!listingId && <p className="rounded-xl bg-sand p-3 text-base text-muted">{t("vNoListing")}</p>}
+          <button onClick={() => setStep("details")} className="flex min-h-20 w-full items-center gap-4 rounded-2xl border-2 border-line-strong bg-white p-4 text-left hover:border-pine">
             <span className="text-4xl">🪪</span>
-            <span><span className="block text-xl font-bold">{t("vPathId")}</span><span className="text-base text-stone-500">≈ {t("vPathIdTime")}</span></span>
+            <span><span className="block text-xl font-bold">{t("vPathId")}</span><span className="text-base text-muted">≈ {t("vPathIdTime")}</span></span>
           </button>
-          <button onClick={() => setStep("partner")} className="flex min-h-20 w-full items-center gap-4 rounded-2xl border-2 border-stone-200 bg-white p-4 text-left hover:border-pine">
+          <button onClick={() => setStep("partner")} className="flex min-h-20 w-full items-center gap-4 rounded-2xl border-2 border-line-strong bg-white p-4 text-left hover:border-pine">
             <span className="text-4xl">🤝</span>
-            <span><span className="block text-xl font-bold">{t("vPathPartner")}</span><span className="text-base text-stone-500">{t("vPathPartnerSub")}</span></span>
+            <span><span className="block text-xl font-bold">{t("vPathPartner")}</span><span className="text-base text-muted">{t("vPathPartnerSub")}</span></span>
           </button>
         </div>
       )}
@@ -150,7 +150,7 @@ function Flow() {
               onChange={(e) => set({ last4: e.target.value.replace(/\D/g, "").slice(0, 4) })}
               className={`${big} mt-0 flex-1 tracking-[0.5em]`}
             />
-            <button onClick={() => setShowTax(!showTax)} aria-pressed={showTax} className="min-h-14 rounded-2xl border-2 border-stone-300 bg-white px-4 text-base font-semibold">
+            <button onClick={() => setShowTax(!showTax)} aria-pressed={showTax} className="min-h-14 rounded-2xl border-2 border-line-strong bg-white px-4 text-base font-semibold">
               {showTax ? "🙈" : "👁"} {showTax ? t("vHide") : t("vShow")}
             </button>
           </div>
@@ -164,7 +164,7 @@ function Flow() {
             <legend className={lbl}>{t("vIdType")}</legend>
             <div className="mt-2 grid gap-2">
               {ID_TYPES.map((k) => (
-                <label key={k} className={`flex min-h-14 cursor-pointer items-center gap-3 rounded-2xl border-2 px-4 ${f.idType === k ? "border-pine bg-pine-soft" : "border-stone-200 bg-white"}`}>
+                <label key={k} className={`flex min-h-14 cursor-pointer items-center gap-3 rounded-2xl border-2 px-4 ${f.idType === k ? "border-pine bg-pine-soft" : "border-line-strong bg-white"}`}>
                   <input type="radio" name="idtype" checked={f.idType === k} onChange={() => set({ idType: k })} className="h-6 w-6 accent-pine" />
                   <span className="text-lg">{t(k)}</span>
                 </label>
@@ -177,13 +177,13 @@ function Flow() {
                 key={side}
                 // Drop zone is decorative: no file is read or uploaded.
                 onClick={() => set({ [side]: true })}
-                className={`flex min-h-32 flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed p-3 ${f[side] ? "border-pine bg-pine-soft" : "border-stone-300 bg-white hover:border-pine"}`}
+                className={`flex min-h-32 flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed p-3 ${f[side] ? "border-pine bg-pine-soft" : "border-line-strong bg-white hover:border-pine"}`}
               >
                 <span className="text-base font-semibold">{side === "front" ? t("vFront") : t("vBackSide")}</span>
                 {f[side] ? (
                   <span className="rounded-full bg-white px-3 py-1 text-sm font-semibold text-pine">📎 {side}.jpg ✓</span>
                 ) : (
-                  <span className="text-sm text-stone-500">📷 {t("vTapUpload")}</span>
+                  <span className="text-sm text-muted">📷 {t("vTapUpload")}</span>
                 )}
               </button>
             ))}
@@ -193,7 +193,7 @@ function Flow() {
 
       {step === "selfie" && (
         <div className="mt-6 flex flex-col items-center gap-5">
-          <div className={`grid h-64 w-52 place-items-center rounded-[50%] border-4 border-dashed ${f.selfie ? "border-pine bg-pine-soft" : capturing ? "animate-pulse border-pine" : "border-stone-300 bg-white"}`}>
+          <div className={`grid h-64 w-52 place-items-center rounded-[50%] border-4 border-dashed ${f.selfie ? "border-pine bg-pine-soft" : capturing ? "animate-pulse border-pine" : "border-line-strong bg-white"}`}>
             <span className="text-7xl" aria-hidden>{f.selfie ? "✅" : "🙂"}</span>
           </div>
           {f.selfie ? (
@@ -213,9 +213,9 @@ function Flow() {
 
       {step === "consent" && (
         <div className="mt-5 space-y-4">
-          <label className="flex min-h-14 cursor-pointer items-start gap-4 rounded-2xl border-2 border-stone-200 bg-white p-4">
+          <label className="flex min-h-14 cursor-pointer items-start gap-4 rounded-2xl border-2 border-line-strong bg-white p-4">
             <input type="checkbox" checked={f.consent} onChange={(e) => set({ consent: e.target.checked })} className="mt-1 h-7 w-7 shrink-0 accent-pine" />
-            <span className="text-xl font-semibold text-stone-900">{t("vConsentBox")}</span>
+            <span className="text-xl font-semibold text-ink">{t("vConsentBox")}</span>
           </label>
           <p className="rounded-2xl bg-pine-soft p-4 text-lg text-pine">ℹ️ {t("vConsentNote")}</p>
         </div>
@@ -224,7 +224,7 @@ function Flow() {
       {step === "checking" && (
         <ul className="mt-6 space-y-3" aria-live="polite">
           {CHECKS.map((k, i) => (
-            <li key={k} className={`flex min-h-14 items-center gap-3 rounded-2xl border-2 px-4 text-xl transition ${i < checked ? "border-pine bg-pine-soft text-pine" : i === checked ? "animate-pulse border-stone-300 bg-white text-stone-500" : "border-stone-200 bg-white text-stone-300"}`}>
+            <li key={k} className={`flex min-h-14 items-center gap-3 rounded-2xl border-2 px-4 text-xl transition ${i < checked ? "border-pine bg-pine-soft text-pine" : i === checked ? "animate-pulse border-line-strong bg-white text-muted" : "border-line-strong bg-white text-faint"}`}>
               <span aria-hidden>{i < checked ? "✓" : "…"}</span> {t(k)}
             </li>
           ))}
@@ -235,7 +235,7 @@ function Flow() {
         <div className="mt-5 space-y-4">
           <div className="grid gap-2">
             {PARTNERS.map((p) => (
-              <label key={p} className={`flex min-h-14 cursor-pointer items-center gap-3 rounded-2xl border-2 px-4 ${f.partner === p ? "border-pine bg-pine-soft" : "border-stone-200 bg-white"}`}>
+              <label key={p} className={`flex min-h-14 cursor-pointer items-center gap-3 rounded-2xl border-2 px-4 ${f.partner === p ? "border-pine bg-pine-soft" : "border-line-strong bg-white"}`}>
                 <input type="radio" name="partner" checked={f.partner === p} onChange={() => set({ partner: p })} className="h-6 w-6 accent-pine" />
                 <span className="text-lg">🤝 {p}</span>
               </label>
@@ -257,9 +257,9 @@ function Flow() {
       {step === "done" && (
         <div className="mt-6 space-y-4 text-center">
           <div className="text-6xl">🎉</div>
-          <div className="mx-auto max-w-sm rounded-2xl border border-stone-200 bg-white p-4 text-left">
-            <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-sm font-semibold text-emerald-800">✓ {t("verified")}</span>
-            <p className="mt-2 font-semibold text-stone-900">{user?.name}</p>
+          <div className="mx-auto max-w-sm rounded-2xl border border-line-strong bg-white p-4 text-left">
+            <span className="inline-flex items-center gap-1 rounded-full bg-pine-soft px-2 py-0.5 text-sm font-semibold text-pine">✓ {t("verified")}</span>
+            <p className="mt-2 font-semibold text-ink">{user?.name}</p>
           </div>
           <Link href="/me" className={cta}>👤 {t("vToProfile")}</Link>
           {listingId && <Link href={`/explore?live=${listingId}`} className="flex min-h-14 w-full items-center justify-center rounded-2xl border-2 border-pine px-5 text-xl font-bold text-pine">🗺️ {t("vToMap")}</Link>}
@@ -271,14 +271,14 @@ function Flow() {
           {step === "consent" ? `🔒 ${t("vStartCheck")}` : `${t("vNext")} →`}
         </button>
       )}
-      {step === "choose" && <button onClick={() => router.back()} className="mt-6 text-base text-stone-500 underline">← {t("vBack")}</button>}
+      {step === "choose" && <button onClick={() => router.back()} className="mt-6 text-base text-muted underline">← {t("vBack")}</button>}
     </main>
   );
 }
 
 export default function VerifyPage() {
   return (
-    <div className="min-h-screen bg-stone-50">
+    <div className="min-h-screen bg-paper">
       <Header />
       <Suspense>
         <Flow />

@@ -23,7 +23,7 @@ body {
   width: 34px;
   height: 34px;
   border-radius: 9999px;
-  background: #ea580c;
+  background: #24594B;
   color: white;
   font-weight: 700;
   font-size: 14px;
@@ -34,7 +34,7 @@ body {
   cursor: pointer;
 }
 .kolo-group.kolo-verified {
-  box-shadow: 0 0 0 2px #059669, 0 2px 6px rgb(0 0 0 / 0.3);
+  box-shadow: 0 0 0 2px #22201E, 0 2px 6px rgb(0 0 0 / 0.3);
 }
 .kolo-pin {
   font-size: 26px;
@@ -61,7 +61,7 @@ body {
   width: 44px;
   height: 44px;
   font-size: 16px;
-  background: #c2410c;
+  background: #163D33;
 }
 
 /* Kolo design tokens */

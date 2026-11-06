@@ -8,8 +8,8 @@ import type { Lang, Order, Provider } from "@/lib/types";
 
 const STATUS_STYLE: Record<Order["status"], string> = {
   new: "bg-sky-100 text-sky-800",
-  accepted: "bg-emerald-100 text-emerald-800",
-  declined: "bg-stone-200 text-stone-600",
+  accepted: "bg-pine-soft text-pine",
+  declined: "bg-line-strong text-muted",
   done: "bg-violet-100 text-violet-800",
 };
 
@@ -87,55 +87,55 @@ export default function OrderChat({ orderId, role }: { orderId: string; role: "c
     setOrder(await res.json());
   }
 
-  if (!order || !provider) return <div className="grid h-full place-items-center text-stone-400">…</div>;
+  if (!order || !provider) return <div className="grid h-full place-items-center text-faint">…</div>;
   const other = role === "customer" ? provider.name : order.customerName;
   const otherLang = role === "customer" ? provider.language : order.customerLanguage;
 
   return (
     <div className="flex h-full flex-col">
-      <div className="border-b border-stone-200 bg-white px-5 py-3">
+      <div className="border-b border-line-strong bg-white px-5 py-3">
         <div className="flex items-center justify-between gap-3">
           <div>
-            <div className="font-semibold text-stone-900">
-              {other} <span className="text-xs font-normal text-stone-400">· {LANG_NAMES[otherLang]}</span>
+            <div className="font-semibold text-ink">
+              {other} <span className="text-xs font-normal text-faint">· {LANG_NAMES[otherLang]}</span>
             </div>
-            <div className="text-xs text-stone-500">
+            <div className="text-xs text-muted">
               {order.item}{order.quantity && order.quantity > 1 ? ` × ${order.quantity}` : ""} · 📍 {t("serves")} {areaById(provider.areaId)?.name}
             </div>
           </div>
           <StatusPill status={order.status} customer={role === "customer"} />
         </div>
-        <dl className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-stone-600">
+        <dl className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted">
           {order.when && <div>🗓️ {formatWhen(order.when, uiLang)}</div>}
           {order.areaText && <div>🏘️ {order.areaText}</div>}
           {role === "provider" && <div>🗣️ {t("customerSpeaks", { lang: LANG_NAMES[order.customerLanguage] })}</div>}
         </dl>
         {role === "provider" && order.status === "new" && (
           <div className="mt-3 flex gap-2">
-            <button onClick={() => setStatus("accepted")} className="min-h-11 flex-1 rounded-full bg-emerald-600 text-sm font-semibold text-white hover:bg-emerald-700">✓ {t("accept")}</button>
-            <button onClick={() => setStatus("declined")} className="min-h-11 flex-1 rounded-full border border-stone-300 text-sm font-semibold text-stone-700 hover:bg-stone-100">✕ {t("decline")}</button>
+            <button onClick={() => setStatus("accepted")} className="min-h-11 flex-1 rounded-full bg-pine text-sm font-semibold text-white hover:bg-pine">✓ {t("accept")}</button>
+            <button onClick={() => setStatus("declined")} className="min-h-11 flex-1 rounded-full border border-line-strong text-sm font-semibold text-ink-2 hover:bg-sand">✕ {t("decline")}</button>
           </div>
         )}
         {role === "provider" && order.status === "accepted" && (
           <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
-            <p className="text-xs text-emerald-700">🔒 {t("addressHint")}</p>
+            <p className="text-xs text-pine">🔒 {t("addressHint")}</p>
             <button onClick={() => setStatus("done")} className="min-h-11 rounded-full bg-violet-600 px-4 text-sm font-semibold text-white hover:bg-violet-700">✔︎ {t("markDone")}</button>
           </div>
         )}
         {role === "customer" && order.status !== "accepted" && order.status !== "done" && (
-          <p className="mt-2 text-xs text-stone-500">🔒 {t("addressAfterAccept")}</p>
+          <p className="mt-2 text-xs text-muted">🔒 {t("addressAfterAccept")}</p>
         )}
       </div>
 
-      <div className="flex-1 space-y-3 overflow-y-auto bg-stone-50 p-5">
-        {order.messages.length === 0 && <p className="text-center text-sm text-stone-400">{t("emptyChat")}</p>}
+      <div className="flex-1 space-y-3 overflow-y-auto bg-paper p-5">
+        {order.messages.length === 0 && <p className="text-center text-sm text-faint">{t("emptyChat")}</p>}
         {order.messages.map((m) => {
           const mine = m.from === role;
           const shown = m.lang === readLang ? m.original : m.translations[readLang] ?? m.original;
           const translated = m.lang !== readLang;
           return (
             <div key={m.id} className={`flex ${mine ? "justify-end" : "justify-start"}`}>
-              <div className={`max-w-[80%] rounded-2xl px-4 py-2.5 ${mine ? "bg-orange-600 text-white" : "border border-stone-200 bg-white text-stone-800"}`}>
+              <div className={`max-w-[80%] rounded-2xl px-4 py-2.5 ${mine ? "bg-ink text-white" : "border border-line-strong bg-white text-ink-2"}`}>
                 <div className="flex items-start gap-2">
                   <span className="whitespace-pre-wrap">{shown}</span>
                   {!mine && (
@@ -145,24 +145,24 @@ export default function OrderChat({ orderId, role }: { orderId: string; role: "c
                   )}
                 </div>
                 {translated && (
-                  <div className={`mt-1 border-t pt-1 text-xs ${mine ? "border-orange-400 text-orange-100" : "border-stone-100 text-stone-400"}`}>
+                  <div className={`mt-1 border-t pt-1 text-xs ${mine ? "border-white/30 text-white/70" : "border-line text-faint"}`}>
                     {t("original")} ({LANG_NAMES[m.lang]}): {m.original}
                   </div>
                 )}
                 {mine && m.lang !== otherLang && m.translations[otherLang] && (
-                  <div className="mt-1 border-t border-orange-400 pt-1 text-xs text-orange-100">→ {m.translations[otherLang]}</div>
+                  <div className="mt-1 border-t border-white/30 pt-1 text-xs text-white/70">→ {m.translations[otherLang]}</div>
                 )}
               </div>
             </div>
           );
         })}
-        {sending && <p className="text-right text-xs text-stone-400">{t("translating")}</p>}
+        {sending && <p className="text-right text-xs text-faint">{t("translating")}</p>}
         <div ref={endRef} />
       </div>
 
-      <div className="flex gap-2 border-t border-stone-200 bg-white p-3">
+      <div className="flex gap-2 border-t border-line-strong bg-white p-3">
         {speechSupported() && (
-          <button onClick={start} className={`min-h-11 rounded-full px-4 text-xl ${listening ? "animate-pulse bg-red-600 text-white" : "border border-stone-300"}`} aria-label={t("speak")}>
+          <button onClick={start} className={`min-h-11 rounded-full px-4 text-xl ${listening ? "animate-pulse bg-red-600 text-white" : "border border-line-strong"}`} aria-label={t("speak")}>
             🎤
           </button>
         )}
@@ -172,9 +172,9 @@ export default function OrderChat({ orderId, role }: { orderId: string; role: "c
           onKeyDown={(e) => e.key === "Enter" && send()}
           placeholder={t("msgPlaceholder")}
           aria-label={t("msgPlaceholder")}
-          className="min-h-11 flex-1 rounded-full border border-stone-300 px-4"
+          className="min-h-11 flex-1 rounded-full border border-line-strong px-4"
         />
-        <button onClick={send} disabled={sending} className="min-h-11 rounded-full bg-stone-900 px-5 font-semibold text-white disabled:opacity-40">
+        <button onClick={send} disabled={sending} className="min-h-11 rounded-full bg-ink px-5 font-semibold text-white disabled:opacity-40">
           {t("send")}
         </button>
       </div>

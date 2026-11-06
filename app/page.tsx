@@ -14,7 +14,7 @@ import type { Suggestion } from "@/app/api/suggest/route";
 
 const MapView = dynamic(() => import("@/components/MapView"), {
   ssr: false,
-  loading: () => <div className="grid h-full place-items-center text-stone-400">…</div>,
+  loading: () => <div className="grid h-full place-items-center text-faint">…</div>,
 });
 
 function posOf(p: Provider): [number, number] | null {
@@ -152,19 +152,19 @@ export default function Home() {
   }, [focusArea, providers]);
 
   return (
-    <div className="flex h-screen flex-col bg-stone-50">
+    <div className="flex h-screen flex-col bg-paper">
       <Header />
       {me && (
-        <div role="status" className="flex flex-wrap items-center justify-between gap-3 bg-emerald-600 px-5 py-3 text-white">
+        <div role="status" className="flex flex-wrap items-center justify-between gap-3 bg-pine px-5 py-3 text-white">
           <div>
             <span className="text-lg font-bold">🎉 {t("live")}</span> <span className="opacity-90">{t("liveSub")}</span>
           </div>
           {me.verified ? (
-            <span className="rounded-full bg-white px-3 py-1 text-sm font-semibold text-emerald-800">✓ {t("verified")}</span>
+            <span className="rounded-full bg-white px-3 py-1 text-sm font-semibold text-pine">✓ {t("verified")}</span>
           ) : (
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-sm opacity-90">{t("getVerified")}:</span>
-              <Link href={`/verify?listing=${me.id}`} className="min-h-11 rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-emerald-800">🪪 {t("getVerified")}</Link>
+              <Link href={`/verify?listing=${me.id}`} className="min-h-11 rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-pine">🪪 {t("getVerified")}</Link>
               <span className="text-xs opacity-75">{t("demoVerify")}</span>
             </div>
           )}
@@ -172,8 +172,8 @@ export default function Home() {
       )}
 
       <div className="flex min-h-0 flex-1 flex-col md:flex-row">
-        <section className="flex max-h-[45vh] w-full flex-col border-b border-stone-200 bg-white md:max-h-none md:max-w-sm md:border-b-0 md:border-r">
-          <div className="space-y-3 border-b border-stone-100 p-4">
+        <section className="flex max-h-[45vh] w-full flex-col border-b border-line-strong md:max-h-none md:max-w-sm md:border-b-0 md:border-r bg-paper">
+          <div className="space-y-3 border-b border-line p-4">
             <div className="relative">
               <label htmlFor="area-q" className="sr-only">{t("areaLabel")}</label>
               <input
@@ -184,44 +184,44 @@ export default function Home() {
                 onKeyDown={(e) => e.key === "Enter" && suggestions[0] && pick(suggestions[0])}
                 placeholder={t("areaPlaceholder")}
                 autoComplete="off"
-                className="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm"
+                className="w-full rounded-lg border border-line-strong px-3 py-2 text-sm"
               />
               {showSuggest && suggestions.length > 0 && (
-                <ul className="absolute z-[1100] mt-1 w-full overflow-hidden rounded-lg border border-stone-200 bg-white shadow-lg">
+                <ul className="absolute z-[1100] mt-1 w-full overflow-hidden rounded-lg border border-line-strong bg-white shadow-lg">
                   {suggestions.map((a) => (
                     <li key={a.id}>
-                      <button onClick={() => pick(a)} className="flex w-full items-baseline justify-between gap-2 px-3 py-2 text-left text-sm hover:bg-orange-50">
+                      <button onClick={() => pick(a)} className="flex w-full items-baseline justify-between gap-2 px-3 py-2 text-left text-sm hover:bg-sand">
                         <span>
                           {a.name}
-                          {parentLabel(a) && <span className="text-stone-400"> · {parentLabel(a)}</span>}
+                          {parentLabel(a) && <span className="text-faint"> · {parentLabel(a)}</span>}
                         </span>
-                        <span className="text-xs text-stone-400">{t(`lvl_${a.level}` as UIKey)}</span>
+                        <span className="text-xs text-faint">{t(`lvl_${a.level}` as UIKey)}</span>
                       </button>
                     </li>
                   ))}
                 </ul>
               )}
-              {noMatch && <p className="mt-1 text-xs text-amber-700">{t("noPlace")}</p>}
+              {noMatch && <p className="mt-1 text-xs text-warn-ink">{t("noPlace")}</p>}
             </div>
             <div className="flex gap-2">
-              <button onClick={nearMe} className="min-h-9 flex-1 rounded-full border border-stone-300 text-xs font-medium hover:bg-stone-100">📍 {t("nearMe")}</button>
-              <button onClick={() => { setFocusArea(null); setGroup(null); setTarget({ us: true, nonce: Date.now() }); }} className="min-h-9 flex-1 rounded-full border border-stone-300 text-xs font-medium hover:bg-stone-100">
+              <button onClick={nearMe} className="min-h-9 flex-1 rounded-full border border-line-strong text-xs font-medium hover:bg-sand">📍 {t("nearMe")}</button>
+              <button onClick={() => { setFocusArea(null); setGroup(null); setTarget({ us: true, nonce: Date.now() }); }} className="min-h-9 flex-1 rounded-full border border-line-strong text-xs font-medium hover:bg-sand">
                 🇺🇸 {t("allUS")}
               </button>
             </div>
-            {geoMsg && <p className="text-xs text-amber-700">{geoMsg}</p>}
+            {geoMsg && <p className="text-xs text-warn-ink">{geoMsg}</p>}
             <input
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
               placeholder={t("searchPlaceholder")}
               aria-label={t("searchLabel")}
-              className="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm"
+              className="w-full rounded-lg border border-line-strong px-3 py-2 text-sm"
             />
             <div className="flex flex-wrap gap-1.5">
               <button
                 onClick={() => setSupportOnly(!supportOnly)}
                 aria-pressed={supportOnly}
-                className={`rounded-full border px-2.5 py-1 text-xs ${supportOnly ? "border-rose-600 bg-rose-600 text-white" : "border-rose-300 text-rose-800 hover:bg-rose-50"}`}
+                className={`rounded-full border px-2.5 py-1 text-xs ${supportOnly ? "border-beauty bg-pine text-white" : "border-beauty text-beauty-ink hover:bg-beauty-tint"}`}
               >
                 💛 {t("openToSupport")}
               </button>
@@ -231,7 +231,7 @@ export default function Home() {
                   onClick={() => setCategory(category === k ? null : k)}
                   aria-pressed={category === k}
                   className={`rounded-full border px-2.5 py-1 text-xs ${
-                    category === k ? "border-orange-600 bg-orange-600 text-white" : "border-stone-300 text-stone-700 hover:bg-stone-100"
+                    category === k ? "border-ink bg-ink text-white" : "border-line-strong text-ink-2 hover:bg-sand"
                   }`}
                 >
                   {catLabel(lang, k)}
@@ -241,30 +241,30 @@ export default function Home() {
           </div>
 
           {group && (
-            <div className="flex items-center justify-between bg-orange-50 px-4 py-2 text-sm text-orange-900">
+            <div className="flex items-center justify-between bg-sand px-4 py-2 text-sm text-pine">
               <span>{t("servingArea", { n: group.list.length, area: areaById(group.areaId)?.name ?? "" })}</span>
               <button onClick={() => setGroup(null)} className="text-xs underline">{t("showAllInView")}</button>
             </div>
           )}
 
-          <ul className="flex-1 divide-y divide-stone-100 overflow-y-auto">
+          <ul className="flex-1 divide-y divide-line overflow-y-auto">
             {visibleList.map((p) => (
               <li key={p.id}>
                 <ProviderRow p={p} onClick={() => setSelected(p)} />
               </li>
             ))}
             {visibleList.length === 0 && !wantSuggestions && (
-              <li className="space-y-3 p-6 text-center text-sm text-stone-500">
+              <li className="space-y-3 p-6 text-center text-sm text-muted">
                 <p>
                   {t("emptyHere")}{" "}
-                  <Link href="/join" className="font-semibold text-orange-700 underline">{t("offer")} →</Link>
+                  <Link href="/join" className="font-semibold text-pine underline">{t("offer")} →</Link>
                 </p>
                 {nearestWithProviders.length > 0 && (
                   <div>
-                    <p className="text-xs text-stone-400">{t("nearbyWithProviders")}</p>
+                    <p className="text-xs text-faint">{t("nearbyWithProviders")}</p>
                     <div className="mt-2 flex flex-wrap justify-center gap-2">
                       {nearestWithProviders.map((a) => (
-                        <button key={a.id} onClick={() => pick(a)} className="rounded-full border border-stone-300 px-3 py-1 text-xs hover:bg-orange-50">
+                        <button key={a.id} onClick={() => pick(a)} className="rounded-full border border-line-strong px-3 py-1 text-xs hover:bg-sand">
                           📍 {a.name}
                         </button>
                       ))}
@@ -275,7 +275,7 @@ export default function Home() {
             )}
             {wantSuggestions && suggested.length > 0 && (
               <>
-                <li className="bg-orange-50 px-4 py-3 text-sm text-orange-900">
+                <li className="bg-sand px-4 py-3 text-sm text-pine">
                   {t("suggestIntro", { kw })}
                 </li>
                 {suggested.map(({ provider: p, reason }) => (
@@ -286,10 +286,10 @@ export default function Home() {
               </>
             )}
             {wantSuggestions && !suggestState && (
-              <li className="p-6 text-center text-sm text-stone-400">{t("suggestLooking")}</li>
+              <li className="p-6 text-center text-sm text-faint">{t("suggestLooking")}</li>
             )}
             {wantSuggestions && suggestState && suggested.length === 0 && (
-              <li className="p-6 text-center text-sm text-stone-400">{t("noMatches")}</li>
+              <li className="p-6 text-center text-sm text-faint">{t("noMatches")}</li>
             )}
           </ul>
         </section>
@@ -313,17 +313,17 @@ export default function Home() {
 function ProviderRow({ p, onClick, reason }: { p: Provider; onClick: () => void; reason?: string }) {
   const { lang, t } = useUILang();
   return (
-    <button onClick={onClick} className="w-full px-4 py-3 text-left hover:bg-stone-50">
-      <div className="flex items-center gap-2 text-xs text-stone-500">
+    <button onClick={onClick} className="w-full px-4 py-3 text-left hover:bg-sand">
+      <div className="flex items-center gap-2 text-xs text-muted">
         <span>{catLabel(lang, p.category)}</span>·<span>{LANG_NAMES[p.language]}</span>
         {p.verified && <VerifiedBadge />}
-        {!!p.needs?.length && <span className="rounded-full bg-rose-100 px-2 py-0.5 text-xs font-medium text-rose-800">💛 {t("openToSupport")}</span>}
+        {!!p.needs?.length && <span className="rounded-full bg-beauty-tint px-2 py-0.5 text-xs font-medium text-beauty-ink">💛 {t("openToSupport")}</span>}
       </div>
-      <div className="font-medium text-stone-900">{pick(p, lang, p.title_en, p.title_native)}</div>
-      <div className="text-xs text-stone-500">
+      <div className="font-medium text-ink">{pick(p, lang, p.title_en, p.title_native)}</div>
+      <div className="text-xs text-muted">
         {p.name} · {p.locationPrecision === "exact" ? "🏪" : t("serves")} {servesLabel(p)}
       </div>
-      {reason && <div className="mt-1 text-xs italic text-orange-800">✨ {reason}</div>}
+      {reason && <div className="mt-1 text-xs italic text-pine">✨ {reason}</div>}
     </button>
   );
 }

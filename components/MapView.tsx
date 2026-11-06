@@ -69,7 +69,7 @@ export default function MapView({
   useEffect(() => {
     setMountId((n) => n + 1);
   }, []);
-  if (mountId === 0) return <div className="h-full w-full bg-stone-100" />;
+  if (mountId === 0) return <div className="h-full w-full bg-sand" />;
   return (
     <MapContainer key={mountId} center={[37.7, -122.25]} zoom={9} className="kolo-map h-full w-full" zoomControl={false}>
       <Tiles />

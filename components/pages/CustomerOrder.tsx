@@ -8,11 +8,11 @@ import OrderChat from "@/components/OrderChat";
 export default function CustomerOrder() {
   const { id } = useParams<{ id: string }>();
   return (
-    <div className="flex h-screen flex-col bg-stone-50">
+    <div className="flex h-screen flex-col bg-paper">
       <Header>
         <TranslatedNote />
       </Header>
-      <div className="mx-auto flex min-h-0 w-full max-w-2xl flex-1 flex-col border-x border-stone-200 bg-white">
+      <div className="mx-auto flex min-h-0 w-full max-w-2xl flex-1 flex-col border-x border-line-strong bg-white">
         <OrderChat orderId={id} role="customer" />
       </div>
     </div>
@@ -21,5 +21,5 @@ export default function CustomerOrder() {
 
 function TranslatedNote() {
   const { t } = useUILang();
-  return <span className="hidden text-sm text-stone-500 md:inline">🌐 {t("translatedNote")}</span>;
+  return <span className="hidden text-sm text-muted md:inline">🌐 {t("translatedNote")}</span>;
 }

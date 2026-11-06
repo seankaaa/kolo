@@ -47,7 +47,7 @@ const LANG_BUTTONS: { lang: Lang; label: string }[] = [
 ];
 const EMPTY: Draft = { step: "lang", lang: "en", name: "", contact: "", messages: [], display: [] };
 
-const btn = "inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-5 font-semibold focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-orange-500 disabled:opacity-40";
+const btn = "inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-5 font-semibold focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-ink disabled:opacity-40";
 
 export default function Join() {
   const router = useRouter();
@@ -247,7 +247,7 @@ export default function Join() {
             <p className="text-center text-base text-sky-900">⬇︎ {t("startNew")}</p>
           </div>
         )}
-        <h1 className="text-center text-3xl font-bold text-stone-900">🌐 {t("chooseLanguage")}</h1>
+        <h1 className="text-center text-3xl font-bold text-ink">🌐 {t("chooseLanguage")}</h1>
         <div className="mt-8 grid gap-4 sm:grid-cols-2">
           {LANG_BUTTONS.map((b) => (
             <button
@@ -257,7 +257,7 @@ export default function Join() {
                 setLang(b.lang);
                 update({ lang: b.lang, step: "signup" });
               }}
-              className="min-h-28 rounded-3xl border-2 border-stone-200 bg-white text-3xl font-bold text-stone-900 shadow-sm hover:border-orange-500 hover:bg-orange-50 focus-visible:outline-4 focus-visible:outline-orange-500"
+              className="min-h-28 rounded-3xl border-2 border-line-strong bg-white text-3xl font-bold text-ink shadow-sm hover:border-ink hover:bg-sand focus-visible:outline-4 focus-visible:outline-ink"
             >
               {b.label}
             </button>
@@ -271,8 +271,8 @@ export default function Join() {
   if (d.step === "signup") {
     return (
       <Page>
-        <h1 className="text-3xl font-bold text-stone-900">{t("signupTitle")}</h1>
-        <p className="mt-2 text-lg text-stone-600">{t("chooseLanguageHint")}</p>
+        <h1 className="text-3xl font-bold text-ink">{t("signupTitle")}</h1>
+        <p className="mt-2 text-lg text-muted">{t("chooseLanguageHint")}</p>
         <form
           className="mt-6 space-y-5"
           onSubmit={(e) => {
@@ -280,13 +280,13 @@ export default function Join() {
             signup();
           }}
         >
-          <p className="rounded-xl bg-white p-4 text-lg text-stone-700">👤 {t("loggedInAs", { name: d.name })} · {d.contact}</p>
+          <p className="rounded-xl bg-white p-4 text-lg text-ink-2">👤 {t("loggedInAs", { name: d.name })} · {d.contact}</p>
           <Check checked={authorized} onChange={setAuthorized} label={t("authorized")} hint={t("authorizedNote")} />
           <Check checked={agreePublic} onChange={setAgreePublic} label={t("publicAgree")} />
           {error && <p role="alert" className="rounded-xl bg-red-50 p-3 text-lg text-red-800">{error}</p>}
           <div className="flex gap-3">
-            <button type="button" onClick={() => update({ step: "lang" })} className={`${btn} border border-stone-300 bg-white text-lg`}>← {t("back")}</button>
-            <button disabled={busy} className={`${btn} flex-1 bg-orange-600 py-4 text-xl text-white hover:bg-orange-700`}>{t("continue")} →</button>
+            <button type="button" onClick={() => update({ step: "lang" })} className={`${btn} border border-line-strong bg-white text-lg`}>← {t("back")}</button>
+            <button disabled={busy} className={`${btn} flex-1 bg-pine py-4 text-xl text-white hover:bg-pine-dark`}>{t("continue")} →</button>
           </div>
         </form>
       </Page>
@@ -299,8 +299,8 @@ export default function Join() {
       <Page>
         {d.step === "building" || !d.listing ? (
           <div className="py-20 text-center" aria-live="polite">
-            <div className="mx-auto h-16 w-16 animate-spin rounded-full border-4 border-orange-200 border-t-orange-600" />
-            <p className="mt-6 text-2xl font-semibold text-stone-800">✍️ {t("building")}</p>
+            <div className="mx-auto h-16 w-16 animate-spin rounded-full border-4 border-line-strong border-t-pine" />
+            <p className="mt-6 text-2xl font-semibold text-ink-2">✍️ {t("building")}</p>
           </div>
         ) : (
           <Preview
@@ -316,8 +316,8 @@ export default function Join() {
         {error && <p role="alert" className="mt-4 rounded-xl bg-red-50 p-3 text-lg text-red-800">{error}</p>}
         {d.step === "preview" && d.listing && (
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <button onClick={startOver} className={`${btn} border border-stone-300 bg-white`}>↺ {t("startOver")}</button>
-            <button onClick={publish} disabled={busy || d.flags === null || !d.listing.areaId} className={`${btn} flex-1 bg-orange-600 py-4 text-xl text-white hover:bg-orange-700`}>
+            <button onClick={startOver} className={`${btn} border border-line-strong bg-white`}>↺ {t("startOver")}</button>
+            <button onClick={publish} disabled={busy || d.flags === null || !d.listing.areaId} className={`${btn} flex-1 bg-pine py-4 text-xl text-white hover:bg-pine-dark`}>
               🚀 {busy ? t("publishing") : t("publish")}
             </button>
           </div>
@@ -332,7 +332,7 @@ export default function Join() {
   return (
     <Page>
       <div className="flex items-center justify-between gap-2">
-        <p className="text-lg font-medium text-stone-500">{t("stepOf", { n: step, total: TOTAL })}</p>
+        <p className="text-lg font-medium text-muted">{t("stepOf", { n: step, total: TOTAL })}</p>
         <div className="flex gap-2">
           <button
             onClick={() => {
@@ -341,30 +341,30 @@ export default function Join() {
               if (voiceOn) window.speechSynthesis?.cancel();
             }}
             aria-pressed={voiceOn}
-            className={`${btn} border border-stone-300 bg-white text-sm`}
+            className={`${btn} border border-line-strong bg-white text-sm`}
           >
             {voiceOn ? "🔊" : "🔇"} {voiceOn ? t("speakerOn") : t("speakerOff")}
           </button>
-          <button onClick={() => turn && speak(turn.reply, SPEECH_LANG[d.lang])} disabled={!turn} className={`${btn} border border-stone-300 bg-white text-sm`}>
+          <button onClick={() => turn && speak(turn.reply, SPEECH_LANG[d.lang])} disabled={!turn} className={`${btn} border border-line-strong bg-white text-sm`}>
             🔁 {t("repeat")}
           </button>
         </div>
       </div>
-      <div className="mt-2 h-2 overflow-hidden rounded-full bg-stone-200" aria-hidden>
-        <div className="h-full rounded-full bg-orange-500 transition-all" style={{ width: `${(step / TOTAL) * 100}%` }} />
+      <div className="mt-2 h-2 overflow-hidden rounded-full bg-line-strong" aria-hidden>
+        <div className="h-full rounded-full bg-pine transition-all" style={{ width: `${(step / TOTAL) * 100}%` }} />
       </div>
 
       <div aria-live="polite" className="mt-8 min-h-24">
         {busy && !turn ? (
-          <p className="text-2xl text-stone-400">{t("thinking")}</p>
+          <p className="text-2xl text-faint">{t("thinking")}</p>
         ) : (
-          <h1 className={`text-[28px] font-bold leading-snug text-stone-900 sm:text-3xl ${busy ? "opacity-40" : ""}`}>{turn?.reply}</h1>
+          <h1 className={`text-[28px] font-bold leading-snug text-ink sm:text-3xl ${busy ? "opacity-40" : ""}`}>{turn?.reply}</h1>
         )}
       </div>
 
       {turn?.asking === "help" && !busy && (
-        <div className="mt-6 rounded-3xl border-2 border-rose-200 bg-rose-50 p-4">
-          <p className="text-lg font-semibold text-stone-800">💛 {t("helpChipsTitle")}</p>
+        <div className="mt-6 rounded-3xl border-2 border-beauty bg-beauty-tint p-4">
+          <p className="text-lg font-semibold text-ink-2">💛 {t("helpChipsTitle")}</p>
           <div className="mt-3 flex flex-wrap gap-2">
             {NEED_CHIPS.map((k) => {
               const label = translate(d.lang, k);
@@ -374,14 +374,14 @@ export default function Join() {
                   key={k}
                   aria-pressed={on}
                   onClick={() => setAnswer((a) => (on ? a.replace(label, "").replace(/(, )+/g, ", ").replace(/^, |, $/g, "") : a ? `${a}, ${label}` : label))}
-                  className={`min-h-11 rounded-full border-2 px-4 text-base ${on ? "border-rose-600 bg-rose-600 text-white" : "border-stone-300 bg-white hover:border-rose-400"}`}
+                  className={`min-h-11 rounded-full border-2 px-4 text-base ${on ? "border-beauty bg-pine text-white" : "border-line-strong bg-white hover:border-beauty"}`}
                 >
                   {label}
                 </button>
               );
             })}
           </div>
-          <p className="mt-3 text-sm text-stone-600">🔒 {t("moneyDirect")}</p>
+          <p className="mt-3 text-sm text-muted">🔒 {t("moneyDirect")}</p>
         </div>
       )}
 
@@ -403,29 +403,29 @@ export default function Join() {
               onClick={() => dictation.toggle(answer)}
               disabled={busy}
               aria-label={dictation.listening ? t("listening") : t("tapToSpeak")}
-              className={`grid h-28 w-28 place-items-center rounded-full text-5xl shadow-lg transition focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-orange-500 disabled:opacity-40 ${
-                dictation.listening ? "animate-pulse bg-red-600 text-white ring-8 ring-red-200" : "bg-orange-600 text-white hover:bg-orange-700"
+              className={`grid h-28 w-28 place-items-center rounded-full text-5xl shadow-lg transition focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-ink disabled:opacity-40 ${
+                dictation.listening ? "animate-pulse bg-red-600 text-white ring-8 ring-red-200" : "bg-pine text-white hover:bg-pine-dark"
               }`}
             >
               {dictation.listening ? "⏹" : "🎤"}
             </button>
-            <p className={`text-xl font-semibold ${dictation.listening ? "text-red-700" : "text-stone-700"}`}>
+            <p className={`text-xl font-semibold ${dictation.listening ? "text-red-700" : "text-ink-2"}`}>
               {dictation.listening ? t("listening") : t("tapToSpeak")}
             </p>
-            <p className="text-base text-stone-500">💬 {t("talkLong")}</p>
+            <p className="text-base text-muted">💬 {t("talkLong")}</p>
             {dictation.status && dictation.status !== "no-speech" && (
-              <p className="text-xs text-stone-400">mic: {dictation.status}</p>
+              <p className="text-xs text-faint">mic: {dictation.status}</p>
             )}
             {/* Speech recognition hears one language at a time: one tap switches mid-sentence, keeping her words. */}
             <div role="group" aria-label={t("micLanguage")} className="flex items-center gap-2">
-              <span className="text-base text-stone-500">{t("micLanguage")}:</span>
+              <span className="text-base text-muted">{t("micLanguage")}:</span>
               {micLangs(d.lang).map((l) => (
                 <button
                   key={l}
                   onClick={() => dictation.switchLang(SPEECH_LANG[l], answer)}
                   aria-pressed={dictation.lang === SPEECH_LANG[l]}
                   className={`min-h-11 rounded-full border-2 px-4 text-base font-semibold ${
-                    dictation.lang === SPEECH_LANG[l] ? "border-orange-600 bg-orange-600 text-white" : "border-stone-300 bg-white text-stone-700"
+                    dictation.lang === SPEECH_LANG[l] ? "border-ink bg-ink text-white" : "border-line-strong bg-white text-ink-2"
                   }`}
                 >
                   🎙️ {translate(l, "langName")}
@@ -436,7 +436,7 @@ export default function Join() {
         )}
       </div>
 
-      <label htmlFor="answer" className="mt-6 block text-lg font-medium text-stone-700">
+      <label htmlFor="answer" className="mt-6 block text-lg font-medium text-ink-2">
         ⌨️ {answer ? t("yourWords") : t("orType")}
       </label>
       <textarea
@@ -450,7 +450,7 @@ export default function Join() {
           }
         }}
         rows={3}
-        className="mt-2 w-full rounded-2xl border-2 border-stone-300 bg-white p-4 text-xl text-stone-900 focus:border-orange-500 focus:outline-none"
+        className="mt-2 w-full rounded-2xl border-2 border-line-strong bg-white p-4 text-xl text-ink focus:border-ink focus:outline-none"
       />
 
       {error && (
@@ -461,27 +461,27 @@ export default function Join() {
       )}
 
       <div className="mt-4 flex flex-wrap gap-3">
-        <button onClick={() => sendAnswer(answer)} disabled={busy || !answer.trim()} className={`${btn} flex-1 bg-stone-900 py-4 text-xl text-white`}>
+        <button onClick={() => sendAnswer(answer)} disabled={busy || !answer.trim()} className={`${btn} flex-1 bg-ink py-4 text-xl text-white`}>
           ➤ {t("send")}
         </button>
         {canSpeak && answer && (
-          <button onClick={() => { setAnswer(""); dictation.start(""); }} disabled={busy} className={`${btn} border border-stone-300 bg-white`}>
+          <button onClick={() => { setAnswer(""); dictation.start(""); }} disabled={busy} className={`${btn} border border-line-strong bg-white`}>
             🎙️ {t("rerecord")}
           </button>
         )}
-        <button onClick={() => sendAnswer(`(skip: ${turn?.asking ?? "none"})`, t("skip"))} disabled={busy || !turn} className={`${btn} border border-stone-300 bg-white`}>
+        <button onClick={() => sendAnswer(`(skip: ${turn?.asking ?? "none"})`, t("skip"))} disabled={busy || !turn} className={`${btn} border border-line-strong bg-white`}>
           ⏭️ {t("skip")}
         </button>
       </div>
 
       {(step >= 5 || (turn && turn.missing.length === 0)) && (
-        <button onClick={() => buildListing(d)} disabled={busy} className={`${btn} mt-6 w-full bg-emerald-600 py-4 text-xl text-white hover:bg-emerald-700`}>
+        <button onClick={() => buildListing(d)} disabled={busy} className={`${btn} mt-6 w-full bg-pine py-4 text-xl text-white hover:bg-pine`}>
           ✅ {t("finishPreview")}
         </button>
       )}
 
       {d.display.length > 0 && (
-        <details className="mt-8 text-stone-500">
+        <details className="mt-8 text-muted">
           <summary className="cursor-pointer text-base">💬 {t("yourWords")} ({d.display.length})</summary>
           <ul className="mt-2 space-y-1 text-base">
             {d.display.map((a, i) => <li key={i}>• {a}</li>)}
@@ -490,11 +490,11 @@ export default function Join() {
       )}
       <div className="mt-6 flex flex-wrap items-center gap-4">
         {!!d.prevTurns?.length && (
-          <button onClick={previousQuestion} disabled={busy} className={`${btn} border border-stone-300 bg-white`}>
+          <button onClick={previousQuestion} disabled={busy} className={`${btn} border border-line-strong bg-white`}>
             ↩︎ {t("prevQuestion")}
           </button>
         )}
-        <button onClick={startOver} className="text-base text-stone-400 underline">↺ {t("startOver")}</button>
+        <button onClick={startOver} className="text-base text-faint underline">↺ {t("startOver")}</button>
       </div>
     </Page>
   );
@@ -502,7 +502,7 @@ export default function Join() {
 
 function Page({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-stone-50 text-lg">
+    <div className="min-h-screen bg-paper text-lg">
       <Header showOffer={false} />
       <main className="mx-auto max-w-2xl px-4 py-8">{children}</main>
     </div>
@@ -512,8 +512,8 @@ function Page({ children }: { children: React.ReactNode }) {
 function Field({ id, label, hint, children }: { id: string; label: string; hint?: string; children: React.ReactNode }) {
   return (
     <div>
-      <label htmlFor={id} className="block text-xl font-semibold text-stone-900">{label}</label>
-      {hint && <p className="text-base text-stone-500">{hint}</p>}
+      <label htmlFor={id} className="block text-xl font-semibold text-ink">{label}</label>
+      {hint && <p className="text-base text-muted">{hint}</p>}
       <div className="mt-2">{children}</div>
     </div>
   );
@@ -521,11 +521,11 @@ function Field({ id, label, hint, children }: { id: string; label: string; hint?
 
 function Check({ checked, onChange, label, hint }: { checked: boolean; onChange: (v: boolean) => void; label: string; hint?: string }) {
   return (
-    <label className="flex min-h-11 cursor-pointer items-start gap-4 rounded-2xl border-2 border-stone-200 bg-white p-4 has-focus-visible:outline-3 has-focus-visible:outline-orange-500">
-      <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} className="mt-1 h-7 w-7 shrink-0 accent-orange-600" />
+    <label className="flex min-h-11 cursor-pointer items-start gap-4 rounded-2xl border-2 border-line-strong bg-white p-4 has-focus-visible:outline-3 has-focus-visible:outline-ink">
+      <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} className="mt-1 h-7 w-7 shrink-0 accent-pine" />
       <span>
-        <span className="block text-xl font-semibold text-stone-900">{label}</span>
-        {hint && <span className="block text-base text-stone-500">{hint}</span>}
+        <span className="block text-xl font-semibold text-ink">{label}</span>
+        {hint && <span className="block text-base text-muted">{hint}</span>}
       </span>
     </label>
   );
@@ -566,13 +566,13 @@ function LocationPicker({ t, hasShop, citySaid, stateSaid, areaId, onPick }: {
   }
 
   return (
-    <div className="mt-6 rounded-3xl border-2 border-orange-200 bg-orange-50 p-4">
-      <p className="text-lg font-semibold text-stone-800">📍 {t("chooseArea")}</p>
+    <div className="mt-6 rounded-3xl border-2 border-line-strong bg-sand p-4">
+      <p className="text-lg font-semibold text-ink-2">📍 {t("chooseArea")}</p>
       {path.length > 0 && (
         <>
           <nav aria-label="breadcrumb" className="mt-3 flex flex-wrap gap-2">
             {path.map((a, i) => (
-              <button key={a.id} onClick={() => pickArea(a)} className="min-h-11 rounded-full border border-orange-300 bg-white px-4 text-base font-medium text-orange-900">
+              <button key={a.id} onClick={() => pickArea(a)} className="min-h-11 rounded-full border border-ink bg-white px-4 text-base font-medium text-pine">
                 {i > 0 && "› "}{a.name}
               </button>
             ))}
@@ -582,12 +582,12 @@ function LocationPicker({ t, hasShop, citySaid, stateSaid, areaId, onPick }: {
               const other = showOther ? ` (other city: ${otherCity})` : "";
               onPick(`📍 ${label}${other} [area_id: ${current.id}]`, `📍 ${label}${showOther ? ` · ${otherCity}` : ""}`);
             }}
-            className="mt-3 flex min-h-14 w-full items-center justify-center gap-2 rounded-2xl bg-orange-600 px-4 text-xl font-bold text-white hover:bg-orange-700 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-orange-700"
+            className="mt-3 flex min-h-14 w-full items-center justify-center gap-2 rounded-2xl bg-pine px-4 text-xl font-bold text-white hover:bg-pine-dark focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-ink"
           >
             ✓ {current.name}{showOther ? ` · ${otherCity}` : ""}
           </button>
           {current.level === "state" && (
-            <label className="mt-3 block text-base text-stone-700">
+            <label className="mt-3 block text-base text-ink-2">
               {t("otherCity")}
               <input value={otherCity} onChange={(e) => setOtherCity(e.target.value)} className="input mt-1" />
             </label>
@@ -596,10 +596,10 @@ function LocationPicker({ t, hasShop, citySaid, stateSaid, areaId, onPick }: {
       )}
       {children.length > 0 && (
         <>
-          <p className="mt-4 text-base font-medium text-stone-600">🔍 {t("moreExact")}:</p>
+          <p className="mt-4 text-base font-medium text-muted">🔍 {t("moreExact")}:</p>
           <div className="mt-2 flex flex-wrap gap-2">
             {children.map((c) => (
-              <button key={c.id} onClick={() => pickArea(c)} className="min-h-11 rounded-full border-2 border-stone-300 bg-white px-4 text-lg hover:border-orange-500">
+              <button key={c.id} onClick={() => pickArea(c)} className="min-h-11 rounded-full border-2 border-line-strong bg-white px-4 text-lg hover:border-ink">
                 {c.name}
               </button>
             ))}
@@ -607,27 +607,27 @@ function LocationPicker({ t, hasShop, citySaid, stateSaid, areaId, onPick }: {
         </>
       )}
       <div className="mt-4">
-        <label htmlFor="area-search" className="text-base font-medium text-stone-600">🔎 {t("findCity")}</label>
+        <label htmlFor="area-search" className="text-base font-medium text-muted">🔎 {t("findCity")}</label>
         <input id="area-search" value={query} onChange={(e) => setQuery(e.target.value)} className="input mt-1" />
         {results.length > 0 && (
           <div className="mt-2 flex flex-wrap gap-2">
             {results.map((a) => (
-              <button key={a.id} onClick={() => pickArea(a)} className="min-h-11 rounded-full border-2 border-stone-300 bg-white px-4 text-base hover:border-orange-500">
-                {a.name}{parentLabel(a) && <span className="text-stone-400"> · {parentLabel(a)}</span>}
+              <button key={a.id} onClick={() => pickArea(a)} className="min-h-11 rounded-full border-2 border-line-strong bg-white px-4 text-base hover:border-ink">
+                {a.name}{parentLabel(a) && <span className="text-faint"> · {parentLabel(a)}</span>}
               </button>
             ))}
           </div>
         )}
       </div>
       {hasShop && current && (
-        <div className="mt-4 border-t border-orange-200 pt-4">
-          <label htmlFor="addr" className="text-base font-semibold text-stone-800">🏪 {t("exactAddress")}</label>
+        <div className="mt-4 border-t border-line-strong pt-4">
+          <label htmlFor="addr" className="text-base font-semibold text-ink-2">🏪 {t("exactAddress")}</label>
           <div className="mt-2 flex gap-2">
             <input id="addr" value={address} onChange={(e) => setAddress(e.target.value)} placeholder={t("typeAddress")} className="input flex-1" />
             <button
               disabled={!address.trim()}
               onClick={() => onPick(`🏪 My shop address: ${address.trim()} [area_id: ${current.id}]`, `🏪 ${address.trim()}`)}
-              className="min-h-11 rounded-full bg-stone-900 px-5 font-semibold text-white disabled:opacity-40"
+              className="min-h-11 rounded-full bg-ink px-5 font-semibold text-white disabled:opacity-40"
             >
               ✓
             </button>
@@ -673,7 +673,7 @@ function Preview({ d, t, onChange, onFlag }: {
         {native && key !== "availability" ? (
           <>
             <Editable value={getText(l, nf)} onSave={(v) => onChange(setText(l, nf, v))} t={t} big={key === "title"} flags={flagsFor(nf)} onFlag={onFlag} />
-            <div className="mt-1 text-base text-stone-500">
+            <div className="mt-1 text-base text-muted">
               🇺🇸 <Editable value={getText(l, ef)} onSave={(v) => onChange(setText(l, ef, v))} t={t} flags={flagsFor(ef)} onFlag={onFlag} />
             </div>
           </>
@@ -686,13 +686,13 @@ function Preview({ d, t, onChange, onFlag }: {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-stone-900">{t("previewTitle")}</h1>
+      <h1 className="text-3xl font-bold text-ink">{t("previewTitle")}</h1>
       <p className="mt-2 rounded-2xl bg-sky-50 p-4 text-lg text-sky-900">✋ {t("onlyYourWords")}</p>
 
       {!!d.turn?.missing.length && (
-        <div className="mt-4 rounded-2xl border-2 border-dashed border-stone-300 bg-white p-4">
-          <p className="font-semibold text-stone-800">➕ {t("addLater")}:</p>
-          <ul className="mt-1 list-inside list-disc text-base text-stone-600">
+        <div className="mt-4 rounded-2xl border-2 border-dashed border-line-strong bg-white p-4">
+          <p className="font-semibold text-ink-2">➕ {t("addLater")}:</p>
+          <ul className="mt-1 list-inside list-disc text-base text-muted">
             {d.turn.missing.map((m) => <li key={m}>{m.replace(/_/g, " ")}</li>)}
           </ul>
         </div>
@@ -716,7 +716,7 @@ function Preview({ d, t, onChange, onFlag }: {
         {row("title", d.name)}
         {row("summary", "")}
         <Part label={`🧾 ${t("services")}`} t={t}>
-          <ul className="divide-y divide-stone-100">
+          <ul className="divide-y divide-line">
             {l.services.map((s, i) => (
               <li key={i} className="py-2">
                 <div className="flex items-start justify-between gap-3">
@@ -732,10 +732,10 @@ function Preview({ d, t, onChange, onFlag }: {
         </Part>
         <Part label={`📍 ${t("area")}`} quotes={l.provenance?.areaId} t={t}>
           <p className="font-semibold">{l.locationPrecision === "exact" && l.address ? `🏪 ${l.address}` : chain}</p>
-          <p className="text-base text-stone-600">
+          <p className="text-base text-muted">
             {l.travelRadius > 0 ? `🚗 ${t("travel", { km: l.travelRadius })}` : `🏠 ${t("noTravel")}`}
           </p>
-          <p className="text-base text-stone-600">{CATEGORIES[l.category]}</p>
+          <p className="text-base text-muted">{CATEGORIES[l.category]}</p>
         </Part>
         {row("availability", `🕒 ${t("availability")}`)}
         {l.story_en && row("story", `💛 ${t("story")}`)}
@@ -755,7 +755,7 @@ function Preview({ d, t, onChange, onFlag }: {
         {!!l.paymentHandles?.length && (
           <Part label={`💵 ${t("paymentHandles")}`} quotes={l.provenance?.paymentHandles} t={t}>
             <ul className="font-mono text-base">{l.paymentHandles.map((h) => <li key={h}>{h}</li>)}</ul>
-            <p className="mt-1 text-sm text-stone-500">🔒 {t("moneyDirect")}</p>
+            <p className="mt-1 text-sm text-muted">🔒 {t("moneyDirect")}</p>
           </Part>
         )}
         {!!l.languages?.length && (
@@ -765,25 +765,25 @@ function Preview({ d, t, onChange, onFlag }: {
         )}
       </div>
 
-      <section className="mt-6 rounded-3xl border-2 border-stone-200 bg-white p-5" aria-live="polite">
-        <h2 className="text-xl font-bold text-stone-900">🛡️ {t("privacyTitle")}</h2>
+      <section className="mt-6 rounded-3xl border-2 border-line-strong bg-white p-5" aria-live="polite">
+        <h2 className="text-xl font-bold text-ink">🛡️ {t("privacyTitle")}</h2>
         {d.flags === null || d.flags === undefined ? (
-          <p className="mt-2 text-stone-500">{t("privacyChecking")}</p>
+          <p className="mt-2 text-muted">{t("privacyChecking")}</p>
         ) : d.flags.length === 0 ? (
-          <p className="mt-2 font-medium text-emerald-700">✓ {t("privacyOk")}</p>
+          <p className="mt-2 font-medium text-pine">✓ {t("privacyOk")}</p>
         ) : (
           <>
-            <p className="mt-1 text-base text-stone-600">{t("privacyHint")}</p>
+            <p className="mt-1 text-base text-muted">{t("privacyHint")}</p>
             <ul className="mt-3 space-y-3">
               {d.flags.map((f, i) => (
-                <li key={i} className="rounded-2xl bg-amber-50 p-4">
+                <li key={i} className="rounded-2xl bg-warn-bg p-4">
                   <p className="text-lg">
-                    <mark className="rounded bg-amber-200 px-1 line-through decoration-amber-700">{f.text}</mark> → <b className="text-emerald-800">{f.rewrite}</b>
+                    <mark className="rounded bg-warn-bg px-1 line-through decoration-warn-ink">{f.text}</mark> → <b className="text-pine">{f.rewrite}</b>
                   </p>
-                  <p className="text-sm text-stone-500">{f.reason}</p>
+                  <p className="text-sm text-muted">{f.reason}</p>
                   <div className="mt-3 flex gap-2">
-                    <button onClick={() => onFlag(f, true)} className="min-h-11 rounded-full bg-emerald-600 px-5 font-semibold text-white">✓ {t("accept")}</button>
-                    <button onClick={() => onFlag(f, false)} className="min-h-11 rounded-full border border-stone-300 bg-white px-5 font-semibold">✋ {t("keepMine")}</button>
+                    <button onClick={() => onFlag(f, true)} className="min-h-11 rounded-full bg-pine px-5 font-semibold text-white">✓ {t("accept")}</button>
+                    <button onClick={() => onFlag(f, false)} className="min-h-11 rounded-full border border-line-strong bg-white px-5 font-semibold">✋ {t("keepMine")}</button>
                   </div>
                 </li>
               ))}
@@ -797,8 +797,8 @@ function Preview({ d, t, onChange, onFlag }: {
 
 function Part({ label, quotes, t, children }: { label: string; quotes?: string[]; t: (k: UIKey) => string; children: React.ReactNode }) {
   return (
-    <div className="rounded-2xl border border-stone-200 bg-white p-4">
-      {label && <div className="mb-1 text-sm font-semibold uppercase tracking-wide text-stone-400">{label}</div>}
+    <div className="rounded-2xl border border-line-strong bg-white p-4">
+      {label && <div className="mb-1 text-sm font-semibold uppercase tracking-wide text-faint">{label}</div>}
       {children}
       <Quotes quotes={quotes} t={t} />
     </div>
@@ -814,7 +814,7 @@ function Quotes({ quotes, t }: { quotes?: string[]; t: (k: UIKey) => string }) {
         💬 {t("fromYourWords")}
       </button>
       {open && (
-        <ul className="mt-1 space-y-1 border-l-4 border-sky-200 pl-3 text-base italic text-stone-600">
+        <ul className="mt-1 space-y-1 border-l-4 border-sky-200 pl-3 text-base italic text-muted">
           {quotes.map((q, i) => <li key={i}>“{q}”</li>)}
         </ul>
       )}
@@ -833,22 +833,22 @@ function Editable({ value, onSave, t, big, flags = [], onFlag }: {
     return (
       <span className="flex w-full gap-2">
         <input value={v} onChange={(e) => setV(e.target.value)} autoFocus className="input flex-1" aria-label={t("edit")} />
-        <button onClick={() => { onSave(v); setEditing(false); }} className="min-h-11 rounded-full bg-stone-900 px-4 font-semibold text-white">✓ {t("save")}</button>
+        <button onClick={() => { onSave(v); setEditing(false); }} className="min-h-11 rounded-full bg-ink px-4 font-semibold text-white">✓ {t("save")}</button>
       </span>
     );
   }
   // Highlight flagged substrings from the privacy check.
   let parts: (string | React.ReactElement)[] = [value];
   for (const f of flags) {
-    parts = parts.flatMap((p): (string | React.ReactElement)[] => (typeof p === "string" && p.includes(f.text) ? p.split(f.text).flatMap((s, i) => (i ? [<mark key={f.text + i} className="rounded bg-amber-200 px-0.5">{f.text}</mark>, s] : [s])) : [p]));
+    parts = parts.flatMap((p): (string | React.ReactElement)[] => (typeof p === "string" && p.includes(f.text) ? p.split(f.text).flatMap((s, i) => (i ? [<mark key={f.text + i} className="rounded bg-warn-bg px-0.5">{f.text}</mark>, s] : [s])) : [p]));
   }
   return (
     <button
       onClick={() => { setV(value); setEditing(true); }}
       title={t("edit")}
-      className={`rounded-lg text-left hover:bg-orange-50 focus-visible:outline-3 focus-visible:outline-orange-500 ${big ? "text-2xl font-bold text-stone-900" : "text-lg text-stone-800"}`}
+      className={`rounded-lg text-left hover:bg-sand focus-visible:outline-3 focus-visible:outline-ink ${big ? "text-2xl font-bold text-ink" : "text-lg text-ink-2"}`}
     >
-      {parts} <span aria-hidden className="text-sm text-stone-300">✎</span>
+      {parts} <span aria-hidden className="text-sm text-faint">✎</span>
     </button>
   );
 }
