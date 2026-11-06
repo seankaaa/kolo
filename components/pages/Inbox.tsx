@@ -3,6 +3,7 @@
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Header from "@/components/Header";
 import OrderChat, { StatusPill } from "@/components/OrderChat";
 import { servesLabel } from "@/components/ProviderDrawer";
 import { CATEGORIES, LANG_NAMES } from "@/lib/areas";
@@ -54,7 +55,7 @@ export default function Inbox() {
   if (missing) {
     return (
       <div className="min-h-screen bg-stone-50">
-        <Top />
+        <Header showOffer={false} />
         <main className="mx-auto max-w-lg px-5 py-12">
           <h1 className="text-2xl font-bold text-stone-900">We couldn&apos;t find this listing</h1>
           <p className="mt-2 text-stone-600">The demo data may have been reset. Create a new listing, or open a sample provider&apos;s inbox.</p>
@@ -76,11 +77,11 @@ export default function Inbox() {
 
   return (
     <div className="flex h-screen flex-col bg-stone-50">
-      <Top label={t.map}>
+      <Header showOffer={false}>
         <span className="text-sm font-medium text-stone-700">
-          {provider?.name} {provider?.verified && <span className="ml-1 rounded-full bg-emerald-100 px-2 py-0.5 text-xs text-emerald-800">✓</span>}
+          👩 {provider?.name} {provider?.verified && <span className="ml-1 rounded-full bg-emerald-100 px-2 py-0.5 text-xs text-emerald-800">✓</span>}
         </span>
-      </Top>
+      </Header>
       <div className="flex min-h-0 flex-1 flex-col md:flex-row">
         <aside className="max-h-[45vh] shrink-0 overflow-y-auto border-b border-stone-200 bg-white md:max-h-none md:w-80 md:border-b-0 md:border-r">
           {provider && (
@@ -131,19 +132,5 @@ export default function Inbox() {
         </main>
       </div>
     </div>
-  );
-}
-
-function Top({ label = "← Map", children }: { label?: string; children?: React.ReactNode }) {
-  return (
-    <header className="flex items-center justify-between gap-3 border-b border-stone-200 bg-white px-5 py-3">
-      <div className="flex items-center gap-4">
-        <Link href="/" className="text-2xl font-bold tracking-tight text-stone-900">
-          Kolo <span className="text-orange-600">◯</span>
-        </Link>
-        <Link href="/" className="text-sm text-stone-500 hover:text-stone-800">{label}</Link>
-      </div>
-      {children}
-    </header>
   );
 }

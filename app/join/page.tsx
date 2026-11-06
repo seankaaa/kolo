@@ -28,7 +28,7 @@ type Flag = { field: string; text: string; reason: string; rewrite: string };
 type Draft = {
   step: "lang" | "signup" | "intake" | "building" | "preview";
   lang: Lang; name: string; contact: string; providerId?: string;
-  messages: ChatMsg[]; display: string[]; turn?: Turn; followupDone?: boolean;
+  messages: ChatMsg[]; display: string[]; turn?: Turn; prevTurns?: Turn[]; followupDone?: boolean;
   listing?: Listing; flags?: Flag[] | null;
 };
 
@@ -95,7 +95,8 @@ export default function Join() {
     try {
       const turn = await post<Turn>("/api/intake", { lang: base.lang, name: base.name, messages });
       const msgs: ChatMsg[] = [...messages, { role: "assistant", content: turn.reply }];
-      const next = { ...base, messages: msgs, display, turn };
+      const prevTurns = base.turn ? [...(base.prevTurns || []), base.turn] : base.prevTurns || [];
+      const next = { ...base, messages: msgs, display, turn, prevTurns };
       setD(next);
       setAnswer("");
       if (turn.done) await buildListing(next);
@@ -173,6 +174,22 @@ export default function Join() {
       setError(t("errNetwork"));
       setBusy(false);
     }
+  }
+
+  /** Go back one question: drop her last answer + the reply to it, restore the previous question. */
+  function previousQuestion() {
+    const prev = d.prevTurns || [];
+    if (!prev.length || busy) return;
+    dictation.stop();
+    const lastUser = [...d.messages].map((m) => m.role).lastIndexOf("user");
+    setD({
+      ...d,
+      messages: d.messages.slice(0, lastUser),
+      display: d.display.slice(0, -1),
+      turn: prev[prev.length - 1],
+      prevTurns: prev.slice(0, -1),
+    });
+    setAnswer(d.display[d.display.length - 1]?.startsWith("📍") ? "" : d.display[d.display.length - 1] || "");
   }
 
   function startOver() {
@@ -400,7 +417,14 @@ export default function Join() {
           </ul>
         </details>
       )}
-      <button onClick={startOver} className="mt-6 text-base text-stone-400 underline">↺ {t("startOver")}</button>
+      <div className="mt-6 flex flex-wrap items-center gap-4">
+        {!!d.prevTurns?.length && (
+          <button onClick={previousQuestion} disabled={busy} className={`${btn} border border-stone-300 bg-white`}>
+            ↩︎ {t("prevQuestion")}
+          </button>
+        )}
+        <button onClick={startOver} className="text-base text-stone-400 underline">↺ {t("startOver")}</button>
+      </div>
     </Page>
   );
 }

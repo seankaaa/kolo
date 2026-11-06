@@ -69,5 +69,10 @@
   "micLanguage": "Mic hears",
   "otherCity": "My city (if not listed)",
   "findCity": "Find your city or state",
-  "talkLong": "Talk as long as you like — pauses are OK. Tap ⏹ when you're done."
+  "talkLong": "Talk as long as you like — pauses are OK. Tap ⏹ when you're done.",
+  "navBack": "Back",
+  "navForward": "Forward",
+  "navHome": "Home",
+  "navProfile": "My profile",
+  "prevQuestion": "Previous question"
 }
