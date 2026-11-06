@@ -12,7 +12,24 @@ export async function POST(req: Request) {
   if (!body.areaId || !areaById(body.areaId)) {
     return Response.json({ error: "Unknown area" }, { status: 400 });
   }
-  const isShop = body.locationPrecision === "exact";
+  const isShop = body.locationPrecision === "exact" && !!body.address;
+  // Only storefronts get a pin. Geocode the public shop address; fall back to the area center.
+  if (isShop && !(body.lat && body.lng)) {
+    const area = areaById(body.areaId)!;
+    body.lat = area.lat;
+    body.lng = area.lng;
+    try {
+      const r = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(body.address!)}`,
+        { headers: { "User-Agent": "kolo-hackathon-demo" } }
+      );
+      const [hit] = await r.json();
+      if (hit) {
+        body.lat = +hit.lat;
+        body.lng = +hit.lon;
+      }
+    } catch {}
+  }
   const provider: Provider = {
     id: newId("p"),
     name: body.name || "New provider",
