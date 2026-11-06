@@ -55,18 +55,28 @@ export function useDictation(defaultLang: string, onUpdate: (t: string) => void)
   const [lang, setLang] = useState(defaultLang);
   const recRef = useRef<any>(null);
   const textRef = useRef("");
-  useEffect(() => setLang(defaultLang), [defaultLang]);
+  // True from her tap-to-start until her tap-to-stop. Chrome ends sessions on its own after
+  // pauses or ~60s, so while this is set we silently restart and keep her words.
+  const wantRef = useRef(false);
+  const langRef = useRef(defaultLang);
+  useEffect(() => {
+    setLang(defaultLang);
+    langRef.current = defaultLang;
+  }, [defaultLang]);
 
   function stop() {
+    wantRef.current = false;
     const rec = recRef.current;
     recRef.current = null;
     rec?.stop();
     setListening(false);
   }
 
-  function start(prefix = "", useLang = lang) {
+  function start(prefix = "", useLang = langRef.current) {
     const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SR) return;
+    wantRef.current = true;
+    langRef.current = useLang;
     window.speechSynthesis?.cancel();
     const rec = new SR();
     rec.lang = useLang;
@@ -81,12 +91,19 @@ export function useDictation(defaultLang: string, onUpdate: (t: string) => void)
       onUpdate(textRef.current);
     };
     rec.onend = () => {
-      if (recRef.current === rec) {
-        recRef.current = null;
+      if (recRef.current !== rec) return;
+      recRef.current = null;
+      if (wantRef.current) {
+        // Chrome stopped by itself: keep going from where she was.
+        setTimeout(() => wantRef.current && !recRef.current && start(textRef.current, langRef.current), 150);
+      } else {
         setListening(false);
       }
     };
-    rec.onerror = rec.onend;
+    rec.onerror = (e: any) => {
+      // Permission denied or no mic: stop for real instead of looping.
+      if (e?.error === "not-allowed" || e?.error === "service-not-allowed" || e?.error === "audio-capture") wantRef.current = false;
+    };
     recRef.current = rec;
     setListening(true);
     rec.start();
@@ -95,6 +112,7 @@ export function useDictation(defaultLang: string, onUpdate: (t: string) => void)
   /** Change recognition language; if recording, continue seamlessly in the new language. */
   function switchLang(next: string, currentText: string) {
     setLang(next);
+    langRef.current = next;
     if (recRef.current) {
       const old = recRef.current;
       recRef.current = null;
@@ -110,6 +128,6 @@ export function useDictation(defaultLang: string, onUpdate: (t: string) => void)
     start,
     stop,
     switchLang,
-    toggle: (prefix = "") => (recRef.current ? stop() : start(prefix)),
+    toggle: (prefix = "") => (wantRef.current ? stop() : start(prefix)),
   };
 }
