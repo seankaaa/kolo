@@ -76,7 +76,7 @@ function LoginForm() {
       <h2 className="mt-10 text-sm font-semibold uppercase tracking-wide text-faint">{t("demoAccounts")}</h2>
       <div className="mt-2 grid gap-2">
         {DEMO.map((d) => (
-          <button key={d.email} disabled={busy} onClick={() => login(d)} className="flex min-h-12 items-center justify-between rounded-xl border border-line-strong bg-white px-4 text-left hover:border-white/30 hover:bg-sand">
+          <button key={d.email} disabled={busy} onClick={() => login(d)} className="flex min-h-16 items-center justify-between rounded-[22px] border-2 border-line-strong bg-white px-5 text-left text-[17px] hover:border-ink hover:bg-sand">
             <span>{d.flag} <b>{d.name}</b> <span className="text-muted">· {t(d.role)} · {LANG_NAMES[d.language]}</span></span>
             <span aria-hidden>→</span>
           </button>

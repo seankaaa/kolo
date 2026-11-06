@@ -121,7 +121,7 @@ export default function Me() {
             {byTab[tab].length === 0 && <p className="mt-3 text-sm text-faint">{t("noOrders")}</p>}
             <ul className="mt-3 space-y-2">
               {byTab[tab].map((o) => (
-                <li key={o.id} className={`${card} ${chat?.id === o.id ? "border-white/30" : ""}`}>
+                <li key={o.id} className={`${card} ${chat?.id === o.id ? "border-2 border-ink" : ""}`}>
                   <OrderSummary o={o} lang={lang} t={t} />
                   <div className="mt-2 flex flex-wrap gap-2">
                     {o.status === "new" && o.type !== "support" && (
@@ -144,7 +144,7 @@ export default function Me() {
             {data.placed.length === 0 && <p className="mt-3 text-sm text-faint">{t("noCustomerOrders")}</p>}
             <ul className="mt-3 space-y-2">
               {data.placed.map((o) => (
-                <li key={o.id} className={`${card} ${chat?.id === o.id ? "border-white/30" : ""}`}>
+                <li key={o.id} className={`${card} ${chat?.id === o.id ? "border-2 border-ink" : ""}`}>
                   <OrderSummary o={o} lang={lang} t={t} customer />
                   <button onClick={() => setChat({ id: o.id, role: "customer" })} className={`${pill} mt-2 border border-line-strong`}>💬 {t("openChat")}</button>
                 </li>
